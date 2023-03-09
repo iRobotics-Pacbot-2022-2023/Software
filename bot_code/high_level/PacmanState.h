@@ -1,7 +1,10 @@
 class PacmanState {
 private:
     int score;
-    // bool gameover;
+    int lives;
+    int level;
+    bool gameover;
+
     int x;
     int y;
 
@@ -22,7 +25,7 @@ private:
     int power_ups_left;
 
 public:
-    PacmanGame() {
+    PacmanState() {
         score = 0;
         lives = 3;
         level = 1;

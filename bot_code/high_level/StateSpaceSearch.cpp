@@ -1,6 +1,6 @@
 // values & weights for certain constants
 #include <vector>
-#include "PacmanGame.h"
+#include "PacmanState.h"
 int power_up = 500;
 int pellet = 10;
 int power_ups_left = 4;
@@ -39,7 +39,7 @@ std::pair<int, int> _state_space_search(int depth, PacmanState current_state) {
     return bestMoveFound;
 }
 
-int evaluate(int depth, Pacmanstate current_state) {
+int evaluate(int depth, PacmanState current_state) {
     if (depth == 0) {
         return evaluatePosition(current_state);
     }
@@ -49,7 +49,7 @@ int evaluate(int depth, Pacmanstate current_state) {
 
     int bestMove = 0; //negative inf, just to initialize
     for (auto move : grid.validMoves()) {
-        Pacmanstate child = current_state;
+        PacmanState child = current_state;
         child.Move(move);
         bestScore = max(bestMove, child.getScore() + evaluate(depth-1, child));
     }
@@ -88,7 +88,7 @@ std::vector<char> validMoves() {
 
 }
 
-int evaluatePosition(Pacmanstate current_state) {
+int evaluatePosition(PacmanState current_state) {
     //this is a function that will evalaute the MPS (max-possible-score)
     // at a certain position
     // it is called within evaluate to determine which paths to go down
