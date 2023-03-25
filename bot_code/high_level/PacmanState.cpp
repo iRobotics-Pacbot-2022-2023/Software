@@ -156,24 +156,25 @@ int PacmanState::getScore() {
         vector<string> directions;
         if (getDirection() == up)
         {
-            xDiff = y + 2;
+            xDiff = yBot + 2;
         }
         if (getDirection() == down)
         {
-            xDiff = y - 2;
+            xDiff = yBot - 2;
         }
         if (getDirection() == left)
         {
-            xDiff = x - 2;
+            xDiff = xBot - 2;
         }
         if (getDirection() == right)
         {
-            xDiff = x + 2;
+            xDiff = xBot + 2;
         }
 
         int x_blue = 2 * (xDiff - x_red);
         int y_blue = 2 * (yDiff - y_red);
-        
+        //How to make this absolute value so that no negative
+        //coords?
 
 
         if ( grid[x_blue + 1][y_blue] != 'I' ) {
