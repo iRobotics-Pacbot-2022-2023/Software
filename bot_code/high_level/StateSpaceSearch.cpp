@@ -105,7 +105,8 @@ int evaluatePosition(Pacmanstate current_state) {
     return total;
 }
 
-void Move(std::vector<std::pair<int,int>> move, Pacmanstate & current) {
+void Move(std::vector<std::pair<int,int>> move_s, Pacmanstate & current) {
+    if (move_s.size() == 0) return;
     // this function needs to simulate how the grid will look like after we move
 
     // we need to take into account whatever we eat will be removed from the board,
