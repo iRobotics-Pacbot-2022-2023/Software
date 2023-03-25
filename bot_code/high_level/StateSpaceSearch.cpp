@@ -56,7 +56,7 @@ int evaluate(int depth, PacmanState current_state) {
     return bestScore; 
 }
 
-std::vector<char> validMoves() {
+std::vector<char> validMoves(int x_current_location, int y_current_location) {
     // look at the grid and determine which moves are legitimate
     // return a vector containing all the possible moves
     // within a certain distance
@@ -66,7 +66,7 @@ std::vector<char> validMoves() {
     // need to access current position
     // pseudocode cuz i dont know how to access positions 
 
-    p_loc = {x_current_location, y_current_location}; //this is terrible
+    std::vector<int> p_loc = {x_current_location, y_current_location}; //this is terrible
 
     //check to see if the next position is either empty or a wall
     // if its either, then dont push it onto the vector because we cant visit it 
