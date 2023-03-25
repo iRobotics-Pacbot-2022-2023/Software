@@ -1,5 +1,4 @@
-#ifndef VARIABLES_H
-#define VARIABLES_H
+#pragma once
 
 using namespace std;
 
@@ -37,10 +36,3 @@ vector<vector<int>> grid = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,e,e,e,e,e,e,I,I,I,I,I
                         {I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,e,e,e,e,e,e,I,I,I,I,I,I,I,I,I,I}};
         //        |         |         |         |         |         |         |
         //        0         5        10        15       20         25       30
-
-
-
-
-
-
-#endif
