@@ -148,6 +148,49 @@ int PacmanState::getScore() {
 
     }
 
+    void PacmanState::moveBlue()
+    {
+        //Incomplete ideas; needs more work
+        int xDiff = 0;
+        int yDiff = 0;
+        vector<string> directions;
+        if (getDirection() == up)
+        {
+            xDiff = y + 2;
+        }
+        if (getDirection() == down)
+        {
+            xDiff = y - 2;
+        }
+        if (getDirection() == left)
+        {
+            xDiff = x - 2;
+        }
+        if (getDirection() == right)
+        {
+            xDiff = x + 2;
+        }
+
+        int x_blue = 2 * (xDiff - x_red);
+        int y_blue = 2 * (yDiff - y_red);
+        
+
+
+        if ( grid[x_blue + 1][y_blue] != 'I' ) {
+            directions.push_back("right");
+        }
+        if (grid[x_blue][y_blue - 1] != 'I') {
+            directions.push_back("up");
+        }
+        if (grid[x_blue - 1][y_blue] != 'I') {
+            directions.push_back("left");
+        } 
+        if (grid[v_blue][y_blue + 1] != 'I') {
+            directions.push_back("down");
+        }
+        //Needs more work
+    }
+
     void PacmanState::moveRed() {
         vector<string> directions;
          if ( grid[x_red + 1][y_red] != 'I' ) {
