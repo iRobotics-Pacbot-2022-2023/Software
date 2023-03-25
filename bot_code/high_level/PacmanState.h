@@ -1,3 +1,12 @@
+#pragma once
+
+#include <vector>
+
+using namespace std;
+
+#include "variables.h"
+#include "grid.h"
+
 class PacmanState {
 private:
     int score;
