@@ -1,4 +1,5 @@
 
+
 #include <cstdlib>
 #include "grid.h"
 #include <vector>
@@ -13,14 +14,14 @@ class PacmanState {
 private:
     int score;
     // bool gameover;
-    int xbotPos;
-    int ybotPos;
+    double xbotPos;
+    double ybotPos;
     int lives;
     int level;
     bool gameover;
 
-    double x;
-    double y;
+    // double x;
+    // double y;
 
     // position by ghosts
     // int x_red;
@@ -35,7 +36,7 @@ private:
     // int x_pink;
     // int y_pink;
 
-    vector<int> ghostlocs = {14, 14, 14, 14, 14, 14, 14, 14}; //red, orange, blue, pink
+    vector<double> ghostlocs = {14, 14, 14, 14, 14, 14, 14, 14}; //red, orange, blue, pink
                                                               //
 
     int power_up_weight;
@@ -107,6 +108,6 @@ public:
     bool hasCollided();
     void moveOrange();
     void moveRed();
+    void movePink();
     
 };
-
