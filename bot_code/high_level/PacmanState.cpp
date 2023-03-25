@@ -22,9 +22,9 @@ PacmanState::~PacmanState() {
 // PacmanState::PacmanState(int level) {
 
 // }
-void PacmanState::movePlayer(double dx, int dy) {
-    x += dx;
-    y += dx;
+void PacmanState::movePlayer(double dx, double dy) {
+    xbotPos += dx;
+    ybotPos += dx;
     if (dx > 0 && dy > 0) {
         direction  = upperRight;
     } else if (dx > 0 && dy == 0) {
@@ -46,10 +46,10 @@ void PacmanState::movePlayer(double dx, int dy) {
 
 }
 double PacmanState::getX() {
-        return x;
+        return xbotPos;
     }
 double PacmanState::getY() {
-        return y;
+        return ybotPos;
     }
 void PacmanState::increaseScore(int points) {
         score += points;
@@ -85,8 +85,13 @@ int PacmanState::getScore() {
         increaseScore(10);
     }
 
-    bool hasCollided() {
-        for(int i = 0; i <)
+    bool PacmanState::hasCollided() {
+        for(int i = 0; i < ghostlocs.size(); i += 2) {
+            if (ghostlocs[i] == xbotPos && ghostlocs[i + 1] == ybotPos) {
+                return true;
+            }
+        }
+        return false;
     }
     void PacmanState::addPowerUpScore() {
         increaseScore(50);
@@ -157,8 +162,8 @@ int PacmanState::getScore() {
         if (grid[x_orange][y_orange + 1] != 'I') {
             directions.push_back("down");
         }
-        int xDiff = x - x_red;
-        int yDiff = y - y_red;
+        int xDiff = xbotPos - x_red;
+        int yDiff = ybotPos - y_red;
 
         if (xDiff <= 0 && yDiff <= 0) { //should also take into account what direction the Pacbot is facing, as that's the likely direction it's gonna go
            
@@ -176,6 +181,66 @@ int PacmanState::getScore() {
 
         }
         
+
+    }
+
+    void PacmanState::movePink() {
+        if (direction_facing != up) {
+            if (direction_facing == right) {
+                double pinkTargetX = x + 4; // have to account for walls later
+                double dx = pinkTargetX - x_pink;
+                double dy = ybotPos - y_pink;
+                if (abs(dx) > abs(dy) && dx > 0) {
+                    x_pink += 1; // check for walls
+                } else if (abs(dx) > abs(dy) && dx < 0) {
+                    y_pink += 1; //have to check for walls
+                } else if (abs(dx) < abs(dy) && dy > 0) {
+                    y_pink -= 1;
+                } else {
+                    y_pink += 1;
+                }
+
+            } else if (direction_facing == down) {
+                double pinkTargetY = ybotPos - 4; // have to account for walls later
+                if (abs(dx) > abs(dy) && dx > 0) {
+                    x_pink += 1;
+                } else if (abs(dx) > abs(dy) && dx < 0) {
+                    x_pink -= 1;
+                } else if (abs(dx) < abs(dy) && dy < 0) {
+                    x_pink += 1;
+                } else  {
+                    y_pink -= 1;
+                }
+
+            } else { // left
+                double pinkTargetX = xbotPos - 4; //have to account for walls later
+                if (abs(dx) > abs(dy) && dx > 0) {
+                    y_pink += 1;
+                } else if (abs(dx) > abs(dy) && dx < 0) {
+                    x_pink -= 1;
+                } else if (abs(dx) < abs(dy) && dy < 0) {
+                    y_pink += 1;
+                } else {
+                    y_pink -= 1;
+                }
+
+            }
+
+        } else {
+            double pinkTargetX = xbotPos - 4;
+            double pinkTargetY = ybotPos + 4;
+            if (abs(dx) > abs(dy) && dx > 0) {
+                    x_pink += 1;
+                } else if (abs(dx) > abs(dy) && dx < 0) {
+                    x_pink -= 1;
+                } else if (abs(dx) < abs(dy) && dy < 0) {
+                    y_pink += 1;
+                } else if (abs(dx) < abs(dy) && dy > 0) {
+                    y_pink -= 1;
+                }
+
+        }
+
 
     }
 
