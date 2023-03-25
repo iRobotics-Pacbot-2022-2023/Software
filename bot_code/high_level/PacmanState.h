@@ -1,38 +1,53 @@
+
+#include <cstdlib>
+#include "grid.h"
+#include <vector>
+#include <iostream>
+#include <string>
+#include "variables.h"
+#include <cmath>
 #pragma once
 
-#include <vector>
-
-using namespace std;
-
-#include "variables.h"
-#include "grid.h"
 
 class PacmanState {
 private:
     int score;
+    // bool gameover;
+    int xbotPos;
+    int ybotPos;
     int lives;
     int level;
     bool gameover;
 
-    int x;
-    int y;
+    double x;
+    double y;
 
     // position by ghosts
-    int x_red;
-    int y_red;
+    // int x_red;
+    // int y_red;
 
-    int x_orange;
-    int y_orange;
+    // int x_orange;
+    // int y_orange;
 
-    int x_blue;
-    int y_blue;
+    // int x_blue;
+    // int y_blue;
 
-    int x_pink;
-    int y_pink;
+    // int x_pink;
+    // int y_pink;
+
+    vector<int> ghostlocs = {14, 14, 14, 14, 14, 14, 14, 14}; //red, orange, blue, pink
+                                                              //
 
     int power_up_weight;
-    int power_ups_left;
+    int power_ups_left; //power ups remaining
 
+    int pellet_weight;
+    int pellets_left;
+    int ghost_score;
+    enum direction {
+        right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft;
+    }
+    direction direction_facing;
 public:
     PacmanState() {
         score = 0;
@@ -82,4 +97,16 @@ public:
     int getLevel() {
         return level;
     }
+    void getDirection() {
+        return direction;
+    }
+    void setDirection(int d) {
+        direction = d;
+    }
+    void movePlayer(double dx, double dy);
+    bool hasCollided();
+    void moveOrange();
+    void moveRed();
+    
 };
+
