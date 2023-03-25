@@ -1,10 +1,6 @@
 // values & weights for certain constants
 #include <vector>
 #include "PacmanState.h"
-int power_up = 500;
-int pellet = 10;
-int power_ups_left = 4;
-int pellets_left = 100;
 
 //frightened state
 // number of points on the way
@@ -27,36 +23,37 @@ std::pair<int, int> _state_space_search(int depth, PacmanState current_state) {
     // p.changeY(self.y_pos);
 
     // move should be a vector of coordinates we have traversed
-    for (auto move : pos.validMoves()) {
+    for (auto move : pos.validMoves(current_state)) {
         const PacmanState child = current_state; // potentially have this be a copy of the state itself. Psuedo, no class implemented yet
-        child.Move(move); //this function essentially simulates what the grid/state will look like after the move
-        value = evaluate(depth-1, &child); // function that will go down the tree of possible moves
-        if value >= bestMove {
+        // child.Move(move);
+        Move(move, child); //this function essentially simulates what the grid/state will look like after the move
+        int value = evaluate(depth-1, &child); // function that will go down the tree of possible moves
+        if (value >= bestMove) {
             bestMove = value;
-            bestMoveFound = {childcoordinate x, childcoordinate y}; //psuedo, i havent set up the pacman class
+            bestMoveFound = {child.}; //psuedo, i havent set up the pacman class
         }
     }
     return bestMoveFound;
 }
 
-int evaluate(int depth, PacmanState current_state) {
+int evaluate(int depth, Pacmanstate current_state) {
     if (depth == 0) {
         return evaluatePosition(current_state);
     }
-    if (game.Position().Status() == game_end) {
+    if (current_state.gameOver() == true) {
         return -100;
     }
 
     int bestMove = 0; //negative inf, just to initialize
     for (auto move : grid.validMoves()) {
-        PacmanState child = current_state;
-        child.Move(move);
+        Pacmanstate child = current_state;
+        Move(move, child);
         bestScore = max(bestMove, child.getScore() + evaluate(depth-1, child));
     }
     return bestScore; 
 }
 
-std::vector<char> validMoves(int x_current_location, int y_current_location) {
+std::vector<std::pair<int,int>> validMoves(Pacmanstate current) {
     // look at the grid and determine which moves are legitimate
     // return a vector containing all the possible moves
     // within a certain distance
@@ -66,29 +63,29 @@ std::vector<char> validMoves(int x_current_location, int y_current_location) {
     // need to access current position
     // pseudocode cuz i dont know how to access positions 
 
-    std::vector<int> p_loc = {x_current_location, y_current_location}; //this is terrible
-
     //check to see if the next position is either empty or a wall
     // if its either, then dont push it onto the vector because we cant visit it 
 
-    if (global_grid[p_loc[0] + 1][p_loc[1]] != 'e' &&
-        global_grid[p_loc[0] + 1][p_loc[1]] != 'W') {
+    // one of the biggest functions i need to update
+
+    if (global_grid[current.getX()][current.getY()] != 'n' &&
+        global_grid[p_loc[0] + 1][p_loc[1]] != 'w') {
             moves.push_back('E');
-    } else if (global_grid[p_loc[0] - 1][p_loc[1]] != 'e' &&
-                global_grid[p_loc[0] - 1][p_loc[1]] != 'W') {
+    } else if (global_grid[p_loc[0] - 1][p_loc[1]] != 'n' &&
+                global_grid[p_loc[0] - 1][p_loc[1]] != 'w') {
                     moves.push_back('W');
-    } else if (global_grid[p_loc[0]][p_loc[1] + 1] != 'e' &&
-                global_grid[p_loc[0]][p_loc[1] + 1] != 'W') {
+    } else if (global_grid[p_loc[0]][p_loc[1] + 1] != 'n' &&
+                global_grid[p_loc[0]][p_loc[1] + 1] != 'w') {
                     moves.push_back('N');
-    } else if (global_grid[p_loc[0]][p_loc[1] - 1] != 'e' &&
-                global_grid[p_loc[0]][p_loc[1] - 1] != 'W') {
+    } else if (global_grid[p_loc[0]][p_loc[1] - 1] != 'n' &&
+                global_grid[p_loc[0]][p_loc[1] - 1] != 'w') {
                     moves.push_back('S');
     }
     return moves;
 
 }
 
-int evaluatePosition(PacmanState current_state) {
+int evaluatePosition(Pacmanstate current_state) {
     //this is a function that will evalaute the MPS (max-possible-score)
     // at a certain position
     // it is called within evaluate to determine which paths to go down
@@ -104,29 +101,15 @@ int evaluatePosition(PacmanState current_state) {
 
     // essentially think of opportunity cost
     
-    int total = (power_up * power_ups_left) + (pellet * pellets_left); //these params are from the current_state
+    int total = current_state.power_ups_left() * current_state.power_up_weight() + current_state.pellets_left() * current_state.pellets_weight(); //these params are from the current_state
     return total;
 }
 
-void Move(char move) {
+void Move(std::vector<std::pair<int,int>> move, Pacmanstate & current) {
     // this function needs to simulate how the grid will look like after we move
 
     // we need to take into account whatever we eat will be removed from the board,
     // and that the ghosts will be moving along with us
     // everything else should be static
-    if (move == 'N') {
-        x_pos = p_loc[0] + 1;
-        y_pos = p_loc[1];
-        //implement ghost changes
-        // see if we have eaten any pellets etc and change that on the map
-    } else if (move == 'S') {
-        x_pos = p_loc[0] - 1;
-        y_pos = p_loc[1];
-    } else if (move == 'W') {
-        x_pos = p_loc[0];
-        y_pos = p_loc[1] - 1;
-    } else if (move == 'E') {
-        x_pos = p_loc[0];
-        y_pos = p_loc[1] + 1;
-    }
+    
 }
