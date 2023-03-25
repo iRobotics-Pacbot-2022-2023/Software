@@ -49,6 +49,15 @@ private:
         right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft;
     }
     direction direction_facing;
+    void moveRedChase();
+    void moveOrangeChase();
+    void moveBlueChase();
+    void movePinkChase();
+
+    void moveBlueScatter();
+    void moveRedScatter();
+    void moveOrangeScatter();
+    void movePinkScatter();
 public:
     PacmanState() {
         score = 0;
@@ -109,5 +118,5 @@ public:
     void moveOrange();
     void moveRed();
     void movePink();
-    
+    void moveBlue();
 };
