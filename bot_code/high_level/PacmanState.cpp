@@ -171,10 +171,10 @@ int PacmanState::getScore() {
             xDiff = xBot + 2;
         }
 
-        int x_blue = 2 * (xDiff - x_red);
-        int y_blue = 2 * (yDiff - y_red);
-        //How to make this absolute value so that no negative
-        //coords?
+        //Must account for chances that end result could be negative
+        //Would be considered out of bounds
+        int x_blue = abs(2 * (xDiff - x_red));
+        int y_blue = abs(2 * (yDiff - y_red));
 
 
         if ( grid[x_blue + 1][y_blue] != 'I' ) {
