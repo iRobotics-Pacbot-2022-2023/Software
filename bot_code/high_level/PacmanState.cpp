@@ -43,7 +43,7 @@ void PacmanState::movePlayer(double dx, double dy) {
         direction = down;
     }
 
-
+    bool collision = hasCollided();
 }
 double PacmanState::getX() {
         return xbotPos;
@@ -116,10 +116,46 @@ int PacmanState::getScore() {
     void PacmanState::ateGhost() {
         addGhostScore();
     }
-
-
+    void PacmanState::moveBlue() {
+        if (chase) {
+            moveBlueChase();
+        } else {
+            moveBlueScatter();
+        }
+    }
 
     void PacmanState::moveOrange() {
+        if (chase) {
+            moveOrangeChase();
+        } else {
+            moveOrangeScatter();
+        }
+
+    }
+
+    void PacmanState::moveRed() {
+        if (chase) {
+            moveRedChase();
+        } else {
+            moveRedScatter();
+        }
+        
+        
+
+    }
+
+    void PacmanState::movePink() {
+        if (chase) {
+            movePinkChase();
+        } else {
+            movePinkScatter();
+        }
+
+
+    }
+
+
+    void PacmanState::moveOrangeChase() {
         int numPossOrangeMoves = 0;
         vector<string> directions;
         if ( grid[x_orange + 1][y_orange] != 'I' ) {
@@ -148,7 +184,7 @@ int PacmanState::getScore() {
 
     }
 
-    void PacmanState::moveBlue()
+    void PacmanState::moveBlueChase()
     {
         //Incomplete ideas; needs more work
         int xDiff = 0;
@@ -192,7 +228,7 @@ int PacmanState::getScore() {
         //Needs more work
     }
 
-    void PacmanState::moveRed() {
+    void PacmanState::moveRedChase() {
         vector<string> directions;
          if ( grid[x_red + 1][y_red] != 'I' ) {
             directions.push_back("right");
@@ -228,7 +264,7 @@ int PacmanState::getScore() {
 
     }
 
-    void PacmanState::movePink() {
+    void PacmanState::movePinkChase() {
         if (direction_facing != up) {
             if (direction_facing == right) {
                 double pinkTargetX = x + 4; // have to account for walls later
@@ -288,3 +324,15 @@ int PacmanState::getScore() {
 
     }
 
+     void PacmanState::moveRedScatter(){
+
+    } 
+    void PacmanState::moveBlueScatter() {
+
+    }
+    void PacmanState::moveOrangeScatter() {
+
+    } 
+    void PacmanState::movePinkScatter() {
+        
+    }
