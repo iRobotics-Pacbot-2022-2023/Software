@@ -5,9 +5,18 @@ using namespace std;
 #include "variables.h"
 #include "grid.h"
 #include "PacmanState.h"
-class HeurisitcHighLevelModule{
+
+class StateSpaceSearch{
+    public:
+
+
+
+
+
+
     private:
 
-    public: 
+
+     
         
 };

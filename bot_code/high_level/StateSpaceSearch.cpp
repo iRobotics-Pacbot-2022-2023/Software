@@ -53,7 +53,7 @@ int evaluate(int depth, Pacmanstate current_state) {
     return bestScore; 
 }
 
-std::vector<std::pair<int,int>> validMoves(Pacmanstate current) {
+std::vector<std::pair<int,int>> validMoves(Pacmanstate current, int depth) {
     // look at the grid and determine which moves are legitimate
     // return a vector containing all the possible moves
     // within a certain distance
