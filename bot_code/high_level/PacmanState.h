@@ -15,8 +15,7 @@ private:
     int score;
     // bool gameover;
 
-    double xbotPos;
-    double ybotPos;
+    std::pair pos;
 
     int lives;
 
@@ -40,7 +39,7 @@ private:
     // int x_pink;
     // int y_pink;
 
-    vector<double> ghostlocs = {14, 14, 14, 14, 14, 14, 14, 14}; //red, orange, blue, pink
+    vector<pair<double>>ghostlocs = { {14, 19}, {14, 16}, {14, 16}, {14, 16} };//red, orange, blue, pink
                                                               //
 
     int power_up_weight = 50;
@@ -53,6 +52,8 @@ private:
         right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
     };
     direction direction_facing;
+    bool chase = true;
+    bool scatter = false;
     void moveRedChase();
     void moveOrangeChase();
     void moveBlueChase();
@@ -70,6 +71,7 @@ public:
         gameover = false;
         xbotPos = 0;
         ybotPos = 0;
+        
     }
     void changeX(int new_x) {
         xbotPos = new_x;
@@ -112,10 +114,10 @@ public:
         return level;
     }
     void getDirection() {
-        return direction;
+        return direction_facing;
     }
-    void setDirection(int d) {
-        direction = d;
+    void setDirection(direction d) {
+        direction_facing = d;
     }
     void movePlayer(double dx, double dy);
     bool hasCollided();
