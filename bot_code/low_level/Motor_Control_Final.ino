@@ -64,40 +64,40 @@ void MotorControl(unsigned int speed, bool direction, int S_pin, int D_pin){
 }
 
 
-void Bot_Up(unsigned int speed, Motor left, Motor right, Motor top, Motor bottom) {
+void Bot_Up(unsigned int speed, Motor top_left, Motor top_right, Motor bottom_left, Motor bottom_right) {
   Serial.print("Going up at speed: ");
   Serial.println(speed);
-  MotorControl(speed, true, left.Speed, left.Direction );
-  MotorControl(speed, true, right.Speed, right.Direction );
-  MotorControl(0, true, top.Speed, top.Direction );
-  MotorControl(0, true, bottom.Speed, bottom.Direction );
+  MotorControl(speed, true, top_left.Speed, top_left.Direction );
+  MotorControl(speed, false, top_right.Speed, top_right.Direction );
+  MotorControl(speed, true, bottom_left.Speed, bottom_left.Direction );
+  MotorControl(speed, false, bottom_right.Speed, bottom_right.Direction );
 }
 
 void Bot_Down(unsigned int speed, Motor left, Motor right, Motor top, Motor bottom) {
   Serial.print("Going down at speed: ");
   Serial.println(speed);
-  MotorControl(speed, false, left.Speed, left.Direction );
-  MotorControl(speed, false, right.Speed, right.Direction );
-   MotorControl(0, true, top.Speed, top.Direction );
-  MotorControl(0, true, bottom.Speed, bottom.Direction );
+  MotorControl(speed, false, top_left.Speed, top_left.Direction );
+  MotorControl(speed, true, top_right.Speed, top_right.Direction );
+  MotorControl(speed, false, bottom_left.Speed, bottom_left.Direction );
+  MotorControl(speed, true, bottom_right.Speed, bottom_right.Direction );
 }
 
 void Bot_Left(unsigned int speed, Motor left, Motor right, Motor top, Motor bottom) {
   Serial.print("Going left at speed: ");
   Serial.println(speed);
-  MotorControl(speed, true, top.Speed, top.Direction );
-  MotorControl(speed, true, bottom.Speed, bottom.Direction );
-   MotorControl(0, false, left.Speed, left.Direction );
-  MotorControl(0, false, right.Speed, right.Direction );
+  MotorControl(speed, true, top_left.Speed, top_left.Direction );
+  MotorControl(speed, true, top_right.Speed, top_right.Direction );
+  MotorControl(speed, false, bottom_left.Speed, bottom_left.Direction );
+  MotorControl(speed, false, bottom_right.Speed, bottom_right.Direction );
 }
 
 void Bot_Right(unsigned int speed, Motor left, Motor right, Motor top, Motor bottom) {
   Serial.print("Going right at speed: ");
   Serial.println(speed);
-  MotorControl(speed, false, top.Speed, top.Direction );
-  MotorControl(speed, false, bottom.Speed, bottom.Direction );
-   MotorControl(0, false, left.Speed, left.Direction );
-  MotorControl(0, false, right.Speed, right.Direction );
+  MotorControl(speed, false, top_left.Speed, top_left.Direction );
+  MotorControl(speed, false, top_right.Speed, top_right.Direction );
+  MotorControl(speed, true, bottom_left.Speed, bottom_left.Direction );
+  MotorControl(speed, true, bottom_right.Speed, bottom_right.Direction );
 }
 
 // Classes and Functions END
