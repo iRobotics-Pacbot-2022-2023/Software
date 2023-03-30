@@ -14,11 +14,15 @@ class PacmanState {
 private:
     int score;
     // bool gameover;
+
     double xbotPos;
     double ybotPos;
+
     int lives;
+
     int level;
-    bool gameover;
+
+    bool gameover = false;
 
     // double x;
     // double y;
@@ -39,15 +43,15 @@ private:
     vector<double> ghostlocs = {14, 14, 14, 14, 14, 14, 14, 14}; //red, orange, blue, pink
                                                               //
 
-    int power_up_weight;
+    int power_up_weight = 50;
     int power_ups_left; //power ups remaining
 
-    int pellet_weight;
+    int pellet_weight = 10;
     int pellets_left;
-    int ghost_score;
+    // int ghost_score;
     enum direction {
-        right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft;
-    }
+        right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
+    };
     direction direction_facing;
     void moveRedChase();
     void moveOrangeChase();
@@ -64,14 +68,14 @@ public:
         lives = 3;
         level = 1;
         gameover = false;
-        x = 0;
-        y = 0;
+        xbotPos = 0;
+        ybotPos = 0;
     }
     void changeX(int new_x) {
-        x = new_x;
+        xbotPos = new_x;
     }
     void changeY(int new_y) {
-        y = new_y;
+        ybotPos = new_y;
     }
     void increaseScore(int points) {
         score += points;

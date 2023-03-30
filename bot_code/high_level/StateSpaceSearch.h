@@ -9,12 +9,22 @@ using namespace std;
 class StateSpaceSearch{
     public:
 
+    
+
+
 
 
 
 
 
     private:
+
+    // State
+    enum GameState { base, cherry, freightened };
+
+    void updateGameState(GameState state);
+
+    GameState state = base;
 
 
      

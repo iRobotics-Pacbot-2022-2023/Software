@@ -24,6 +24,12 @@ const int P = 6; // Pacbot
 const int CHERRY_POINTS = 100;
 const int POWER_POINTS = 50;
 const int PELLET_POINTS = 10;
-// int GHOST_POINTS = 200;
+
+/* Ghosts Points
+first = 200
+second = 400
+third = 800
+fourth = 1600
+*/
 
 
