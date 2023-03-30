@@ -6,8 +6,8 @@ PacmanState::PacmanState() {
         // lives = 3;
         // level = 1;
         // gameover = false;
-        x = 14;
-        y = 7;
+        pos.first = 14;
+        pos.second = 7;
         power_up_weight = 35;
         pellet_weight = 65;
         ghost_score = 200;
@@ -23,8 +23,8 @@ PacmanState::~PacmanState() {
 
 // }
 void PacmanState::movePlayer(double dx, double dy) {
-    xbotPos += dx;
-    ybotPos += dx;
+     pos.first += dx;
+    pos.second += dy; //not sure if thise will work
     if (dx > 0 && dy > 0) {
         direction  = upperRight;
     } else if (dx > 0 && dy == 0) {
@@ -46,10 +46,10 @@ void PacmanState::movePlayer(double dx, double dy) {
     bool collision = hasCollided();
 }
 double PacmanState::getX() {
-        return xbotPos;
+        return pos.first;
     }
 double PacmanState::getY() {
-        return ybotPos;
+        return pos.second;
     }
 void PacmanState::increaseScore(int points) {
         score += points;
@@ -87,7 +87,7 @@ int PacmanState::getScore() {
 
     bool PacmanState::hasCollided() {
         for(int i = 0; i < ghostlocs.size(); i += 2) {
-            if (ghostlocs[i] == xbotPos && ghostlocs[i + 1] == ybotPos) {
+            if (ghostlocs[i].first == pos.first && ghostlocs[i].second == pos.second) {
                 return true;
             }
         }
@@ -192,19 +192,19 @@ int PacmanState::getScore() {
         vector<string> directions;
         if (getDirection() == up)
         {
-            xDiff = yBot + 2;
+            xDiff = pos.second +  2;
         }
         if (getDirection() == down)
         {
-            xDiff = yBot - 2;
+            xDiff = pos.second - 2;
         }
         if (getDirection() == left)
         {
-            xDiff = xBot - 2;
+            xDiff = pos.first - 2;
         }
         if (getDirection() == right)
         {
-            xDiff = xBot + 2;
+            xDiff = pos.first + 2;
         }
 
         //Must account for chances that end result could be negative
