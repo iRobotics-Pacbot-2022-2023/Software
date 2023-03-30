@@ -8,9 +8,9 @@ class Motor {
 
     int Direction;
 
-    int EC1;
+    int EC1; // encoder 1
 
-    int EC2;
+    int EC2; 
 
     Motor(int S_pin, int D_pin, int C1, int C2) {
 
@@ -21,8 +21,10 @@ class Motor {
       EC1= C1;
 
       EC2 = C2;
+    }
 
-    }};
+};
+
 void Motor_Initalize(Motor M1) {
   pinMode(M1.Speed, OUTPUT);
 
