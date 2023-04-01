@@ -5,6 +5,7 @@ using namespace std;
 #include "variables.h"
 #include "grid.h"
 #include "PacmanState.h"
+#include "BFS.h"
 
 class StateSpaceSearch{
     public:
