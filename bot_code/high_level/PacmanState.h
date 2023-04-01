@@ -14,33 +14,11 @@
 class PacmanState {
 private:
     int score;
-    // bool gameover;
-
     std::pair<int, int> pos;
-
     int lives;
-
-    int level;
-
+    // int level;
     bool gameover = false;
-
-    // double x;
-    // double y;
-
-    // position by ghosts
-    // int x_red;
-    // int y_red;
-
-    // int x_orange;
-    // int y_orange;
-
-    // int x_blue;
-    // int y_blue;
-
-    // int x_pink;
-    // int y_pink;
-
-    vector<pair<double, double>>ghostlocs = { {14, 19}, {14, 16}, {14, 16}, {14, 16} };//red, orange, blue, pink
+    //red, orange, blue, pink
                                                               //
 
     int power_up_weight = 50;
@@ -55,15 +33,15 @@ private:
     direction direction_facing;
     bool chase = true;
     bool scatter = false;
-    void moveRedChase();
-    void moveOrangeChase();
-    void moveBlueChase();
-    void movePinkChase();
+    // void moveRedChase();
+    // void moveOrangeChase();
+    // void moveBlueChase();
+    // void movePinkChase();
 
-    void moveBlueScatter();
-    void moveRedScatter();
-    void moveOrangeScatter();
-    void movePinkScatter();
+    // void moveBlueScatter();
+    // void moveRedScatter();
+    // void moveOrangeScatter();
+    // void movePinkScatter();
 public:
     PacmanState() {
         score = 0;
@@ -81,12 +59,8 @@ public:
     int getX();
     int getY();
 
-    void changeX(int new_x) {
-        xbotPos = new_x;
-    }
-    void changeY(int new_y) {
-        ybotPos = new_y;
-    }
+    void changeX(int new_x);
+    void changeY(int new_y);
     void increaseScore(int points) {
         score += points;
     }
@@ -127,6 +101,10 @@ public:
     void setDirection(direction d) {
         direction_facing = d;
     }
+    double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
+    std::vector<std::pair<int, int>> find_possible_moves();
+    bool is_move_legal(std::pair<int, int> move);
+
     void movePlayer(double dx, double dy);
     bool hasCollided();
     void moveOrange();
