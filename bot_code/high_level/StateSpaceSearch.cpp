@@ -23,7 +23,7 @@ std::pair<int, int> _state_space_search(int depth, PacmanState current_state) {
     // p.changeY(self.y_pos);
 
     // move should be a vector of coordinates we have traversed
-    for (auto move : pos.validMoves(current_state)) {
+    for (auto move : current_state.find_possible_moves()) {
         const PacmanState child = current_state; // potentially have this be a copy of the state itself. Psuedo, no class implemented yet
         // child.Move(move);
         Move(move, child); //this function essentially simulates what the grid/state will look like after the move

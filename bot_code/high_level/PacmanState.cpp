@@ -2,10 +2,10 @@
 
 
 PacmanState::PacmanState() {
-    score = 0;
-        // lives = 3;
+        score = 0;
+        lives = 3;
         // level = 1;
-        // gameover = false;
+        gameover = false;
         pos.first = 14;
         pos.second = 7;
         power_up_weight = 35;
@@ -56,6 +56,15 @@ int PacmanState::getX() {
 int PacmanState::getY() {
     return getBotPos().second;
 }
+
+void PacmanState::changeX(int new_x) {
+    pos.first = new_x;
+}
+
+void PacmanState::changeY(int new_y) {
+    pos.first = new_x;
+}
+
 void PacmanState::increaseScore(int points) {
         score += points;
     }
@@ -336,9 +345,9 @@ int PacmanState::getScore() {
     }
 
 
-    std::vector<std::pair<int, int>> Pacmanstate::find_possible_moves() {
-        int botx = botPos.first;
-        int boty = botPos.second;
+    std::vector<std::pair<int, int>> PacmanState::find_possible_moves() {
+        int botx = pos.first;
+        int boty = pos.second;
 
         std::pair<int, int> right = {botx + 1, boty};
         std::pair<int, int> up = {botx, boty + 1};
@@ -364,23 +373,21 @@ int PacmanState::getScore() {
     bool PacmanState::is_move_legal(std::pair<int, int> move) {
         // how do i check the actual grid? perhaps we should have a private member for the grid?
         // psuedo for now
-        return (move != botPos && grid[move.first][move.second] != 'I' && grid[move.first][move.second] != 'n');
-    }
-    
-    asdjj 
+        return (move != pos && grid[move.first][move.second] != 'I' && grid[move.first][move.second] != 'n');
+    } 
     
 
-    Pacmanstate::get_move_based_on_target()
+    // Pacmanstate::get_move_based_on_target()
 
-     void PacmanState::moveRedScatter(){
+    //  void PacmanState::moveRedScatter(){
 
-    } 
-    void PacmanState::moveBlueScatter() {
+    // } 
+    // void PacmanState::moveBlueScatter() {
 
-    }
-    void PacmanState::moveOrangeScatter() {
+    // }
+    // void PacmanState::moveOrangeScatter() {
 
-    } 
-    void PacmanState::movePinkScatter() {
+    // } 
+    // void PacmanState::movePinkScatter() {
         
-    }
+    // }
