@@ -22,6 +22,10 @@ PacmanState::~PacmanState() {
 // PacmanState::PacmanState(int level) {
 
 // }
+std::pair<int, int> PacmanState::getBotPos() {
+    return pos;
+}
+
 void PacmanState::movePlayer(double dx, double dy) {
      pos.first += dx;
     pos.second += dy; //not sure if thise will work
@@ -45,12 +49,13 @@ void PacmanState::movePlayer(double dx, double dy) {
 
     bool collision = hasCollided();
 }
-double PacmanState::getX() {
-        return pos.first;
-    }
-double PacmanState::getY() {
-        return pos.second;
-    }
+int PacmanState::getX() {
+    return getBotPos().first;
+}
+
+int PacmanState::getY() {
+    return getBotPos().second;
+}
 void PacmanState::increaseScore(int points) {
         score += points;
     }

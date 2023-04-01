@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include <cstdlib>
 #include "grid.h"
@@ -7,8 +7,8 @@
 #include <string>
 #include "variables.h"
 #include <cmath>
-#include <pair>
-#pragma once
+#include <utility>
+
 
 
 class PacmanState {
@@ -16,7 +16,7 @@ private:
     int score;
     // bool gameover;
 
-    std::pair pos;
+    std::pair<int, int> pos;
 
     int lives;
 
@@ -40,7 +40,7 @@ private:
     // int x_pink;
     // int y_pink;
 
-    vector<pair<double>>ghostlocs = { {14, 19}, {14, 16}, {14, 16}, {14, 16} };//red, orange, blue, pink
+    vector<pair<double, double>>ghostlocs = { {14, 19}, {14, 16}, {14, 16}, {14, 16} };//red, orange, blue, pink
                                                               //
 
     int power_up_weight = 50;
@@ -70,10 +70,17 @@ public:
         lives = 3;
         level = 1;
         gameover = false;
-        xbotPos = 0;
-        ybotPos = 0;
+        // xbotPos = 0;
+        // ybotPos = 0;
         
     }
+
+
+    std::pair<int, int> getBotPos();
+
+    int getX();
+    int getY();
+
     void changeX(int new_x) {
         xbotPos = new_x;
     }
