@@ -16,7 +16,7 @@ private:
     int score;
     std::pair<int, int> pos;
     int lives;
-    // int level;
+    int level;
     bool gameover = false;
     //red, orange, blue, pink
                                                               //
