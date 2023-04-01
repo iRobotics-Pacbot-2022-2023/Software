@@ -19,6 +19,7 @@ const int e = 3; // unreachable
 const int O = 4; // power point
 const int n = 5; // untouchable
 const int P = 6; // Pacbot
+const int empty = 7; // No pellets here
 
 // Points
 const int CHERRY_POINTS = 100;
