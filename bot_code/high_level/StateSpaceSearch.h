@@ -20,12 +20,12 @@ class StateSpaceSearch{
 
     private:
 
-    // State
-    enum GameState { BASE, CHERRYONE, CHERRYTWO, FREIGHTENED };
+        // State
+        enum GameState { BASE, CHERRYONE, CHERRYTWO, FREIGHTENED };
 
-    void updateGameState(GameState state);
+        void updateGameState(GameState state);
 
-    GameState state = BASE;
+        GameState state = BASE;
 
 
      
