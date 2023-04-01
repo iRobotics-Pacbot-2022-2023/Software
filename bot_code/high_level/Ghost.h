@@ -1,3 +1,5 @@
+#include <pair>
+
 class Ghost {
     public:
         enum direction {

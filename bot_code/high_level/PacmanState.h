@@ -7,6 +7,7 @@
 #include <string>
 #include "variables.h"
 #include <cmath>
+#include <pair>
 #pragma once
 
 

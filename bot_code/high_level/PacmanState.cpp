@@ -10,7 +10,7 @@ PacmanState::PacmanState() {
         pos.second = 7;
         power_up_weight = 35;
         pellet_weight = 65;
-        ghost_score = 200;
+        // ghost_score = 200;
         power_ups_left = 4;
         pellets_left = 236;
 }
@@ -323,6 +323,49 @@ int PacmanState::getScore() {
 
 
     }
+
+    double PacmanState::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
+        double dx = pos_b.first - pos_a.first;
+        double dy = pos_b.second - pos_b.second;
+        return std::sqrt(dx*dx + dy*dy);
+    }
+
+
+    std::vector<std::pair<int, int>> Pacmanstate::find_possible_moves() {
+        int botx = botPos.first;
+        int boty = botPos.second;
+
+        std::pair<int, int> right = {botx + 1, boty};
+        std::pair<int, int> up = {botx, boty + 1};
+        std::pair<int, int> left = {botx - 1, boty};
+        std::pair<int, int> down = {botx, boty - 1};
+
+        std::vector<std::pair<int, int>> possible;
+
+        if (is_move_legal(right)) {
+            possible.push_back(right);
+        }
+        if (is_move_legal(up)) {
+            possible.push_back(up);
+        }
+        if (is_move_legal(left)) {
+            possible.push_back(left);
+        }
+        if (is_move_legal(down)) {
+            possible.push_back(down);
+        }
+    }
+
+    bool PacmanState::is_move_legal(std::pair<int, int> move) {
+        // how do i check the actual grid? perhaps we should have a private member for the grid?
+        // psuedo for now
+        return (move != botPos && grid[move.first][move.second] != 'I' && grid[move.first][move.second] != 'n');
+    }
+    
+    asdjj 
+    
+
+    Pacmanstate::get_move_based_on_target()
 
      void PacmanState::moveRedScatter(){
 
