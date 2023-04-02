@@ -17,13 +17,14 @@ const int empty = 7; // No pellets here
 
 vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
-    visited_nodes_to_parents[start] = (-1, -1);
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
 
-    queue<pair<int, int> queue;
-    queue.push_back(start);
+    queue<pair<int, int>> queue;
+    queue.push(start);
 
     while (!queue.empty()) {
-        pair<int, int> current = queue.pop();
+        pair<int, int> current = queue.front();
+        queue.pop();
 
         if (current == goal) { // current.x = goal.x && current.y = goal.y
             
@@ -53,7 +54,7 @@ vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> g
 
 vector<pair<int, int>> BFS::bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
-    visited_nodes_to_parents[start] = (-1, -1);
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
 
     queue<pair<int, int> queue;
     queue.push_back(start);
@@ -91,10 +92,11 @@ vector<pair<int, int>> BFS::getNeighbors(pair<int, int> node, vector<vector<int>
     // x : [0, 27]
     // y :[0, 30]
 
-    vector<pair<int, int>> neighbors = {(node.first - 1, node.second), // left
-                                        (node.first, node.second - 1), // down
-                                        (node.first + 1, node.second), // right
-                                        (node.first, node.second + 1)}; // up
+    vector<pair<int, int>> neighbors;
+    neighbors[0] = make_pair(node.first - 1, node.second); // left
+    neighbors[1] = make_pair(node.first, node.second - 1); // down
+    neighbors[2] = make_pair(node.first + 1, node.second); // right
+    neighbors[3] = make_pair(node.first, node.second + 1); // up
     
     int i = 0;
     while (i < neighbors.size()) {
