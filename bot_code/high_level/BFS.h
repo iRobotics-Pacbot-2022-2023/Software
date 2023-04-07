@@ -13,12 +13,11 @@ using namespace std;
 
 class BFS {
 private:
-    BFS() = default;
 
 public:
     vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
 
-    vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, vector<pair<int, int>> goals, vector<vector<int>> grid);
+    vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid);
 
     vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
 

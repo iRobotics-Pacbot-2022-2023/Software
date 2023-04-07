@@ -13,7 +13,7 @@ using namespace std;
 
 class AStar {
 private:
-    AStar() = default;
+    
 public:
 
     vector<pair<int, int>> aStarPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);

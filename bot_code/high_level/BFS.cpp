@@ -30,7 +30,7 @@ vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> g
             
             vector<pair<int, int>> path;
 
-            while (current != (-1, -1)) {
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
                 path.insert(path.begin(), current);
                 current = visited_nodes_to_parents[current];
             }
@@ -44,7 +44,7 @@ vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> g
         for (pair<int, int> neighbor : neighbors) {
             if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
                 visited_nodes_to_parents[neighbor] = current;
-                queue.push_back(neighbor);
+                queue.push(neighbor);
             }
         }
     }
@@ -56,17 +56,18 @@ vector<pair<int, int>> BFS::bfsPathMultiple(pair<int, int> start, set<pair<int, 
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
     visited_nodes_to_parents[start] = make_pair(-1, -1);
 
-    queue<pair<int, int> queue;
-    queue.push_back(start);
+    queue<pair<int, int>> queue;
+    queue.push(start);
 
     while (!queue.empty()) {
-        pair<int, int> current = queue.pop();
+        pair<int, int> current = queue.front();
+        queue.pop();
 
         if (goals.find(current) == goals.end()) { // current.x = goal.x && current.y = goal.y
             
             vector<pair<int, int>> path;
 
-            while (current != (-1, -1)) {
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
                 path.insert(path.begin(), current);
                 current = visited_nodes_to_parents[current];
             }
@@ -79,7 +80,7 @@ vector<pair<int, int>> BFS::bfsPathMultiple(pair<int, int> start, set<pair<int, 
         for (pair<int, int> neighbor : neighbors) {
             if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
                 visited_nodes_to_parents[neighbor] = current;
-                queue.push_back(neighbor);
+                queue.push(neighbor);
             }
         }
     }
