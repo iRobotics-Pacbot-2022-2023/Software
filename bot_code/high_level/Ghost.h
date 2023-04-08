@@ -39,8 +39,16 @@ class Ghost {
     
     private:
 
+    start_path current_path; //tells us what mode the ghosts are in (frightened, chase, scatter)
+    color ghostColor;
+    direction direction_facing;
+    
     vector<pair<int,int>> ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
 
+    double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
+
+    std::pair<std::pair<int, int>, direction> get_move_based_on_target(std::pair<int, int> target );
+    
     const std::pair<int,int> red_init_pos = {13,19};
     const std::pair<int,int> red_init_npos = {12,19};
     direction red_init_dir = left;
