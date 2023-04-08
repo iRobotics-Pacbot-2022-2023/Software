@@ -37,42 +37,88 @@ void Ghost::moveBlue() {
 
 
     }
-    void Ghost::moveRedChase() {
-        vector<string> directions;
-         if ( grid[x_red + 1][y_red] != 'I' ) {
-            directions.push_back("right");
-        }
-        if (grid[x_orange][y_orange - 1] != 'I') {
-            directions.push_back("up");
-        }
-        if (grid[x_orange - 1][y_orange] != 'I') {
-            directions.push_back("left");
-        } 
-        if (grid[x_orange][y_orange + 1] != 'I') {
-            directions.push_back("down");
-        }
-        int xDiff = xbotPos - x_red;
-        int yDiff = ybotPos - y_red;
+        void Ghost::moveRedChase(int xBotPos, int yBotPos, char[][] grid;) {
+
+        int x_red = ghostlocs[0].first;
+        int y_red = ghostlocs[0].second;
+        // vector<string> directions;
+        //  if ( grid[x_red + 1][y_red] != 'I' ) {
+        //     directions.push_back("right");
+        // }
+        // if (grid[x_red][y_red - 1] != 'I') {
+        //     directions.push_back("up");
+        // }
+        // if (grid[x_red - 1][y_red] != 'I') {
+        //     directions.push_back("left");
+        // } 
+        // if (grid[x_red][y_red + 1] != 'I') {
+        //     directions.push_back("down");
+        // }
+        int xDiff = xBotPos - x_red; //Assume we can call the xbotpos
+        int yDiff = xBotPos - y_red;
 
         if (xDiff <= 0 && yDiff <= 0) { //should also take into account what direction the Pacbot is facing, as that's the likely direction it's gonna go
+           std::pair<int, int> left = {x_red - 1, y_red};
+           std::pair<int, int> up = {x_red, y_red - 1};
            
-            if (grid[x_red - 1][y_red] !=  'I' && grid[x_red ][y_red - 1] !- 'I') {
+            if (is_move_legal(left)) {
                 if (xDiff < yDiff) {
-                    x_orange -= 1;
+                    x_red -= 1;
                 } 
-            } else if (grid[x_red][y_red -1] != 'I' ) {
+            } else if (is_move_legal(up)) ) {
                 if (yDiff < xDiff) {
-                    y_orange -= 1;
+                    y_red -= 1;
                 }
             }
             
         } else if (xDiff < 0 && yDiff > 0) {
 
+        } else if (xDiff > 0 && yDiff < 0) {
+
+        } else {
+
         }
+
+
     }
-    void Ghost::moveOrangeChase() {
-        int numPossOrangeMoves = 0;
+//     void Ghost::moveRedChase() {
+//         vector<string> directions;
+//          if ( grid[x_red + 1][y_red] != 'I' ) {
+//             directions.push_back("right");
+//         }
+//         if (grid[x_orange][y_orange - 1] != 'I') {
+//             directions.push_back("up");
+//         }
+//         if (grid[x_orange - 1][y_orange] != 'I') {
+//             directions.push_back("left");
+//         } 
+//         if (grid[x_orange][y_orange + 1] != 'I') {
+//             directions.push_back("down");
+//         }
+//         int xDiff = xbotPos - x_red;
+//         int yDiff = ybotPos - y_red;
+
+//         if (xDiff <= 0 && yDiff <= 0) { //should also take into account what direction the Pacbot is facing, as that's the likely direction it's gonna go
+           
+//             if (grid[x_red - 1][y_red] !=  'I' && grid[x_red ][y_red - 1] !- 'I') {
+//                 if (xDiff < yDiff) {
+//                     x_orange -= 1;
+//                 } 
+//             } else if (grid[x_red][y_red -1] != 'I' ) {
+//                 if (yDiff < xDiff) {
+//                     y_orange -= 1;
+//                 }
+//             }
+            
+//         } else if (xDiff < 0 && yDiff > 0) {
+
+//         }
+//     }
+    void Ghost::moveOrangeChase(int xBotPos, int yBotPos, char[][] grid) {
+        // int numPossOrangeMoves = 0;
         vector<string> directions;
+        int x_orange = ghostlocs[1].first;
+        int y_orange = ghostlocs[1].second;
         if ( grid[x_orange + 1][y_orange] != 'I' ) {
             directions.push_back("right");
         }
@@ -97,10 +143,14 @@ void Ghost::moveBlue() {
             y_orange -= 1;
         }
     }
-    void Ghost::moveBlueChase(){
+
+    void Ghost::moveBlueChase(int xBot, int yBot, char[][]grid ){
          //Incomplete ideas; needs more work
         int xDiff = 0;
         int yDiff = 0;
+
+        int x_red = ghostlocs[0].first;
+        int y_red = ghostlocs[1].first;
         vector<string> directions;
         if (getDirection() == up)
         {
@@ -134,12 +184,12 @@ void Ghost::moveBlue() {
         if (grid[x_blue - 1][y_blue] != 'I') {
             directions.push_back("left");
         } 
-        if (grid[v_blue][y_blue + 1] != 'I') {
+        if (grid[x_blue][y_blue + 1] != 'I') {
             directions.push_back("down");
         }
         //Needs more work
     }
-    void Ghost::movePinkChase() {
+   void Ghost::movePinkChase(int xbotPos, int ybotPos, char[][]grid ) {
         if (direction_facing != up) {
             if (direction_facing == right) {
                 double pinkTargetX = x + 4; // have to account for walls later
@@ -196,6 +246,62 @@ void Ghost::moveBlue() {
 
         }
     }
+
+std::pair<std::pair<int, int> , int> Ghost::get_move_based_on_target(std::pair<int, int> target) {
+        std::vector<std::pair<int, int> > possibleMoves = find_possible_moves();
+        std::vector<double> distances;
+        for (std::pair<int, int> move: possibleMoves) {
+            distances.push_back(get_euclidian_distance(move, target) );
+        }
+        double minDistance = distances[0];
+        int index = 0;
+        for (unsigned long i = 0; i < distances.size(); i++) {
+            if (distances[i] < minDistance) {
+                index = i;
+                minDistance = distance[i];
+            }
+        }
+
+
+        // possible = self._find_possible_moves()
+        // distances = []
+        // for tile in possible:
+        //     distances.append(self._get_euclidian_distance(target, tile))
+        // (min_distance, index) = min((min_distance, index)
+        //                             for (index, min_distance) in enumerate(distances))
+
+        // return (possible[index], self._get_direction(self.pos["next"], possible[index]))
+        std::pair<std::pair<int, int> , int> finalMove = {possibleMoves[index], getDirection( , possibleMoves[index] ) };
+        return finalMove;
+    }
+        
+direction Ghost::getDirection(std::pair<int, int> prevPos, std::pair<int, int> newPos) {
+        if (newPos.first > prevPos.first) {
+            return right;
+        } else if (newPos.first < prevPos.first) {
+            return left;
+        } else if (newPos.second > prevPos.second) {
+            return up;
+        } else if (newPos.second < prevPos.second) {
+            return down;
+        }
+        else {
+            return direction_facing;
+        }
+
+        // def _get_direction(self, pos_prev, pos_new):
+        // if pos_new[0] > pos_prev[0]:
+        //     return right
+        // elif pos_new[0] < pos_prev[0]:
+        //     return left
+        // elif pos_new[1] > pos_prev[1]:
+        //     return up
+        // elif pos_new[1] < pos_prev[1]:
+        //     return down
+        // else:
+        //     return self.direction
+
+    }
     void Ghost::moveRedScatter(){
         // vector<int> x_desired = {};
         // vector<int> y_desired = {};
@@ -221,9 +327,56 @@ void Ghost::moveBlue() {
     }
 
     
+        double Ghost::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
+        double dx = pos_b.first - pos_a.first;
+        double dy = pos_b.second - pos_b.second;
+        return std::sqrt(dx*dx + dy*dy);
+    }
 
+        bool Ghost::is_move_legal(std::pair<int, int> move, char[][] grid) {
+        // how do i check the actual grid? perhaps we should have a private member for the grid?
+        // psuedo for now
+        return (move != pos && grid[move.first][move.second] != 'I' && grid[move.first][move.second] != 'n');
+    } 
+        
+std::vector<std::pair<int, int>> Ghost::find_possible_moves() {
+        int ghostx;
+        int ghosty;
+        if (ghostColor == red)  {
+        ghostx = ghostlocs[0][0];
+        ghosty = ghostlocs[0][1];
+        } else if (ghostColor == orange) {
+             ghostx = ghostlocs[1][0];
+            ghosty = ghostlocs[1][1];
+        } else if (ghostColor == pink) {
+            ghostx = ghostlocs[2][0];
+            ghosty = ghostlocs[2][1];
+        } else {// blue
+            ghostx = ghostlocs[3][0];
+            ghosty = ghostlocs[3][1];
 
+        }
 
+        std::pair<int, int> right = {ghostx + 1, ghosty};
+        std::pair<int, int> up = {ghostx, ghosty + 1};
+        std::pair<int, int> left = {ghostx - 1, ghosty};
+        std::pair<int, int> down = {ghostx, ghosty - 1};
+
+        std::vector<std::pair<int, int>> possible;
+
+        if (is_move_legal(right)) {
+            possible.push_back(right);
+        }
+        if (is_move_legal(up)) {
+            possible.push_back(up);
+        }
+        if (is_move_legal(left)) {
+            possible.push_back(left);
+        }
+        if (is_move_legal(down)) {
+            possible.push_back(down);
+        }
+    }
 
 
 
