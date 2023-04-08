@@ -1,11 +1,12 @@
 #pragma once
 
-#include <cstdlib>
 #include "grid.h"
+#include "variables.h"
+
+#include <cstdlib>
 #include <vector>
 #include <iostream>
 #include <string>
-#include "variables.h"
 #include <cmath>
 #include <utility>
 

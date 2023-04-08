@@ -17,7 +17,7 @@ const int empty = 7; // No pellets here
 
 vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
-    visited_nodes_to_parents[start] = make_pair(-1, -1);
+    visited_nodes_to_parents[start] = make_pair(-1, -1); // start doesn't have a parent so we set it to (-1, -1)
 
     queue<pair<int, int>> queue;
     queue.push(start);

@@ -1,46 +1,53 @@
+#pragma once
+
 #include <utility>
+#include <vector>
+#include <string>
+
+using namespace std;
 
 class Ghost {
     public:
         enum direction {
-        right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft;
-    }
-    enum color{
-        red, blue, pink, orange;
-    }
-    enum start_path {
-        frightened, chase, scatter;
-    }
-    Ghost(std::pair<int,int> firstPos, /*std::pair<int,int> secondPos, */ color color_, direction direction_, start_path startPath, std::pair<int,int> scatter_pos );
+        right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
+        };
+        enum color{
+            red, blue, pink, orange
+        };
+        enum start_path {
+            frightened, chase, scatter
+        };
 
-    void moveOrange();
-    void moveRed();
-    void movePink();
-    void moveBlue();
+        Ghost(std::pair<int,int> firstPos, /*std::pair<int,int> secondPos, */ color color_, direction direction_, start_path startPath, std::pair<int,int> scatter_pos );
 
-    void moveRedChase();
-    void moveOrangeChase();
-    void moveBlueChase();
-    void movePinkChase();
+        void moveOrange();
+        void moveRed();
+        void movePink();
+        void moveBlue();
 
-    void moveBlueScatter();
-    void moveRedScatter();
-    void moveOrangeScatter();
-    void movePinkScatter();
+        void moveRedChase();
+        void moveOrangeChase();
+        void moveBlueChase();
+        void movePinkChase();
 
-    void /* some return type for get scatter move*/ get_next_scatter_move() ;
+        void moveBlueScatter();
+        void moveRedScatter();
+        void moveOrangeScatter();
+        void movePinkScatter();
+
+        void /* some return type for get scatter move*/ get_next_scatter_move() ;
     
     private:
 
-    vector<pair<int>>ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
+    vector<pair<int,int>> ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
 
     const std::pair<int,int> red_init_pos = {13,19};
     const std::pair<int,int> red_init_npos = {12,19};
     direction red_init_dir = left;
 
-    const std::pair<int,int> pink_init_pos = {14,15}
+    const std::pair<int,int> pink_init_pos = {14,15};
     const std::pair<int,int> pink_init_npos = {14,16};
-    direction pink_init_dir = up
+    direction pink_init_dir = up;
 
     const std::pair<int,int> blue_init_pos = {12,15};
     const std::pair<int,int> blue_init_npos = {12,16};

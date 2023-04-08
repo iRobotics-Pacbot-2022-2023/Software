@@ -207,12 +207,15 @@ void Ghost::moveBlue() {
         // } if (y_red >)
         return (get_move_based_on_target(red_scatter_pos.first, red_scatter_pos.second));
     } 
+
     void Ghost::moveBlueScatter() {
         return (get_move_based_on_target(blue_scatter_pos.first, blue_scatter_pos.second));
     }
+
     void Ghost::moveOrangeScatter() {
         return (get_move_based_on_target(orange_scatter_pos.first, orange_scatter_pos.second));
     } 
+    
     void Ghost::movePinkScatter() {
         return (get_move_based_on_target(pink_scatter_pos.first, pink_scatter_pos.second));    
     }
