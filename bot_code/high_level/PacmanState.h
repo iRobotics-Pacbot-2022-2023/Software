@@ -14,36 +14,27 @@
 
 class PacmanState {
 private:
+
     int score;
-    std::pair<int, int> pos;
+    std::pair<int, int> botPos;
     int lives;
     int level;
     bool gameover = false;
     //red, orange, blue, pink
-                                                              //
 
-    int power_up_weight = 50;
     int power_ups_left; //power ups remaining
 
-    int pellet_weight = 10;
     int pellets_left;
-    // int ghost_score;
+    
+
     enum direction {
         right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
     };
-    direction direction_facing;
-    bool chase = true;
-    bool scatter = false;
-    // void moveRedChase();
-    // void moveOrangeChase();
-    // void moveBlueChase();
-    // void movePinkChase();
 
-    // void moveBlueScatter();
-    // void moveRedScatter();
-    // void moveOrangeScatter();
-    // void movePinkScatter();
+    direction direction_facing;
+   
 public:
+
     PacmanState() {
         score = 0;
         lives = 3;
