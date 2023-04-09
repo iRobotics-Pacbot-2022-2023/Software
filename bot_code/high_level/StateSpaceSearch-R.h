@@ -20,18 +20,21 @@ class StateSpaceSearchR {
 
         enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
 
-        void updateGameState(GameState state);
+        // void updateGameState(GameState newState) { state = newState; }
 
-        GameState getGameState();
+        void updateGameState();
+
+        GameState getGameState() { return state; }
+
+        pair<int, int> getPacmanPos() { return PacmanState::getBotPos(); }
+
+        vector<vector<int>> getGrid() { return Grid::getGrid(); }
 
         // BASE state
         struct baseNode {
             pair<int, int> pacman_pos; // first = x, second - y
             vector<vector<int, int>> grid;
             int points; // pellets collected & distance to ghosts
-            int heuristic;
-            int totalCost;
-            // node* parent;
         };
 
         
