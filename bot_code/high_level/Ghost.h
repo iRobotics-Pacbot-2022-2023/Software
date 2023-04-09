@@ -34,9 +34,14 @@ class Ghost {
         void moveRedScatter();
         void moveOrangeScatter();
         void movePinkScatter();
+    
+    void moveRedFrightened();
+    void moveOrangeFrightened();
+    void moveBlueFrightened();
+    void movePinkFrightened();
 
         void /* some return type for get scatter move*/ get_next_scatter_move() ;
-    
+    std::pair<std::pair<int, int>, direction>  /* some return type for get frightened move*/ get_next_frightened_move();
     private:
 
     start_path current_path; //tells us what mode the ghosts are in (frightened, chase, scatter)
@@ -70,6 +75,11 @@ class Ghost {
     const std::pair<int, int> blue_scatter_pos = {27, -1};
     const std::pair<int, int> red_scatter_pos = {25, 32};
 
+    std::vector<std::pair<int, int>> find_possible_moves();
+    bool is_move_legal(std::pair<int, int> move);
+
+    direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
+    
     /*pink_start_path = [((14,17),up),((14,18),up),((14,19),up)]
 
 blue_start_path = [((12,17),up),((12,16),down),((12,15),down),((12,16),up),((12,17),up),

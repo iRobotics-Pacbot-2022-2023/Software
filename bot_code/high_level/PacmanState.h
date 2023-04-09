@@ -14,28 +14,26 @@
 
 class PacmanState {
 private:
-
-    int score; // update score, 
-    std::pair<int, int> botPos; // update bot position
-    int lives; // update live
-    int level; // update level
-    bool gameover = false; // update gameover
-    
+    int score;
+    std::pair<int, int> pos;
+    int lives;
+    int level;
+    bool gameover = false;
+    //red, orange, blue, pink
                                                               //
-    // int power_up_weight = 50;
-    int power_ups_left; //power ups remaining - update
 
-    // int pellet_weight = 10;
-    int pellets_left; // update pellets left
-   
+    int power_up_weight = 50;
+    int power_ups_left; //power ups remaining
 
+    int pellet_weight = 10;
+    int pellets_left;
+    // int ghost_score;
     enum direction {
         right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
     };
     direction direction_facing;
-
-    // bool chase = true;
-    // bool scatter = false;
+    bool chase = true;
+    bool scatter = false;
     // void moveRedChase();
     // void moveOrangeChase();
     // void moveBlueChase();
@@ -59,32 +57,26 @@ public:
 
     std::pair<int, int> getBotPos() { return botPos; }
 
+    int getX();
+    int getY();
 
     void changeX(int new_x);
     void changeY(int new_y);
-
     void increaseScore(int points) {
         score += points;
     }
 
-    void decreaseLives() {
-        lives--;
-        if (lives == 0) {
-            gameover = true;
-        }
-    }
+    // void nextLevel() {
+    //     level++;
+    // }
 
-    void nextLevel() {
-        level++;
-    }
+    // void gameOver() {
+    //     gameover = true;
+    // }
 
-    void gameOver() {
-        gameover = true;
-    }
-
-    bool isGameOver() {
-        return gameover;
-    }
+    // bool isGameOver() {
+    //     return gameover;
+    // }
 
     int getScore() {
         return score;
@@ -106,15 +98,13 @@ public:
     double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
 
     std::vector<std::pair<int, int>> find_possible_moves();
-
     bool is_move_legal(std::pair<int, int> move);
 
     void movePlayer(double dx, double dy);
 
     bool hasCollided();
-
-    // void moveOrange();
-    // void moveRed();
-    // void movePink();
-    // void moveBlue();
+    void moveOrange();
+    void moveRed();
+    void movePink();
+    void moveBlue();
 };

@@ -247,7 +247,7 @@ void Ghost::moveBlue() {
         }
     }
 
-std::pair<std::pair<int, int> , int> Ghost::get_move_based_on_target(std::pair<int, int> target) {
+ std::pair<std::pair<int, int> , direction> Ghost::get_move_based_on_target(std::pair<int, int> target) {
         std::vector<std::pair<int, int> > possibleMoves = find_possible_moves();
         std::vector<double> distances;
         for (std::pair<int, int> move: possibleMoves) {
@@ -271,7 +271,18 @@ std::pair<std::pair<int, int> , int> Ghost::get_move_based_on_target(std::pair<i
         //                             for (index, min_distance) in enumerate(distances))
 
         // return (possible[index], self._get_direction(self.pos["next"], possible[index]))
-        std::pair<std::pair<int, int> , int> finalMove = {possibleMoves[index], getDirection( , possibleMoves[index] ) };
+        std::pair<int, int> currGhostPos;
+        if (color == red) {
+            currGhostPos = ghostlocs[0];
+        } else if (color == orange) {
+            currGhostPos = ghostlocs[1];
+        } else if (color == blue) {
+            currGhostPos = ghostlocs[2];
+        } else {
+            currGhostPos = ghostlocs[3];
+        }
+
+        std::pair<std::pair<int, int> , direction> finalMove = {possibleMoves[index], getDirection( currGhostPos, possibleMoves[index] ) };
         return finalMove;
     }
         
@@ -311,21 +322,52 @@ direction Ghost::getDirection(std::pair<int, int> prevPos, std::pair<int, int> n
         //     }
 
         // } if (y_red >)
-        return (get_move_based_on_target(red_scatter_pos.first, red_scatter_pos.second));
+         std::pair<std::pair<int, int> , direction > nextMove =  (get_move_based_on_target(red_scatter_pos) );
+        std::pair<int, int> move = nextMove.first;
+        ghostlocs[0].first = move.first;
+        ghostlocs[0].second = move.second;
     } 
 
     void Ghost::moveBlueScatter() {
-        return (get_move_based_on_target(blue_scatter_pos.first, blue_scatter_pos.second));
+        std::pair<std::pair<int, int> , direction> nextMove =  (get_move_based_on_target(blue_scatter_pos) );
+        std::pair<int, int> move = nextMove.first;
+        ghostlocs[2].first = move.first;
+        ghostlocs[2].second = move.second;
     }
 
     void Ghost::moveOrangeScatter() {
-        return (get_move_based_on_target(orange_scatter_pos.first, orange_scatter_pos.second));
+        std::pair<std::pair<int, int> , direction> nextMove = (get_move_based_on_target(orange_scatter_pos));
+        std::pair<int, int> move = nextMove.first;
+        ghostlocs[1].first = move.first;
+        ghostlocs[1].second = move.second;
     } 
     
     void Ghost::movePinkScatter() {
-        return (get_move_based_on_target(pink_scatter_pos.first, pink_scatter_pos.second));    
+        std::pair<std::pair<int, int> , direction> nextMove =  (get_move_based_on_target(pink_scatter_pos)) ;    
+        std::pair<int, int> move = nextMove.first;
+        ghostlocs[3].first = move.first;
+        ghostlocs[3].second = move.second;
     }
+std::pair<std::pair<int, int> , direction> Ghost::get_next_frightened_move() {
+        std::vector<std::pair<int, int> > moves = find_possible_moves();
+        std::pair< std::pair<int, int>, int> move = moves[rand() % moves.size()  ];
 
+        std::pair<int, int> currGhostPos;
+        if (color == red) {
+            currGhostPos = ghostlocs[0];
+        } else if (color == orange) {
+            currGhostPos = ghostlocs[1];
+        } else if (color == blue) {
+            currGhostPos = ghostlocs[2];
+        } else {
+            currGhostPos = ghostlocs[3];
+        }
+        std::pair<std::pair<int, int>, direction> finalMove = {move, getDirection(currGhostPos, move)};
+        return finalMove;
+
+
+
+    }
     
         double Ghost::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
         double dx = pos_b.first - pos_a.first;
@@ -376,6 +418,7 @@ std::vector<std::pair<int, int>> Ghost::find_possible_moves() {
         if (is_move_legal(down)) {
             possible.push_back(down);
         }
+        return possible;
     }
 
 
