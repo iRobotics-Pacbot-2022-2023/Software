@@ -10,7 +10,10 @@ void StateSpaceSearchR::updateGameState() {
     pair<int, int> pink_pos = Ghost::getPinkPos();
 
     int cherries_eaten = PacmanState::getCherriesEaten();
-        int pellets_eaten = PacmanState::getPelletsEaten();
+    int pellets_eaten = PacmanState::getPelletsEaten();
+
+    int prev_powerups_eaten = PacmanState::getPrevPowerupsEaten();
+    int curr_powerups_eaten = PacmanState::getCurrPowerupsEaten();
 
     if (state == BASE) {
         // can only change to CHERRYONE or POWERUP
@@ -26,24 +29,29 @@ void StateSpaceSearchR::updateGameState() {
 
     } else if (state == CHERRYONE) {
         // can only change to CHERRYTWO
+
         if ((cherries_eaten == 0 && pellets_eaten >= 70) || (cherries_eaten == 1 && pellets_eaten >= 170)) {
             state = CHERRYTWO;
         }
 
     } else if (state == CHERRYTWO) {
         // can only change to BASE
+
         if (cherries_eaten == 2 /* or time runs out */) {
             state = BASE;
         }
 
     } else if (state == POWERUP) {
         // can only change to FREIGHTENED
-        if (/* we collected powerup */) {
+
+        if (curr_powerups_eaten > prev_powerups_eaten) {
+            PacmanState::setPrevPowerupsEaten(curr_powerups_eaten);
             state = FREIGHTENED;
         }
 
     } else if (state == FREIGHTENED) {
         // can only change to BASE
+
         if (/* freightened time is up */) {
             state = BASE;
         }

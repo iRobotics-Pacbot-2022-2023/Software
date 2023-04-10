@@ -15,9 +15,12 @@
 class PacmanState {
 private:
 
-    int score;
+    // int score;
+
     std::pair<int, int> pos;
-    int lives;
+    
+    // int lives;
+
     bool gameover = false;
     //red, orange, blue, pink
 
@@ -28,9 +31,9 @@ private:
 
     int cherries_eaten;
 
-    int prev_powerups_eaten;
+    int prev_powerups_eaten; // update after we change state (+1) (POWERUP -> FREIGHTENED)
 
-    int curr_powerups_eaten;
+    int curr_powerups_eaten; // update after we eat a powerup (+1)
     
 
     enum Direction {
@@ -42,8 +45,8 @@ private:
 public:
 
     PacmanState(std::pair<int, int> botPos) {
-        score = 0; // retrieve from server
-        lives = 3; // retrieve from server
+        // score = 0; // retrieve from server
+        // lives = 3; // retrieve from server
         gameover = false; // retrieve from server
         pos = botPos; // retrieve from server
         pellets_left = 0; // retrieve from server
@@ -76,13 +79,29 @@ public:
         cherries_eaten = new_cherries_eaten;
     }
 
-    int getScore() {
-        return score;
+    void setPrePowerUpsEaten(int new_powerups_eaten) {
+        prev_powerups_eaten = new_powerups_eaten;
     }
 
-    int getLives() {
-        return lives;
+    int getPrePowerUpsEaten() {
+        return prev_powerups_eaten;
     }
+
+    void setCurrPowerUpsEaten(int new_powerups_eaten) {
+        curr_powerups_eaten = new_powerups_eaten;
+    }
+
+    int getCurrPowerUpsEaten() {
+        return curr_powerups_eaten;
+    }
+
+    // int getScore() {
+    //     return score;
+    // }
+
+    // int getLives() {
+    //     return lives;
+    // }
 
     Direction getDirection() {
         return direction_facing;
@@ -91,7 +110,8 @@ public:
     void setDirection(Direction d) {
         direction_facing = d;
     }
-    s
+    
+
     double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
 
     std::vector<std::pair<int, int>> find_possible_moves();
