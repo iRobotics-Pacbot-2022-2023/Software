@@ -16,58 +16,65 @@ class PacmanState {
 private:
 
     int score;
-    std::pair<int, int> botPos;
+    std::pair<int, int> pos;
     int lives;
-    int level;
     bool gameover = false;
     //red, orange, blue, pink
 
-    int power_ups_left; //power ups remaining
 
     int pellets_left;
+
+    int pellets_eaten;
+
+    int cherries_eaten;
+
+    int prev_powerups_eaten;
+
+    int curr_powerups_eaten;
     
 
-    enum direction {
+    enum Direction {
         right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
     };
 
-    direction direction_facing;
+    Direction direction_facing;
    
 public:
 
-    PacmanState() {
-        score = 0;
-        lives = 3;
-        level = 1;
-        gameover = false;
-        // xbotPos = 0;
-        // ybotPos = 0;
-        
+    PacmanState(std::pair<int, int> botPos) {
+        score = 0; // retrieve from server
+        lives = 3; // retrieve from server
+        gameover = false; // retrieve from server
+        pos = botPos; // retrieve from server
+        pellets_left = 0; // retrieve from server
+        pellets_eaten = 0; // retrieve from server
+        cherries_eaten = 0; // retrieve from server
+        prev_powerups_eaten = 0; // retrieve from server
+        curr_powerups_eaten = 0; // retrieve from server
     }
 
 
-    std::pair<int, int> getBotPos() { return botPos; }
+    std::pair<int, int> getBotPos() { return pos; }
 
-    int getX();
-    int getY();
-
-    void changeX(int new_x);
-    void changeY(int new_y);
-    void increaseScore(int points) {
-        score += points;
+    void changePos(std::pair<int, int> new_pos) {
+        pos = new_pos;
     }
 
-    // void nextLevel() {
-    //     level++;
-    // }
+    int getPelletsEaten() {
+        return pellets_eaten;
+    }
 
-    // void gameOver() {
-    //     gameover = true;
-    // }
+    void setPelletsEaten(int new_pellets_eaten) {
+        pellets_eaten = new_pellets_eaten;
+    }
 
-    // bool isGameOver() {
-    //     return gameover;
-    // }
+    int getCherriesEaten() {
+        return cherries_eaten;
+    }
+
+    void setCherriesEaten(int new_cherries_eaten) {
+        cherries_eaten = new_cherries_eaten;
+    }
 
     int getScore() {
         return score;
@@ -77,25 +84,26 @@ public:
         return lives;
     }
 
-    int getLevel() {
-        return level;
-    }
-    void getDirection() {
+    Direction getDirection() {
         return direction_facing;
     }
-    void setDirection(direction d) {
+
+    void setDirection(Direction d) {
         direction_facing = d;
     }
+    s
     double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
 
     std::vector<std::pair<int, int>> find_possible_moves();
+
     bool is_move_legal(std::pair<int, int> move);
 
     void movePlayer(double dx, double dy);
 
     bool hasCollided();
-    void moveOrange();
-    void moveRed();
-    void movePink();
-    void moveBlue();
+
+    // void moveOrange();
+    // void moveRed();
+    // void movePink();
+    // void moveBlue();
 };

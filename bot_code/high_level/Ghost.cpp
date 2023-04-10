@@ -37,7 +37,8 @@ void Ghost::moveBlue() {
 
 
     }
-        void Ghost::moveRedChase(int xBotPos, int yBotPos, char[][] grid;) {
+    
+    void Ghost::moveRedChase(int xBotPos, int yBotPos, vector<vector<int>> grid) {
 
         int x_red = ghostlocs[0].first;
         int y_red = ghostlocs[0].second;
@@ -114,7 +115,7 @@ void Ghost::moveBlue() {
 
 //         }
 //     }
-    void Ghost::moveOrangeChase(int xBotPos, int yBotPos, char[][] grid) {
+    void Ghost::moveOrangeChase(int xBotPos, int yBotPos, vector<vector<int>> grid) {
         // int numPossOrangeMoves = 0;
         vector<string> directions;
         int x_orange = ghostlocs[1].first;
@@ -144,7 +145,7 @@ void Ghost::moveBlue() {
         }
     }
 
-    void Ghost::moveBlueChase(int xBot, int yBot, char[][]grid ){
+    void Ghost::moveBlueChase(int xBot, int yBot, vector<vector<int>> grid ){
          //Incomplete ideas; needs more work
         int xDiff = 0;
         int yDiff = 0;
@@ -189,7 +190,7 @@ void Ghost::moveBlue() {
         }
         //Needs more work
     }
-   void Ghost::movePinkChase(int xbotPos, int ybotPos, char[][]grid ) {
+   void Ghost::movePinkChase(int xbotPos, int ybotPos, vector<vector<int>> grid ) {
         if (direction_facing != up) {
             if (direction_facing == right) {
                 double pinkTargetX = x + 4; // have to account for walls later
@@ -375,7 +376,7 @@ std::pair<std::pair<int, int> , direction> Ghost::get_next_frightened_move() {
         return std::sqrt(dx*dx + dy*dy);
     }
 
-        bool Ghost::is_move_legal(std::pair<int, int> move, char[][] grid) {
+        bool Ghost::is_move_legal(std::pair<int, int> move, vector<vector<int>> grid) {
         // how do i check the actual grid? perhaps we should have a private member for the grid?
         // psuedo for now
         return (move != pos && grid[move.first][move.second] != 'I' && grid[move.first][move.second] != 'n');

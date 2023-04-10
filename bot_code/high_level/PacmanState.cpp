@@ -8,8 +8,6 @@ PacmanState::PacmanState() {
         gameover = false;
         pos.first = 14;
         pos.second = 7;
-        power_up_weight = 35;
-        pellet_weight = 65;
         // ghost_score = 200;
         power_ups_left = 4;
         pellets_left = 236;

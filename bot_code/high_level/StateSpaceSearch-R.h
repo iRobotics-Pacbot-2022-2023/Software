@@ -30,12 +30,26 @@ class StateSpaceSearchR {
 
         vector<vector<int>> getGrid() { return Grid::getGrid(); }
 
+        vector<pair<int, int>> generatePath(); // main path
+
+        vector<pair<int, int>> generatePathBase();
+
+        vector<pair<int, int>> generatePathCherryOne();
+
+        vector<pair<int, int>> generatePathCherryTwo();
+
+        vector<pair<int, int>> generatePathPowerUp();
+
+        vector<pair<int, int>> generatePathFreightened();
+
         // BASE state
         struct baseNode {
             pair<int, int> pacman_pos; // first = x, second - y
             vector<vector<int, int>> grid;
             int points; // pellets collected & distance to ghosts
         };
+
+        int euclideanDistance(pair<int, int> start, pair<int, int> goal);
 
         
 
