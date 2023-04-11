@@ -167,7 +167,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     vector<pair<int, int>> path;
 
     while (filler != nil) {
-        path.push_back(filler.pacman_pos);
+        path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
     }
 
