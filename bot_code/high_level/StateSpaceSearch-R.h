@@ -28,34 +28,53 @@ class StateSpaceSearchR {
 
         pair<int, int> getPacmanPos() { return PacmanState::getBotPos(); }
 
-        vector<vector<int>> getGrid() { return Grid::getGrid(); }
+        vector<vector<int>> getGrid() { return grid; }
 
-        vector<pair<int, int>> generatePath(); // main path
+        // no need to update grid - just assign changeGrid to a new variable
+        vector<vector<int>> changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
+            if (prevPos.first == newPos.first && prevPos.second == newPos.second) return grid;
 
-        vector<pair<int, int>> generatePathBase();
+            vector<vector<int>> newGrid = grid;
+            newGrid[prevPos.first][prevPos.second] = v; 
+            newGrid[newPos.first][newPos.second] = P; 
+            // Grid::updateGrid(grid);
+            return newGrid; 
+        }
 
-        vector<pair<int, int>> generatePathCherryOne();
+        vector<pair<int, int>> generatePath(int length); // main path
 
-        vector<pair<int, int>> generatePathCherryTwo();
+        vector<pair<int, int>> generatePathBase(int length);
 
-        vector<pair<int, int>> generatePathPowerUp();
+        vector<pair<int, int>> generatePathCherryOne(int length);
 
-        vector<pair<int, int>> generatePathFreightened();
+        vector<pair<int, int>> generatePathCherryTwo(int length);
+
+        vector<pair<int, int>> generatePathPowerUp(int length);
+
+        vector<pair<int, int>> generatePathFreightened(int length);
 
         // BASE state
         struct baseNode {
             pair<int, int> pacman_pos; // first = x, second - y
-            vector<vector<int, int>> grid;
+            vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
+            int depth; // depth of parent = 0
         };
 
+        // CHERRYONE state
+
         int euclideanDistance(pair<int, int> start, pair<int, int> goal);
+
+        vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid);
 
         
 
     private:
 
         GameState state = BASE;
+
+        vector<vector<int>> grid = Grid::getGrid();
+
 
         
 
