@@ -87,6 +87,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
     }
 }
 
+/////////////////////////////// BASE ///////////////////////////////
+
 vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     /*
     - Distance to ghost (maximize) (euclidean)
@@ -195,6 +197,38 @@ vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> 
     }
 
     return neighbors;
+}
+
+/////////////////////////////// CHERRY ONE ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
+    /*
+    - Distance to ghost (maximize) (euclidean) (score at end)
+    - pellet collected
+    - distance to cherry (minimize) (BFS / A*) (score at end)
+    - distance to nearest pellet (minimize) (BFS/A*) (score at end)
+    Pellet's collected > distance to cherry
+    don't collect power pellet
+    */
+
+}
+
+/////////////////////////////// CHERRY TWO ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
+
+}
+
+/////////////////////////////// POWER UP ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
+
+}
+
+/////////////////////////////// FREIGHTENED ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
+
 }
 
 int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> goal) {
