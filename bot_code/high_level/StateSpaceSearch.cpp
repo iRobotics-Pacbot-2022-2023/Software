@@ -1,6 +1,7 @@
 // values & weights for certain constants
 #include <vector>
 #include "PacmanState.h"
+#include "StateSpaceSearch.h"
 
 //frightened state
 // number of points on the way

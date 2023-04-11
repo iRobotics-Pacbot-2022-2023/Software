@@ -17,7 +17,7 @@ private:
     std::pair<int, int> pos;
     int lives;
     // int level;
-    bool gameover = false;
+    bool gameover;
     //red, orange, blue, pink
                                                               //
 
@@ -43,15 +43,7 @@ private:
     // void moveOrangeScatter();
     // void movePinkScatter();
 public:
-    PacmanState() {
-        score = 0;
-        lives = 3;
-        level = 1;
-        gameover = false;
-        // xbotPos = 0;
-        // ybotPos = 0;
-        
-    }
+    PacmanState();
 
 
     std::pair<int, int> getBotPos();
@@ -72,9 +64,9 @@ public:
         }
     }
 
-    void nextLevel() {
-        level++;
-    }
+    // void nextLevel() {
+    //     level++;
+    // }
 
     void gameOver() {
         gameover = true;
@@ -92,10 +84,10 @@ public:
         return lives;
     }
 
-    int getLevel() {
-        return level;
-    }
-    void getDirection() {
+    // int getLevel() {
+    //     return level;
+    // }
+    direction getDirection() {
         return direction_facing;
     }
     void setDirection(direction d) {
