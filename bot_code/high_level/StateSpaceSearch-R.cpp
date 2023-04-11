@@ -171,6 +171,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
         filler = node_to_parent[filler];
     }
 
+    return path;
+
 
 }
 
