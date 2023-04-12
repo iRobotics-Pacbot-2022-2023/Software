@@ -97,15 +97,15 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     Only look at o & v for neighbors
     */
 
-   map<baseNode, baseNode> node_to_parent;
+   map<BaseNode, BaseNode> node_to_parent;
 
-   vector<baseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
-   queue<baseNode> queue;
+   queue<BaseNode> queue;
 
-   baseNode nil; // represents null
+   BaseNode nil; // represents null
 
-   baseNode parent;
+   BaseNode parent;
     parent.pacman_pos = getPacmanPos();
     parent.grid = grid;
     parent.points = 0;
@@ -117,7 +117,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     while (!queue.empty()) {
 
-        baseNode curr = queue.front();
+        BaseNode curr = queue.front();
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
@@ -131,7 +131,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
         for (pair<int, int> neighbor : neighbors) {
             // p, v, o
-            baseNode child;
+            BaseNode child;
             child.pacman_pos = neighbor;
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
             
@@ -156,17 +156,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     /* Figure out and calculate the ghost positions for all the final positions*/
     // for all the basenodes of depth = length, calculate the ghost positions and recalulate score
 
-    baseNode best_node;
+    BaseNode best_node;
 
     for (auto n : node_to_parent) {
-        baseNode curr = n.first;
+        BaseNode curr = n.first;
         
         if (curr.depth == length && curr.points > best_node.points) {
             best_node = curr;
         }
     }
 
-    baseNode filler = best_node;
+    BaseNode filler = best_node;
 
     vector<pair<int, int>> path;
 
