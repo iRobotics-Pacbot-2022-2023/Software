@@ -107,6 +107,13 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
    BaseNode parent;
     parent.pacman_pos = getPacmanPos();
+    child.pacman_dir;
+
+    child.red_ghost_pos;
+    child.blue_ghost_pos;
+    child.orange_ghost_pos;
+    child.pink_ghost_pos;
+
     parent.grid = grid;
     parent.points = 0;
     parent.depth = 0;
@@ -121,6 +128,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
+        child.pacman_dir;
+
+        child.red_ghost_pos;
+        child.blue_ghost_pos;
+        child.orange_ghost_pos;
+        child.pink_ghost_pos;
         vector<vector<int>> curr_grid = curr.grid;
         int curr_points = curr.points;
         int curr_depth = curr.depth;
@@ -133,7 +146,22 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             // p, v, o
             BaseNode child;
             child.pacman_pos = neighbor;
+
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
+
+            child.pacman_dir;
+
+            child.red_ghost_pos;
+            child.blue_ghost_pos;
+            child.orange_ghost_pos;
+            child.pink_ghost_pos;
+
+            if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
+                || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
+                child.points = -1;
+                node_to_parent[child] = curr;
+                continue;
+            }
             
             if (curr_grid[neighbor.first][neighbor.second] == o) child.points = curr_points + 1;
             else child.points = curr_points;
@@ -143,6 +171,9 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
 
+            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
+            
+            
             if (child.depth == length) {
                 node_to_parent[child] = curr;
                 final_positions.push_back(child);
@@ -157,6 +188,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     // for all the basenodes of depth = length, calculate the ghost positions and recalulate score
 
     BaseNode best_node;
+    best_node.points = -1;
 
     for (auto n : node_to_parent) {
         BaseNode curr = n.first;
