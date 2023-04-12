@@ -16,10 +16,10 @@ void StateSpaceSearchR::updateGameState() {
 
     pair<int, int> pacman_pos = getPacmanPos();
 
-    pair<int, int> red_pos = Ghost::getRedPos();
-    pair<int, int> orange_pos = Ghost::getOrangePos();
-    pair<int, int> blue_pos = Ghost::getBluePos();
-    pair<int, int> pink_pos = Ghost::getPinkPos();
+    pair<int, int> red_pos = Ghost::getRedGhostPos();
+    pair<int, int> orange_pos = Ghost::getOrangeGhostPos();
+    pair<int, int> blue_pos = Ghost::getBlueGhostPos();
+    pair<int, int> pink_pos = Ghost::getPinkGhostPos();
 
     int cherries_eaten = PacmanState::getCherriesEaten();
     int pellets_eaten = PacmanState::getPelletsEaten();
@@ -87,6 +87,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
     }
 }
 
+/////////////////////////////// BASE ///////////////////////////////
+
 vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     /*
     - Distance to ghost (maximize) (euclidean)
@@ -95,15 +97,15 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     Only look at o & v for neighbors
     */
 
-   map<baseNode, baseNode> node_to_parent;
+   map<BaseNode, BaseNode> node_to_parent;
 
-   vector<baseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
-   queue<baseNode> queue;
+   queue<BaseNode> queue;
 
-   baseNode nil; // represents null
+   BaseNode nil; // represents null
 
-   baseNode parent;
+   BaseNode parent;
     parent.pacman_pos = getPacmanPos();
     parent.grid = grid;
     parent.points = 0;
@@ -115,7 +117,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     while (!queue.empty()) {
 
-        baseNode curr = queue.front();
+        BaseNode curr = queue.front();
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
@@ -129,11 +131,13 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
         for (pair<int, int> neighbor : neighbors) {
             // p, v, o
-            baseNode child;
+            BaseNode child;
             child.pacman_pos = neighbor;
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
+            
             if (curr_grid[neighbor.first][neighbor.second] == o) child.points = curr_points + 1;
             else child.points = curr_points;
+            
             child.depth = curr_depth + 1;
 
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
@@ -152,17 +156,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     /* Figure out and calculate the ghost positions for all the final positions*/
     // for all the basenodes of depth = length, calculate the ghost positions and recalulate score
 
-    baseNode best_node;
+    BaseNode best_node;
 
     for (auto n : node_to_parent) {
-        baseNode curr = n.first;
+        BaseNode curr = n.first;
         
         if (curr.depth == length && curr.points > best_node.points) {
             best_node = curr;
         }
     }
 
-    baseNode filler = best_node;
+    BaseNode filler = best_node;
 
     vector<pair<int, int>> path;
 
@@ -195,6 +199,38 @@ vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> 
     }
 
     return neighbors;
+}
+
+/////////////////////////////// CHERRY ONE ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
+    /*
+    - Distance to ghost (maximize) (euclidean) (score at end)
+    - pellet collected
+    - distance to cherry (minimize) (BFS / A*) (score at end)
+    - distance to nearest pellet (minimize) (BFS/A*) (score at end)
+    Pellet's collected > distance to cherry
+    don't collect power pellet
+    */
+
+}
+
+/////////////////////////////// CHERRY TWO ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
+
+}
+
+/////////////////////////////// POWER UP ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
+
+}
+
+/////////////////////////////// FREIGHTENED ///////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
+
 }
 
 int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> goal) {

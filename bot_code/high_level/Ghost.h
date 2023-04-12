@@ -11,7 +11,7 @@ class Ghost {
     public:
 
         enum Direction {
-            right, up, left, down, upperRight, upperLeft, lowerRight, lowerLeft
+            right, up, left, down
         };
 
         enum Color {
