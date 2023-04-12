@@ -1,0 +1,81 @@
+#pragma once
+
+#include "variables.h"
+#include "grid.h"
+#include "PacmanState.h"
+#include "Ghost.h"
+
+#include "BFS.h"
+#include "AStar.h"
+
+#include <vector>
+#include <utility>
+#include <queue>
+#include <map>
+#include <set>
+#include <cmath>
+
+class StateSpaceSearchR {
+    public:
+
+        enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
+
+        // void updateGameState(GameState newState) { state = newState; }
+
+        void updateGameState();
+
+        GameState getGameState() { return state; }
+
+        pair<int, int> getPacmanPos() { return PacmanState::getBotPos(); }
+
+        vector<vector<int>> getGrid() { return grid; }
+
+        // no need to update grid - just assign changeGrid to a new variable
+        vector<vector<int>> changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
+            if (prevPos.first == newPos.first && prevPos.second == newPos.second) return grid;
+
+            vector<vector<int>> newGrid = grid;
+            newGrid[prevPos.first][prevPos.second] = v; 
+            newGrid[newPos.first][newPos.second] = P; 
+            // Grid::updateGrid(grid);
+            return newGrid; 
+        }
+
+        vector<pair<int, int>> generatePath(int length); // main path
+
+        vector<pair<int, int>> generatePathBase(int length);
+
+        vector<pair<int, int>> generatePathCherryOne(int length);
+
+        vector<pair<int, int>> generatePathCherryTwo(int length);
+
+        vector<pair<int, int>> generatePathPowerUp(int length);
+
+        vector<pair<int, int>> generatePathFreightened(int length);
+
+        // BASE state
+        struct baseNode {
+            pair<int, int> pacman_pos; // first = x, second - y
+            vector<vector<int>> grid;
+            int points; // pellets collected & distance to ghosts
+            int depth; // depth of parent = 0
+        };
+
+        // CHERRYONE state
+
+        int euclideanDistance(pair<int, int> start, pair<int, int> goal);
+
+        vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid);
+
+        
+
+    private:
+
+        GameState state = BASE;
+
+        vector<vector<int>> grid = Grid::getGrid();
+
+
+        
+
+};

@@ -5,6 +5,9 @@ using namespace std;
 #include "variables.h"
 #include "grid.h"
 #include "PacmanState.h"
+#include "Ghost.h"
+#include "BFS.h"
+#include "AStar.h"
 
 class StateSpaceSearch{
     public:
@@ -19,12 +22,12 @@ class StateSpaceSearch{
 
     private:
 
-    // State
-    enum GameState { BASE, CHERRYONE, CHERRYTWO, FREIGHTENED };
+        // State
+        enum GameState { BASE, CHERRYONE, CHERRYTWO, FREIGHTENED };
 
-    void updateGameState(GameState state);
+        void updateGameState(GameState state);
 
-    GameState state = BASE;
+        GameState state = BASE;
 
 
      
