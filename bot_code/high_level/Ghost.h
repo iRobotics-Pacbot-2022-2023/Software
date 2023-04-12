@@ -58,6 +58,10 @@ class Ghost {
         bool is_move_legal(std::pair<int, int> move);
 
         std::pair<std::pair<int, int>, Direction> _get_next_pink_chase_move();
+        std::pair<std::pair<int, int>, Direction> _get_next_red_chase_move();
+        std::pair<std::pair<int, int>, Direction> _get_next_orange_chase_move();
+
+        std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
 
         Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
         std::pair<int, int> getGhostLocation();
@@ -74,6 +78,7 @@ class Ghost {
         // RED, ORANGE, BLUE, PINK
         // vector<pair<int,int>> ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
         std::pair<int, int> curGhostLocation;
+        std::pair<int, int> scatterLocation;
 
 
         
@@ -94,10 +99,10 @@ class Ghost {
         // const std::pair<int,int> orange_init_npos = {15,16};
         // Direction orange_init_dir = up;
 
-        const std::pair<int, int> pink_scatter_pos = {2, 32};
-        const std::pair<int, int> orange_scatter_pos = {0, -1};
-        const std::pair<int, int> blue_scatter_pos = {27, -1};
-        const std::pair<int, int> red_scatter_pos = {25, 32};
+        // const std::pair<int, int> pink_scatter_pos = {2, 32};
+        // const std::pair<int, int> orange_scatter_pos = {0, -1};
+        // const std::pair<int, int> blue_scatter_pos = {27, -1};
+        // const std::pair<int, int> red_scatter_pos = {25, 32};
 
         
     /*pink_start_path = [((14,17),up),((14,18),up),((14,19),up)]
