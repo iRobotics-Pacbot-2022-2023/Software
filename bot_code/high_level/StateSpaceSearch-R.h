@@ -56,11 +56,11 @@ class StateSpaceSearchR {
         // BASE state
         struct BaseNode {
             pair<int, int> pacman_pos; // first = x, second - y
+            PacmanState::Direction pacman_dir;
             pair<int, int> red_ghost_pos;
             pair<int, int> blue_ghost_pos;
             pair<int, int> orange_ghost_pos;
             pair<int, int> pink_ghost_pos;
-            PacmanState::Direction pacman_dir;
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
@@ -77,6 +77,8 @@ class StateSpaceSearchR {
     private:
 
         GameState state = BASE;
+
+        PacmanState::Direction pacman_dir = PacmanState::getDirection();
 
         vector<vector<int>> grid = PacmanState::getGrid();
 
