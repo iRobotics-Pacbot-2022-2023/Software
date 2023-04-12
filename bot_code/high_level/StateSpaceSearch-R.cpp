@@ -16,10 +16,10 @@ void StateSpaceSearchR::updateGameState() {
 
     pair<int, int> pacman_pos = getPacmanPos();
 
-    pair<int, int> red_pos = Ghost::getRedPos();
-    pair<int, int> orange_pos = Ghost::getOrangePos();
-    pair<int, int> blue_pos = Ghost::getBluePos();
-    pair<int, int> pink_pos = Ghost::getPinkPos();
+    pair<int, int> red_pos = Ghost::getRedGhostPos();
+    pair<int, int> orange_pos = Ghost::getOrangeGhostPos();
+    pair<int, int> blue_pos = Ghost::getBlueGhostPos();
+    pair<int, int> pink_pos = Ghost::getPinkGhostPos();
 
     int cherries_eaten = PacmanState::getCherriesEaten();
     int pellets_eaten = PacmanState::getPelletsEaten();
@@ -134,8 +134,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             baseNode child;
             child.pacman_pos = neighbor;
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
+            
             if (curr_grid[neighbor.first][neighbor.second] == o) child.points = curr_points + 1;
             else child.points = curr_points;
+            
             child.depth = curr_depth + 1;
 
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector

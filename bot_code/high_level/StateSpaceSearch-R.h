@@ -56,6 +56,10 @@ class StateSpaceSearchR {
         // BASE state
         struct baseNode {
             pair<int, int> pacman_pos; // first = x, second - y
+            pair<int, int> red_ghost_pos;
+            pair<int, int> blue_ghost_pos;
+            pair<int, int> orange_ghost_pos;
+            pair<int, int> pink_ghost_pos;
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
