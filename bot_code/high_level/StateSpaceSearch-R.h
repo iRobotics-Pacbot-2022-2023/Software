@@ -78,7 +78,7 @@ class StateSpaceSearchR {
 
         GameState state = BASE;
 
-        vector<vector<int>> grid = Grid::getGrid();
+        vector<vector<int>> grid = PacmanState::getGrid();
 
 
         
