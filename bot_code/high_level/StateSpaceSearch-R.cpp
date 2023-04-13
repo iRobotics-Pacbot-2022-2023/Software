@@ -107,12 +107,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
    BaseNode parent;
     parent.pacman_pos = getPacmanPos();
-    child.pacman_dir;
+    parent.pacman_dir = getPacmanDir();
 
-    child.red_ghost_pos;
-    child.blue_ghost_pos;
-    child.orange_ghost_pos;
-    child.pink_ghost_pos;
+    parent.red_ghost_pos;
+    parent.blue_ghost_pos;
+    parent.orange_ghost_pos;
+    parent.pink_ghost_pos;
 
     parent.grid = grid;
     parent.points = 0;
@@ -128,12 +128,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
-        child.pacman_dir;
+        curr.pacman_dir;
 
-        child.red_ghost_pos;
-        child.blue_ghost_pos;
-        child.orange_ghost_pos;
-        child.pink_ghost_pos;
+        curr.red_ghost_pos;
+        curr.blue_ghost_pos;
+        curr.orange_ghost_pos;
+        curr.pink_ghost_pos;
         vector<vector<int>> curr_grid = curr.grid;
         int curr_points = curr.points;
         int curr_depth = curr.depth;
@@ -199,6 +199,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     }
 
     BaseNode filler = best_node;
+
+    updatePacmanDir(filler.pacman_dir);
 
     vector<pair<int, int>> path;
 

@@ -26,6 +26,10 @@ class StateSpaceSearchR {
 
         GameState getGameState() { return state; }
 
+        void updatePacmanDir(PacmanState::Direction newDir) { pacman_dir = newDir; }
+
+        PacmanState::Direction getPacmanDir() { return pacman_dir; }
+
         pair<int, int> getPacmanPos() { return PacmanState::getBotPos(); }
 
         vector<vector<int>> getGrid() { return grid; }
