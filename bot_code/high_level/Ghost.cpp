@@ -102,6 +102,25 @@
         return get_move_based_on_target(pinkMove);
 
     }
+
+    // we will put this into the state class to have access to the pacbot location
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_red_chase_move() {
+        return get_move_based_on_target(pacbot.pos);
+    }
+
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move() {
+        if (get_euclidian_distance(curGhostLocation, pacbot.pos) < 8) {
+            return _get_next_scatter_move();
+        }
+        return get_move_based_on_target(pacbot.pos);
+    }
+
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_scatter_move() {
+        return get_move_based_on_target(scatterLocation);
+    }
+        
+
+        
 //     void Ghost::moveRedChase() {
 //         vector<string> directions;
 //          if ( grid[x_red + 1][y_red] != 'I' ) {
