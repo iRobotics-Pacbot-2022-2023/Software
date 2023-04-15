@@ -38,7 +38,7 @@ int main () {
 
 
 
-    // ghost.ghostMove(std::pair<int, int>(1,1));
+    ghost.ghostMove(std::pair<int, int>(1,1));
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
     // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
     while ((ghost.getGhostLocation().first != pac.getPos().first) || (ghost.getGhostLocation().second != pac.getPos().second)) {

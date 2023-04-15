@@ -64,16 +64,24 @@
         return get_move_based_on_target(pacbot.getPos());
     }
 
-    // std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move() {
-    //     if (get_euclidian_distance(curGhostLocation, pacbot.getPos()) < 8) {
-    //         return _get_next_scatter_move();
-    //     }
-    //     return get_move_based_on_target(pacbot.getPos());
-    // }
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move() {
+        if (get_euclidian_distance(curGhostLocation, pacbot.getPos()) < 8) {
+            return _get_next_scatter_move();
+        }
+        return get_move_based_on_target(pacbot.getPos());
+    }
 
-    // std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_scatter_move() {
-    //     return get_move_based_on_target(scatterLocation);
-    // }
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_scatter_move() {
+        return get_move_based_on_target(scatterLocation);
+    }
+
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_frightened_move() {
+        std::vector<std::pair<int, int>> possible = find_possible_moves();
+        std::pair<int, int> rand_move = possible[rand() % possible.size()];
+        Ghost::Direction direction = getDirection(curGhostLocation, rand_move);
+        std::pair<std::pair<int, int> , Ghost::Direction> finalMove = {rand_move, direction};
+        return finalMove;
+    }
 
 
     // fuckkkkkkkkkk i gotta do BFS
@@ -120,7 +128,7 @@
                 minDistance = distances[i];
             }
         }
-        Direction facing = getDirection(curGhostLocation, possibleMoves[index]);
+        Ghost::Direction facing = getDirection(curGhostLocation, possibleMoves[index]);
         
 
         std::pair<std::pair<int, int> , Ghost::Direction> finalMove = {possibleMoves[index], facing};

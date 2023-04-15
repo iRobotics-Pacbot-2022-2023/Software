@@ -49,7 +49,7 @@ class Ghost {
         // UNFINISHED/DIFFERENT STATE
         void /* some return type for get scatter move*/ get_next_scatter_move();
         std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
-        std::pair<std::pair<int, int>, Direction>  /* some return type for get frightened move*/ get_next_frightened_move();
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_frightened_move();
 
         // UTILITY FUNCTIONS
         void ghostMove(std::pair<int, int> pair);
