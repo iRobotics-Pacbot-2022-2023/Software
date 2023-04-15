@@ -7,10 +7,10 @@ using namespace std;
 // Variables
 
 // Game params
-const vector<int> PACBOT_STARTING_POSITION = {14, 7};
+const pair<int,int> PACBOT_STARTING_POSITION = {14, 7};
 
 // Cherry param
-const vector<int> CHERRY_POS = {13, 13};
+const pair<int,int> CHERRY_POS = {13, 13};
 
 // Grid Parameters
 const int I = 1; // WALL

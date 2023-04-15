@@ -160,7 +160,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             child.red_ghost_pos = Ghost::moveRed(child.pacman_pos, child.pacman_dir, child.grid);
             child.blue_ghost_pos = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.grid, child.red_ghost_pos);
             child.orange_ghost_pos = Ghost::moveOrange();
-            child.pink_ghost_pos = Ghost::movePink(child.pacman_pos, child.pacman_dir, child.grid);;
+            child.pink_ghost_pos = Ghost::movePink(child.pacman_pos, child.pacman_dir, child.grid);
+
+            // OR we could add these ghost positions to a std::set and just check
+            // if we have pacman_pos in the set or not
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
@@ -206,11 +209,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     BaseNode filler = best_node;
 
-    updatePacmanDir(filler.pacman_dir);
+    updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
 
     vector<pair<int, int>> path;
 
-    while (filler != nil) {
+    while (!equals(filler, nil)) {
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
     }
@@ -218,6 +221,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     return path;
 
 
+}
+
+bool StateSpaceSearchR::equals(BaseNode a, BaseNode b) {
+    return a.pacman_pos == b.pacman_pos && a.pacman_dir == b.pacman_dir && a.red_ghost_pos == b.red_ghost_pos
+        && a.blue_ghost_pos == b.blue_ghost_pos && a.orange_ghost_pos == b.orange_ghost_pos
+        && a.pink_ghost_pos == b.pink_ghost_pos && a.points == b.points && a.depth == b.depth;
 }
 
 // Don't hit the power up
@@ -248,7 +257,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     /*
     - Distance to ghost (maximize) (euclidean) (score at end)
     - pellet collected
-    - distance to cherry (minimize) (BFS / A*) (score at end)
+    - distance to cherry (minimize) (BFS / A*) (score at end) (DO NOT HIT THE POSITION) (!= )
     - distance to nearest pellet (minimize) (BFS/A*) (score at end)
     Pellet's collected > distance to cherry
     don't collect power pellet
