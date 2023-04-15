@@ -86,9 +86,10 @@
 
     }
 
-    Ghost::Ghost(Grid & grid, PacBot & test) {
-        grid = grid;
+    Ghost::Ghost(PacBot & test) {
+        // grid = grid;
         pacbot = test;
+        curGhostLocation = std::pair<int, int>(1, 1);
     }
 
     // we will move this to the state space search since this depends on the pacbot direction
@@ -117,10 +118,10 @@
     }
 
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move() {
-        if (get_euclidian_distance(curGhostLocation, pacbot.pos) < 8) {
+        if (get_euclidian_distance(curGhostLocation, pacbot.getPos()) < 8) {
             return _get_next_scatter_move();
         }
-        return get_move_based_on_target(pacbot.pos);
+        return get_move_based_on_target(pacbot.getPos());
     }
 
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_scatter_move() {
