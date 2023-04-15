@@ -2,14 +2,13 @@
 
 
 PacmanState::PacmanState() {
-        score = 0;
-        lives = 3;
-        // level = 1;
+        // score = 0;
+        // lives = 3;
         gameover = false;
         pos.first = 14;
         pos.second = 7;
         // ghost_score = 200;
-        power_ups_left = 4;
+        // power_ups_left = 4;
         pellets_left = 236;
 }
 
@@ -17,7 +16,7 @@ PacmanState::~PacmanState() {
 
 }
 std::pair<int, int> PacmanState::getBotPos() {
-    return botPos;
+    return pos;
 }
 
 void PacmanState::movePlayer(double dx, double dy) {

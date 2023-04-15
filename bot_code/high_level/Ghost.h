@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include "grid.h"
+#include "PacBot.h"
 
 using namespace std;
 
@@ -21,7 +23,8 @@ class Ghost {
         enum GhostState {
             frightened, chase, scatter
         };
-
+        Ghost();
+        Ghost(Grid & grid, PacBot & test);
         Ghost(std::pair<int,int> firstPos, /*std::pair<int,int> secondPos, */ Color color_, Direction direction_, GhostState startPath, std::pair<int,int> scatter_pos );
 
         std::pair<std::pair<int, int>, Direction> get_move_based_on_target(std::pair<int, int> target);
@@ -80,8 +83,10 @@ class Ghost {
         std::pair<int, int> curGhostLocation;
         std::pair<int, int> scatterLocation;
 
+        // gonna create some variables for testing
+        Grid grid;
+        PacBot pacbot;
 
-        
         
         // const std::pair<int,int> red_init_pos = {13,19};
         // const std::pair<int,int> red_init_npos = {12,19};

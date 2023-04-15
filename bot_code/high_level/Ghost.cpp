@@ -81,23 +81,31 @@
     //     }
 
 
-    // }
+    // do nothing
+    Ghost::Ghost() {
+
+    }
+
+    Ghost::Ghost(Grid & grid, PacBot & test) {
+        grid = grid;
+        pacbot = test;
+    }
 
     // we will move this to the state space search since this depends on the pacbot direction
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_pink_chase_move() {
         std::pair<int, int> pinkMove;
-        if (pacbot.direction == up) {
-            pinkMove.first = pacbot.pos[0] - 4;
-            pinkMove.second = pacbot.pos[1] + 4;
-        } else if (pacbot.direction == down) {
-            pinkMove.first = pacbot.pos[0];
-            pinkMove.second = pacbot.pos[1] - 4;
-        } else if (pacbot.direction == left) {
-            pinkMove.first = pacbot.pos[0] - 4;
-            pinkMove.second = pacbot.pos[1];
-        } else if (pacbot.direction == right) {
-            pinkMove.first = pacbot.pos[0] + 4;
-            pinkMove.second = pacbot.pos[1];
+        if (pacbot.getPacDirection() == up) {
+            pinkMove.first = pacbot.getPos().first - 4;
+            pinkMove.second = pacbot.getPos().second + 4;
+        } else if (pacbot.getPacDirection() == down) {
+            pinkMove.first = pacbot.getPos().first;
+            pinkMove.second = pacbot.getPos().second - 4;
+        } else if (pacbot.getPacDirection() == left) {
+            pinkMove.first = pacbot.getPos().first - 4;
+            pinkMove.second = pacbot.getPos().second;
+        } else if (pacbot.getPacDirection() == right) {
+            pinkMove.first = pacbot.getPos().first + 4;
+            pinkMove.second = pacbot.getPos().second;
         }
         return get_move_based_on_target(pinkMove);
 
@@ -105,7 +113,7 @@
 
     // we will put this into the state class to have access to the pacbot location
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_red_chase_move() {
-        return get_move_based_on_target(pacbot.pos);
+        return get_move_based_on_target(pacbot.getPos());
     }
 
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move() {
@@ -355,11 +363,11 @@ std::pair<std::pair<int, int> , Ghost::Direction> Ghost::get_next_frightened_mov
 
     }
     
-        double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
-            double dx = pos_b.first - pos_a.first;
-            double dy = pos_b.second - pos_b.second;
-            return std::sqrt(dx*dx + dy*dy);
-        }
+    double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
+        double dx = pos_b.first - pos_a.first;
+        double dy = pos_b.second - pos_b.second;
+        return std::sqrt(dx*dx + dy*dy);
+    }
 
     // we plan on moving this over to the statespacesearch class for OOP reasons
     bool Ghost::is_move_legal(std::pair<int, int> move) {

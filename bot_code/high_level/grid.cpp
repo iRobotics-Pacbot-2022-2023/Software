@@ -1,7 +1,7 @@
 #include "grid.h"
 
-grid::grid() {
-    grid_ = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,e,e,e,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
+Grid::Grid() {
+                        grid = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,e,e,e,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                                 {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,e,e,e,e,e,e,I,o,o,o,o,o,O,o,o,I},
                                 {I,o,I,I,o,I,I,o,I,I,o,I,e,e,e,e,e,e,e,e,e,I,o,I,I,o,I,I,I,o,I},
                                 {I,o,I,I,o,o,o,o,I,I,o,I,e,e,e,e,e,e,e,e,e,I,o,I,I,o,I,e,I,o,I},
@@ -34,14 +34,14 @@ grid::grid() {
     // grid_.at(14).at(7) = 'B';
 }
 
-int grid::height() {
-    return grid_.size();
+int Grid::height() {
+    return grid.size();
 }
 
-int grid::width() {
-    return grid_.at(0).size();
+int Grid::width() {
+    return grid.at(0).size();
 }
 
-vector<vector<char>> & grid::getGrid() {
-    return grid_;
+vector<vector<int>> & Grid::getGrid() {
+    return grid;
 }

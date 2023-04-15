@@ -14,7 +14,9 @@ class Grid {
 
                 void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM
 
-                vector<vector<int>> getGrid() { return grid; }
+                vector<vector<int>> & getGrid();
+                int height();
+                int width();
 
         private:
                                         // Bottom Left
