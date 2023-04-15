@@ -62,19 +62,19 @@
 std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_move(){
 
      std::pair<int, int> bluezooms;
-        if(pacbot.getPacDirection() == up){
+        if(pacbot.getPacDirection() == PacBot::up){
         bluezooms.first = pacbot.getPos().first - 2;
         bluezooms.second = pacbot.getPos().second + 2;
         }
-        else if(pacbot.getPacDirection() == down){
+        else if(pacbot.getPacDirection() == PacBot::down){
         bluezooms.first = pacbot.getPos().first;
         bluezooms.second = pacbot.getPos().second - 2;
         }
-        else if(pacbot.getPacDirection() == left){
+        else if(pacbot.getPacDirection() == PacBot::left){
         bluezooms.first = pacbot.getPos().first - 2;
         bluezooms.second = pacbot.getPos().second;
         }
-        else if(pacbot.getPacDirection() == right){
+        else if(pacbot.getPacDirection() == PacBot::right){
         bluezooms.first = pacbot.getPos().first + 2;
         bluezooms.second = pacbot.getPos().second;
         }
@@ -245,37 +245,9 @@ vector<pair<int, int>> Ghost::getNeighbors(pair<int, int> node, vector<vector<in
     return neighbors;
 }
 
-
-// TIMS WORK, just commented out so i can compile
-// std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_move(){
-
-//      std::pair<int, int> bluezooms;
-//         if(pacbot.getPacDirection() == up){
-//         bluezooms.first = pacbot.getPos().first - 2;
-//         bluezooms.second = pacbot.getPos().second + 2;
-//         }
-//         else if(pacbot.getPacDirection() == down){
-//         bluezooms.first = pacbot.getPos();
-//         bluezooms.second = pacbot.getPos() - 2;
-//         }
-//         else if(pacbot.getPacDirection() == left){
-//         bluezooms.first = pacbot.getPos() - 2;
-//         bluezooms.second = pacbot.getPos();
-//         }
-//         else if(pacbot.getPacDirection() == right){
-//         bluezooms.first = pacbot.getPos() + 2;
-//         bluezooms.second = pacbot.getPos();
-//         }
-//         //Please change _get_next_red_chase_move() for current red ghost position
-//         //bluezooms.first = bluezooms.first + (bluezooms.first - _get_next_red_chase_move().first); make method to obtain the red ghost's current position
-//         //bluezooms.second = bluezooms.second + (bluezooms.first - _get_next_red_chase_move().second); Since the blue heavily relies on this red ghost position
-//         return get_move_based_on_target(bluezooms); 
-    
-//     }
 Ghost::Direction Ghost::getterDirection() {
     return direction_facing;
 }
-
 
 Ghost::Direction Ghost::getDirection(std::pair<int, int> prevPos, std::pair<int, int> newPos) {
         if (newPos.first > prevPos.first) {
@@ -292,67 +264,6 @@ Ghost::Direction Ghost::getDirection(std::pair<int, int> prevPos, std::pair<int,
         }
     }
 
-
-    // below is scatter code/other states, dont know if it works cuz didnt research yet
-
-
-
-    // void Ghost::moveRedScatter(){
-    //     // vector<int> x_desired = {};
-    //     // vector<int> y_desired = {};
-    //     // if (x_red < 26){
-    //     //     if (grid[x_red+1][y_red] != 'I') {
-    //     //         x_red += 1;
-    //     //     }
-
-    //     // } if (y_red >)
-    //      std::pair<std::pair<int, int> , direction > nextMove =  (get_move_based_on_target(red_scatter_pos) );
-    //     std::pair<int, int> move = nextMove.first;
-    //     ghostlocs[0].first = move.first;
-    //     ghostlocs[0].second = move.second;
-    // } 
-
-    // void Ghost::moveBlueScatter() {
-    //     std::pair<std::pair<int, int> , direction> nextMove =  (get_move_based_on_target(blue_scatter_pos) );
-    //     std::pair<int, int> move = nextMove.first;
-    //     ghostlocs[2].first = move.first;
-    //     ghostlocs[2].second = move.second;
-    // }
-
-    // void Ghost::moveOrangeScatter() {
-    //     std::pair<std::pair<int, int> , direction> nextMove = (get_move_based_on_target(orange_scatter_pos));
-    //     std::pair<int, int> move = nextMove.first;
-    //     ghostlocs[1].first = move.first;
-    //     ghostlocs[1].second = move.second;
-    // } 
-    
-    // void Ghost::movePinkScatter() {
-    //     std::pair<std::pair<int, int> , direction> nextMove =  (get_move_based_on_target(pink_scatter_pos)) ;    
-    //     std::pair<int, int> move = nextMove.first;
-    //     ghostlocs[3].first = move.first;
-    //     ghostlocs[3].second = move.second;
-    // }
-// std::pair<std::pair<int, int> , Ghost::Direction> Ghost::get_next_frightened_move() {
-//         std::vector<std::pair<int, int> > moves = find_possible_moves();
-//         std::pair< std::pair<int, int>, int> move = moves[rand() % moves.size()  ];
-
-//         std::pair<int, int> currGhostPos;
-//         if (color == red) {
-//             currGhostPos = ghostlocs[0];
-//         } else if (color == orange) {
-//             currGhostPos = ghostlocs[1];
-//         } else if (color == blue) {
-//             currGhostPos = ghostlocs[2];
-//         } else {
-//             currGhostPos = ghostlocs[3];
-//         }
-//         std::pair<std::pair<int, int>, direction> finalMove = {move, getDirection(currGhostPos, move)};
-//         return finalMove;
-
-
-
-//     }
-    
     double Ghost::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
         double dx = pos_b.first - pos_a.first;
         double dy = pos_b.second - pos_b.second;
