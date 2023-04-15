@@ -80,6 +80,7 @@ class Ghost {
         
         // RED, ORANGE, BLUE, PINK
         // vector<pair<int,int>> ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
+        
         std::pair<int, int> curGhostLocation;
         std::pair<int, int> scatterLocation;
 

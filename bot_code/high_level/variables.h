@@ -15,6 +15,9 @@ const pair<int,int> CHERRY_POS = {13, 13};
 // Ghost Exit
 const pair<float,int> GHOST_EXIT = {13.5, 19};
 
+// Ghost starting positions
+const pair<int,int> GHOST_STARTING_POSITIONS[4] = {{13, 11}, {13, 12}, {13, 13}, {13, 14}};
+
 // Grid Parameters
 const int I = 1; // WALL
 const int o = 2; // Pellet

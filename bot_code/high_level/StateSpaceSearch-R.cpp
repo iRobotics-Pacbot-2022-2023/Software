@@ -165,6 +165,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             // OR we could add these ghost positions to a std::set and just check
             // if we have pacman_pos in the set or not
 
+            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
+
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
                 child.points = -1;
@@ -180,8 +182,6 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
 
-            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
-            
             
             if (child.depth == length) {
                 node_to_parent[child] = curr;
