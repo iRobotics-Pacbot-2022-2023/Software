@@ -70,13 +70,29 @@ class StateSpaceSearchR {
             int depth; // depth of parent = 0
         };
 
-        bool equals(BaseNode a, BaseNode b);
+        // BASE state
+        struct PowerUpNode {
+            pair<int, int> pacman_pos; // first = x, second - y
+            PacmanState::Direction pacman_dir;
+            pair<int, int> red_ghost_pos;
+            pair<int, int> blue_ghost_pos;
+            pair<int, int> orange_ghost_pos;
+            pair<int, int> pink_ghost_pos;
+            vector<vector<int>> grid;
+            int points; // pellets collected & distance to ghosts
+            int depth; // depth of parent = 0
+            bool powerup_eaten;
+        };
+
+        bool baseNodeEquals(BaseNode a, BaseNode b);
 
         // CHERRYONE state
 
         int euclideanDistance(pair<int, int> start, pair<int, int> goal);
 
         vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid);
+
+        vector<pair<int, int>> getNeighborsCherryOne(pair<int, int> pos, vector<vector<int>> grid);
 
         void updateFreightenedTimeLeft(int time) { freightened_time_left = time; }
 

@@ -94,19 +94,24 @@ vector<pair<int, int>> BFS::getNeighbors(pair<int, int> node, vector<vector<int>
     // y :[0, 30]
 
     vector<pair<int, int>> neighbors;
-    neighbors[0] = make_pair(node.first - 1, node.second); // left
-    neighbors[1] = make_pair(node.first, node.second - 1); // down
-    neighbors[2] = make_pair(node.first + 1, node.second); // right
-    neighbors[3] = make_pair(node.first, node.second + 1); // up
+
+
+    neighbors.push_back(make_pair(node.first - 1, node.second)); // left
+    neighbors.push_back(make_pair(node.first, node.second - 1)); // down
+    neighbors.push_back(make_pair(node.first + 1, node.second)); // right
+    neighbors.push_back(make_pair(node.first, node.second + 1)); // up
     
     int i = 0;
     while (i < neighbors.size()) {
-        pair<int, int> neighbor = neighbors[0];
+        pair<int, int> neighbor = neighbors[i];
         int x = neighbor.first;
         int y = neighbor.second;
-        if (x < 0 || y > 27 || y < 0 || y > 20 
-            || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) neighbors.erase(neighbors.begin()); 
-        else i++;
+        if (x < 0 || x > 27 || y > 30 || y < 0 || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) {
+            neighbors.erase(neighbors.begin() + i);
+        } 
+        else {
+            i++;
+        }
     }
 
     return neighbors;

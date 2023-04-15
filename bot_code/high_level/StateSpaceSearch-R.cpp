@@ -213,7 +213,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     vector<pair<int, int>> path;
 
-    while (!equals(filler, nil)) {
+    while (!baseNodeEquals(filler, nil)) {
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
     }
@@ -223,28 +223,28 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
 }
 
-bool StateSpaceSearchR::equals(BaseNode a, BaseNode b) {
+bool StateSpaceSearchR::baseNodeEquals(BaseNode a, BaseNode b) {
     return a.pacman_pos == b.pacman_pos && a.pacman_dir == b.pacman_dir && a.red_ghost_pos == b.red_ghost_pos
         && a.blue_ghost_pos == b.blue_ghost_pos && a.orange_ghost_pos == b.orange_ghost_pos
         && a.pink_ghost_pos == b.pink_ghost_pos && a.points == b.points && a.depth == b.depth;
 }
 
 // Don't hit the power up
-vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid) {
+vector<pair<int, int>> StateSpaceSearchR::getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid) {
     vector<pair<int, int>> neighbors;
-    neighbors[0] = make_pair(pos.first - 1, pos.second); // left
-    neighbors[1] = make_pair(pos.first, pos.second - 1); // down
-    neighbors[2] = make_pair(pos.first + 1, pos.second); // right
-    neighbors[3] = make_pair(pos.first, pos.second + 1); // up
-    neighbors[4] = make_pair(pos.first, pos.second); // Itself
+    neighbors.push_back(make_pair(pos.first - 1, pos.second)); // left
+    neighbors.push_back(make_pair(pos.first, pos.second - 1)); // down
+    neighbors.push_back(make_pair(pos.first + 1, pos.second)); // right
+    neighbors.push_back(make_pair(pos.first, pos.second + 1)); // up
+    neighbors.push_back(make_pair(pos.first, pos.second)); // Itself
 
     int i = 0;
     while (i < neighbors.size()) {
-        pair<int, int> neighbor = neighbors[0];
+        pair<int, int> neighbor = neighbors[i];
         int x = neighbor.first;
         int y = neighbor.second;
         if (x < 0 || y > 27 || y < 0 || y > 20 
-            || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n || grid[x][y] == O) neighbors.erase(neighbors.begin()); 
+            || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n || grid[x][y] == O) neighbors.erase(neighbors.begin() + i); 
         else i++;
     }
 
@@ -260,9 +260,137 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     - distance to cherry (minimize) (BFS / A*) (score at end) (DO NOT HIT THE POSITION) (!= )
     - distance to nearest pellet (minimize) (BFS/A*) (score at end)
     Pellet's collected > distance to cherry
-    don't collect power pellet
+    don't collect power pellet (neighbor thing)
     */
 
+   map<BaseNode, BaseNode> node_to_parent;
+
+   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+
+   queue<BaseNode> queue;
+
+   BaseNode nil; // represents null
+
+   BaseNode parent;
+    parent.pacman_pos = getPacmanPos();
+    parent.pacman_dir = getPacmanDir();
+
+    parent.red_ghost_pos = Ghost::getRedGhostPos();
+    parent.blue_ghost_pos = Ghost::getBlueGhostPos();
+    parent.orange_ghost_pos = Ghost::getOrangeGhostPos();
+    parent.pink_ghost_pos = Ghost::getPinkGhostPos();
+
+    parent.grid = grid;
+    parent.points = 0;
+    parent.depth = 0;
+
+    node_to_parent[parent] = nil;
+
+    queue.push(parent);
+
+    while (!queue.empty()) {
+        BaseNode curr = queue.front();
+        queue.pop();
+
+        pair<int, int> curr_pos = curr.pacman_pos;
+        vector<pair<int, int>> neighbors = getNeighborsCherryOne(curr_pos, curr.grid);
+
+        for (auto neighbor : neighbors) {
+            BaseNode child;
+            child.pacman_pos = neighbor;
+            child.pacman_dir = curr.pacman_dir;
+
+            child.red_ghost_pos = curr.red_ghost_pos;
+            child.blue_ghost_pos = curr.blue_ghost_pos;
+            child.orange_ghost_pos = curr.orange_ghost_pos;
+            child.pink_ghost_pos = curr.pink_ghost_pos;
+
+            child.grid = curr.grid;
+            child.points = curr.points;
+            child.depth = curr.depth;
+
+            int curr_points = curr.points;
+            int curr_depth = curr.depth;
+
+            vector<vector<int>> curr_grid = curr.grid;
+
+            if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
+                || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
+                child.points = -1;
+                node_to_parent[child] = curr;
+                continue;
+            }
+            
+            if (curr_grid[neighbor.first][neighbor.second] == o) child.points = curr_points + 1;
+            else child.points = curr_points;
+            
+            child.depth = curr_depth + 1;
+
+            // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
+            // if depth < length add to queue and node_to_parent map but not final_positions vector
+
+            
+            if (child.depth == length) {
+                node_to_parent[child] = curr;
+                final_positions.push_back(child);
+            } else if (child.depth < length) {
+                queue.push(child);
+                node_to_parent[child] = curr;
+            }
+        }
+    }
+
+    /* Figure out and calculate the ghost positions for all the final positions*/
+    // for all the basenodes of depth = length, calculate the ghost positions and recalulate score
+
+    BaseNode best_node;
+    best_node.points = -1;
+
+    for (auto n : node_to_parent) {
+        BaseNode curr = n.first;
+        
+        if (curr.depth == length && curr.points > best_node.points) {
+            best_node = curr;
+        }
+    }
+
+    BaseNode filler = best_node;
+
+    updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
+
+    vector<pair<int, int>> path;
+
+    while (!equals(filler, nil)) {
+        path.insert(path.begin(), filler.pacman_pos);
+        filler = node_to_parent[filler];
+    }
+
+    return path;
+
+
+}
+
+// Don't hit the power up
+vector<pair<int, int>> StateSpaceSearchR::getNeighborsCherryOne(pair<int, int> pos, vector<vector<int>> grid) {
+    vector<pair<int, int>> neighbors;
+    neighbors.push_back(make_pair(pos.first - 1, pos.second)); // left
+    neighbors.push_back(make_pair(pos.first, pos.second - 1)); // down
+    neighbors.push_back(make_pair(pos.first + 1, pos.second)); // right
+    neighbors.push_back(make_pair(pos.first, pos.second + 1)); // up
+    neighbors.push_back(make_pair(pos.first, pos.second)); // Itself
+
+    int i = 0;
+    while (i < neighbors.size()) {
+        pair<int, int> neighbor = neighbors[i];
+        int x = neighbor.first;
+        int y = neighbor.second;
+        if (x < 0 || y > 27 || y < 0 || y > 20 
+            || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n 
+            || grid[x][y] == O || (x == 13 && y == 13)) neighbors.erase(neighbors.begin() + i); 
+        else i++;
+    }
+
+    return neighbors;
 }
 
 /////////////////////////////// CHERRY TWO ///////////////////////////////
@@ -274,6 +402,13 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
 /////////////////////////////// POWER UP ///////////////////////////////
 
 vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
+    /*
+    - Distance to ghost (maximize) (euclidean)
+    - Distance to power up (minimize) (BFS / A*)
+    - pellet collection
+
+    if we hit power up, add it to map, but not to queue, but put a special condition on it.
+    */
 
 }
 
