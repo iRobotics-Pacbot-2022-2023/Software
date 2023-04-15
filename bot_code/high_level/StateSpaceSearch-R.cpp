@@ -151,12 +151,16 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
-            child.pacman_dir;
+            if (child.pacman_pos == curr_position) child.pacman_dir = curr_direction;
+            else if (child.pacman_pos.second == curr_position.second + 1) child.pacman_dir = PacmanState::Direction::Up;
+            else if (child.pacman_pos.second == curr_position.second - 1) child.pacman_dir = PacmanState::Direction::Down;
+            else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::Right;
+            else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::Left;
 
-            child.red_ghost_pos;
-            child.blue_ghost_pos;
-            child.orange_ghost_pos;
-            child.pink_ghost_pos;
+            child.red_ghost_pos = Ghost::moveRed(child.pacman_pos, child.pacman_dir, child.grid);
+            child.blue_ghost_pos = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.grid, child.red_ghost_pos);
+            child.orange_ghost_pos = Ghost::moveOrange();
+            child.pink_ghost_pos = Ghost::movePink(child.pacman_pos, child.pacman_dir, child.grid);;
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
