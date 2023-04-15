@@ -59,6 +59,31 @@
 
     }
 
+std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_move(){
+
+     std::pair<int, int> bluezooms;
+        if(pacbot.getPacDirection() == up){
+        bluezooms.first = pacbot.getPos().first - 2;
+        bluezooms.second = pacbot.getPos().second + 2;
+        }
+        else if(pacbot.getPacDirection() == down){
+        bluezooms.first = pacbot.getPos().first;
+        bluezooms.second = pacbot.getPos().second - 2;
+        }
+        else if(pacbot.getPacDirection() == left){
+        bluezooms.first = pacbot.getPos().first - 2;
+        bluezooms.second = pacbot.getPos().second;
+        }
+        else if(pacbot.getPacDirection() == right){
+        bluezooms.first = pacbot.getPos().first + 2;
+        bluezooms.second = pacbot.getPos().second;
+        }
+        //Please change _get_next_red_chase_move() for current red ghost position
+        //bluezooms.first = bluezooms.first + (bluezooms.first - _get_next_red_chase_move().first); make method to obtain the red ghost's current position
+        //bluezooms.second = bluezooms.second + (bluezooms.first - _get_next_red_chase_move().second); Since the blue heavily relies on this red ghost position
+        return get_move_based_on_target(bluezooms); 
+
+    }
     // we will put this into the state class to have access to the pacbot location
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_red_chase_move() {
         return get_move_based_on_target(pacbot.getPos());
