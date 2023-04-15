@@ -79,7 +79,7 @@ class StateSpaceSearchR {
             pair<int, int> orange_ghost_pos;
             pair<int, int> pink_ghost_pos;
             vector<vector<int>> grid;
-            int points; // pellets collected & distance to ghosts
+            float points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
             bool powerup_eaten;
         };

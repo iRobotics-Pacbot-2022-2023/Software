@@ -201,9 +201,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     for (auto n : node_to_parent) {
         BaseNode curr = n.first;
-        
-        if (curr.depth == length && curr.points > best_node.points) {
-            best_node = curr;
+
+        if (curr.depth == length) {
+            int red_distance = euclideanDistance(curr.pacman_pos, curr.red_ghost_pos);
+            int blue_distance = euclideanDistance(curr.pacman_pos, curr.blue_ghost_pos);
+            int orange_distance = euclideanDistance(curr.pacman_pos, curr.orange_ghost_pos);
+            int pink_distance = euclideanDistance(curr.pacman_pos, curr.pink_ghost_pos);
+
+            curr.points += (red_distance + blue_distance + orange_distance + pink_distance);
+
+            if (curr.points > best_node.points) best_node = curr;
+
         }
     }
 
@@ -219,7 +227,6 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     }
 
     return path;
-
 
 }
 
@@ -360,7 +367,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
     vector<pair<int, int>> path;
 
-    while (!equals(filler, nil)) {
+    while (!baseNodeEquals(filler, nil)) {
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
     }
