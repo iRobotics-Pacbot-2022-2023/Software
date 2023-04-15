@@ -63,6 +63,7 @@ class Ghost {
         std::pair<std::pair<int, int>, Direction> _get_next_pink_chase_move();
         std::pair<std::pair<int, int>, Direction> _get_next_red_chase_move();
         std::pair<std::pair<int, int>, Direction> _get_next_orange_chase_move();
+        std::pair<std::pair<int, int>, Direction> _get_next_blue_chase_move();
 
         std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
 
