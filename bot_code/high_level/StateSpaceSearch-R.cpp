@@ -107,12 +107,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
    BaseNode parent;
     parent.pacman_pos = getPacmanPos();
-    child.pacman_dir;
+    parent.pacman_dir = getPacmanDir();
 
-    child.red_ghost_pos;
-    child.blue_ghost_pos;
-    child.orange_ghost_pos;
-    child.pink_ghost_pos;
+    parent.red_ghost_pos = Ghost::getRedGhostPos();
+    parent.blue_ghost_pos = Ghost::getBlueGhostPos();
+    parent.orange_ghost_pos = Ghost::getOrangeGhostPos();
+    parent.pink_ghost_pos = Ghost::getPinkGhostPos();
 
     parent.grid = grid;
     parent.points = 0;
@@ -128,12 +128,13 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
-        child.pacman_dir;
+        PacmanState::Direction curr_direction = curr.pacman_dir;
 
-        child.red_ghost_pos;
-        child.blue_ghost_pos;
-        child.orange_ghost_pos;
-        child.pink_ghost_pos;
+        pair<int, int> curr_red_ghost_pos = curr.red_ghost_pos;
+        pair<int, int> curr_blue_ghost_pos = curr.blue_ghost_pos;
+        pair<int, int> curr_orange_ghost_pos = curr.orange_ghost_pos;
+        pair<int, int> curr_pink_ghost_pos = curr.pink_ghost_pos;
+
         vector<vector<int>> curr_grid = curr.grid;
         int curr_points = curr.points;
         int curr_depth = curr.depth;
@@ -200,6 +201,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     BaseNode filler = best_node;
 
+    updatePacmanDir(filler.pacman_dir);
+
     vector<pair<int, int>> path;
 
     while (filler != nil) {
@@ -212,6 +215,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
 }
 
+// Don't hit the power up
 vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid) {
     vector<pair<int, int>> neighbors;
     neighbors[0] = make_pair(pos.first - 1, pos.second); // left
