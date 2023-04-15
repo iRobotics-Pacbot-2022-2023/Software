@@ -7,6 +7,10 @@
 #include "grid.h"
 #include "PacBot.h"
 
+#include <queue>
+#include <map>
+#include <set>
+
 using namespace std;
 
 class Ghost {
@@ -24,10 +28,10 @@ class Ghost {
             frightened, chase, scatter
         };
         Ghost();
-        Ghost(PacBot & test);
+        Ghost(PacBot & pac);
         // Ghost(std::pair<int,int> firstPos, /*std::pair<int,int> secondPos, */ Color color_, Direction direction_, GhostState startPath, std::pair<int,int> scatter_pos );
-
-        std::pair<std::pair<int, int>, Direction> get_move_based_on_target(std::pair<int, int> target);
+        PacBot getPac();
+        std::pair<std::pair<int, int>, Ghost::Direction> get_move_based_on_target(std::pair<int, int> target);
 
         // pair<int,int> Ghost::getRedGhostPos() { return ghostlocs[0]; }
         // pair<int,int> Ghost::getOrangeGhostPos() { return ghostlocs[1]; }
@@ -69,6 +73,11 @@ class Ghost {
         Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
         std::pair<int, int> getGhostLocation();
 
+        void ghostMove(std::pair<int, int> pair);
+        std::vector<std::vector<int>> getGrid();
+
+        vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
+        vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
 
         std::pair<std::pair<int, int>, Direction>  /* some return type for get frightened move*/ get_next_frightened_move();
     

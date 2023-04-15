@@ -5,7 +5,7 @@
         return pos;
     }
     PacBot::PacBot() {
-        pos = std::pair<int, int>(14, 14);
+        pos = std::pair<int, int>(14, 7);
         pacdirection_ = up;
     }
     void PacBot::move(std::pair<int, int> newLoc) {

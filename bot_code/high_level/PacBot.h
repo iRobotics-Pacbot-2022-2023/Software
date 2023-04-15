@@ -1,10 +1,10 @@
 // file for testing
-#include "Ghost.h"
+#pragma once
+#include <utility>
+#include <vector>
 class PacBot {
             public:
-                PacBot() {
-                    pos = std::pair<int, int>(5, 5);
-                }
+                PacBot();
                 std::pair<int, int> getPos();
                 void move(std::pair<int, int> newLoc);
                 enum PacDirection {
