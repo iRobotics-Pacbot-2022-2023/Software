@@ -10,6 +10,7 @@
 #include <queue>
 #include <map>
 #include <set>
+#include <iostream>
 
 using namespace std;
 
@@ -34,6 +35,7 @@ class Ghost {
         std::pair<int, int> getGhostLocation();
         Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
         std::vector<std::vector<int>> getGrid();
+        Direction getterDirection();
 
         // CALCULATING FUNCTIONS, WILL MOST LIKELY MOVE TO DIFFERENT CLASS
         std::pair<std::pair<int, int>, Ghost::Direction> get_move_based_on_target(std::pair<int, int> target);

@@ -7,6 +7,7 @@
     Ghost::Ghost(PacBot & test) {
         pacbot = test;
         curGhostLocation = std::pair<int, int>(1, 1);
+        direction_facing = up;
     }
 
     PacBot Ghost::getPac() {
@@ -22,6 +23,17 @@
         return grid;
     }
     void Ghost::ghostMove(std::pair<int, int> pair) {
+        
+        Ghost::Direction facing = getDirection(curGhostLocation, pair);
+        if (facing == Ghost::up) {
+            direction_facing = Ghost::up;
+        } else if (facing == Ghost::left) {
+            direction_facing = Ghost::left;
+        } else if (facing == Ghost::right) {
+            direction_facing = Ghost::right;
+        } else if (facing == Ghost::down) {
+            direction_facing = Ghost::down;
+        }
         curGhostLocation = pair;
     }
 
@@ -66,42 +78,73 @@
 
     // fuckkkkkkkkkk i gotta do BFS
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::get_move_based_on_target(std::pair<int, int> target) {
-        // std::vector<std::pair<int, int>> possibleMoves = find_possible_moves();
-        // std::vector<double> distances;
-        // for (std::pair<int, int> move: possibleMoves) {
-        //     distances.push_back(get_euclidian_distance(target, move) );
-        // }
-        // double minDistance = distances[0];
-        // int index = 0;
-        // // if we will reach our target, if not take the next best route
-        // for (unsigned long i = 0; i < distances.size(); i++) {
-        //     if (distances[i] < minDistance) {
-        //         index = i;
-        //         minDistance = distances[i];
-        //     }
-        // }
-        // std::pair<std::pair<int, int> , Ghost::Direction> finalMove = {possibleMoves[index], getDirection(curGhostLocation, possibleMoves[index])};
-        // return finalMove;
+        // BFS does not model the ghost movement properly
+        // i need to go back to euclidian but put the correct logic
+        // first i need to ensure that the ghosts can never reverse during chase
+        // also that they go in the right ordering
 
-        std::vector<std::pair<int, int>> vect_ = bfsPathSingle(getGhostLocation(), target, grid);
-        vect_.erase(vect_.begin());
-        std::pair<int, int> toReturn = vect_.front();
-        Ghost::Direction direct;
-        if (toReturn.first == getGhostLocation().first) {
-            if (toReturn.second < getGhostLocation().second) {
-                direct = down;
-            } else if (toReturn.second > getGhostLocation().second) {
-                direct = up;
-            }
-        } else if (toReturn.second == getGhostLocation().second) {
-            if (toReturn.first < getGhostLocation().first) {
-                direct = left;
-            } else if (toReturn.first > getGhostLocation().first) {
-                direct = right;
+        std::vector<std::pair<int, int>> possibleMoves = find_possible_moves();
+        // check if any of the possible moves make the ghost reverse
+        // if so, then delete
+        std::pair<int, int> reversed;
+        if (direction_facing == up) {
+            reversed = std::pair<int, int>(curGhostLocation.first, curGhostLocation.second - 1);
+        } else if (direction_facing == down) {
+            reversed = std::pair<int, int>(curGhostLocation.first, curGhostLocation.second + 1);
+        } else if (direction_facing == left) {
+            reversed = std::pair<int, int>(curGhostLocation.first + 1, curGhostLocation.second);
+        } else if (direction_facing == right) {
+            reversed = std::pair<int, int>(curGhostLocation.first - 1, curGhostLocation.second);
+        }
+        for (int i = 0; i < possibleMoves.size(); ++i) {
+            if (possibleMoves.at(i).first == reversed.first && possibleMoves.at(i).second == reversed.second) {
+                possibleMoves.erase(possibleMoves.begin() + i);
             }
         }
-        std::pair<std::pair<int, int>, Ghost::Direction> finalMove = {toReturn, direct};
+        // testing
+        // for (int i = 0; i < possibleMoves.size(); ++i) {
+        //     std::cout << possibleMoves.at(i).first << " " << possibleMoves.at(i).second << std::endl;
+        // }
+        
+
+        std::vector<double> distances;
+        for (std::pair<int, int> move: possibleMoves) {
+            distances.push_back(get_euclidian_distance(target, move) );
+        }
+        double minDistance = distances[0];
+        int index = 0;
+        // if we will reach our target, if not take the next best route
+        for (unsigned long i = 0; i < distances.size(); i++) {
+            if (distances[i] < minDistance) {
+                index = i;
+                minDistance = distances[i];
+            }
+        }
+        Direction facing = getDirection(curGhostLocation, possibleMoves[index]);
+        
+
+        std::pair<std::pair<int, int> , Ghost::Direction> finalMove = {possibleMoves[index], facing};
         return finalMove;
+
+        // std::vector<std::pair<int, int>> vect_ = bfsPathSingle(getGhostLocation(), target, grid);
+        // vect_.erase(vect_.begin());
+        // std::pair<int, int> toReturn = vect_.front();
+        // Ghost::Direction direct;
+        // if (toReturn.first == getGhostLocation().first) {
+        //     if (toReturn.second < getGhostLocation().second) {
+        //         direct = down;
+        //     } else if (toReturn.second > getGhostLocation().second) {
+        //         direct = up;
+        //     }
+        // } else if (toReturn.second == getGhostLocation().second) {
+        //     if (toReturn.first < getGhostLocation().first) {
+        //         direct = left;
+        //     } else if (toReturn.first > getGhostLocation().first) {
+        //         direct = right;
+        //     }
+        // }
+        // std::pair<std::pair<int, int>, Ghost::Direction> finalMove = {toReturn, direct};
+        // return finalMove;
     }
 
     vector<pair<int, int>> Ghost::bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
@@ -148,11 +191,10 @@ vector<pair<int, int>> Ghost::getNeighbors(pair<int, int> node, vector<vector<in
 
     vector<pair<int, int>> neighbors;
 
-
+    neighbors.push_back(make_pair(node.first, node.second + 1)); // up
     neighbors.push_back(make_pair(node.first - 1, node.second)); // left
     neighbors.push_back(make_pair(node.first, node.second - 1)); // down
     neighbors.push_back(make_pair(node.first + 1, node.second)); // right
-    neighbors.push_back(make_pair(node.first, node.second + 1)); // up
     
     int i = 0;
     while (i < neighbors.size()) {
@@ -197,16 +239,20 @@ vector<pair<int, int>> Ghost::getNeighbors(pair<int, int> node, vector<vector<in
 //         return get_move_based_on_target(bluezooms); 
     
 //     }
-        
+Ghost::Direction Ghost::getterDirection() {
+    return direction_facing;
+}
+
+
 Ghost::Direction Ghost::getDirection(std::pair<int, int> prevPos, std::pair<int, int> newPos) {
         if (newPos.first > prevPos.first) {
-            return right;
+            return Ghost::right;
         } else if (newPos.first < prevPos.first) {
-            return left;
+            return Ghost::left;
         } else if (newPos.second > prevPos.second) {
-            return up;
+            return Ghost::up;
         } else if (newPos.second < prevPos.second) {
-            return down;
+            return Ghost::down;
         }
         else {
             return direction_facing;
@@ -274,58 +320,41 @@ Ghost::Direction Ghost::getDirection(std::pair<int, int> prevPos, std::pair<int,
 
 //     }
     
-    // double Ghost::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
-        double Ghost::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
+    double Ghost::get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b) {
         double dx = pos_b.first - pos_a.first;
         double dy = pos_b.second - pos_b.second;
         return std::sqrt(dx*dx + dy*dy);
     }
 
-    //     bool Ghost::is_move_legal(std::pair<int, int> move, vector<vector<int>> grid) {
-    //     // how do i check the actual grid? perhaps we should have a private member for the grid?
-    //     // psuedo for now
-    //     return (move != pos && grid[move.first][move.second] != 'I' && grid[move.first][move.second] != 'n');
-    // } 
+    bool Ghost::is_move_legal(std::pair<int, int> move) {
+        return (move != curGhostLocation && grid[move.first][move.second] != I && 
+        grid[move.first][move.second] != n && 
+        grid[move.first][move.second]  != e);
+    } 
         
-// std::vector<std::pair<int, int>> Ghost::find_possible_moves() {
-//         int ghostx;
-//         int ghosty;
-//         if (ghostColor == red)  {
-//         ghostx = ghostlocs[0][0];
-//         ghosty = ghostlocs[0][1];
-//         } else if (ghostColor == orange) {
-//              ghostx = ghostlocs[1][0];
-//             ghosty = ghostlocs[1][1];
-//         } else if (ghostColor == pink) {
-//             ghostx = ghostlocs[2][0];
-//             ghosty = ghostlocs[2][1];
-//         } else {// blue
-//             ghostx = ghostlocs[3][0];
-//             ghosty = ghostlocs[3][1];
+std::vector<std::pair<int, int>> Ghost::find_possible_moves() {
+        
+        std::pair<int, int> up = std::pair<int, int>(curGhostLocation.first, curGhostLocation.second + 1); //up
+        std::pair<int, int> left = std::pair<int, int>(curGhostLocation.first - 1, curGhostLocation.second); //left
+        std::pair<int, int> down = std::pair<int, int>(curGhostLocation.first, curGhostLocation.second - 1); //down
+        std::pair<int, int> right = std::pair<int, int>(curGhostLocation.first + 1, curGhostLocation.second); //right
 
-//         }
+        std::vector<std::pair<int, int>> possible;
 
-//         std::pair<int, int> right = {ghostx + 1, ghosty};
-//         std::pair<int, int> up = {ghostx, ghosty + 1};
-//         std::pair<int, int> left = {ghostx - 1, ghosty};
-//         std::pair<int, int> down = {ghostx, ghosty - 1};
-
-//         std::vector<std::pair<int, int>> possible;
-
-//         if (is_move_legal(right)) {
-//             possible.push_back(right);
-//         }
-//         if (is_move_legal(up)) {
-//             possible.push_back(up);
-//         }
-//         if (is_move_legal(left)) {
-//             possible.push_back(left);
-//         }
-//         if (is_move_legal(down)) {
-//             possible.push_back(down);
-//         }
-//         return possible;
-//     }
+        if (is_move_legal(up)) {
+            possible.push_back(up);
+        }
+        if (is_move_legal(left)) {
+            possible.push_back(left);
+        }
+        if (is_move_legal(down)) {
+            possible.push_back(down);
+        }
+        if (is_move_legal(right)) {
+            possible.push_back(right);
+        }
+        return possible;
+    }
 
 
 
