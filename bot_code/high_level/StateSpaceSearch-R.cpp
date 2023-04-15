@@ -151,12 +151,21 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
-            child.pacman_dir;
+            if (child.pacman_pos == curr_position) child.pacman_dir = curr_direction;
+            else if (child.pacman_pos.second == curr_position.second + 1) child.pacman_dir = PacmanState::Direction::Up;
+            else if (child.pacman_pos.second == curr_position.second - 1) child.pacman_dir = PacmanState::Direction::Down;
+            else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::Right;
+            else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::Left;
 
-            child.red_ghost_pos;
-            child.blue_ghost_pos;
-            child.orange_ghost_pos;
-            child.pink_ghost_pos;
+            child.red_ghost_pos = Ghost::moveRed(child.pacman_pos, child.pacman_dir, child.grid);
+            child.blue_ghost_pos = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.grid, child.red_ghost_pos);
+            child.orange_ghost_pos = Ghost::moveOrange();
+            child.pink_ghost_pos = Ghost::movePink(child.pacman_pos, child.pacman_dir, child.grid);
+
+            // OR we could add these ghost positions to a std::set and just check
+            // if we have pacman_pos in the set or not
+
+            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
@@ -173,8 +182,6 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
 
-            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
-            
             
             if (child.depth == length) {
                 node_to_parent[child] = curr;
@@ -202,11 +209,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     BaseNode filler = best_node;
 
-    updatePacmanDir(filler.pacman_dir);
+    updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
 
     vector<pair<int, int>> path;
 
-    while (filler != nil) {
+    while (!equals(filler, nil)) {
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
     }
@@ -214,6 +221,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     return path;
 
 
+}
+
+bool StateSpaceSearchR::equals(BaseNode a, BaseNode b) {
+    return a.pacman_pos == b.pacman_pos && a.pacman_dir == b.pacman_dir && a.red_ghost_pos == b.red_ghost_pos
+        && a.blue_ghost_pos == b.blue_ghost_pos && a.orange_ghost_pos == b.orange_ghost_pos
+        && a.pink_ghost_pos == b.pink_ghost_pos && a.points == b.points && a.depth == b.depth;
 }
 
 // Don't hit the power up
@@ -244,7 +257,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     /*
     - Distance to ghost (maximize) (euclidean) (score at end)
     - pellet collected
-    - distance to cherry (minimize) (BFS / A*) (score at end)
+    - distance to cherry (minimize) (BFS / A*) (score at end) (DO NOT HIT THE POSITION) (!= )
     - distance to nearest pellet (minimize) (BFS/A*) (score at end)
     Pellet's collected > distance to cherry
     don't collect power pellet

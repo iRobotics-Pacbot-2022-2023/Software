@@ -42,7 +42,7 @@ private:
         right, up, left, down
     };
 
-    Direction direction_facing;
+    Direction direction_facing = up;
 
     void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM
 

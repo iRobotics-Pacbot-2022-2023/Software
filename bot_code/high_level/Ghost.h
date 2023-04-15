@@ -29,57 +29,31 @@ class Ghost {
         };
         Ghost();
         Ghost(PacBot & pac);
-        // Ghost(std::pair<int,int> firstPos, /*std::pair<int,int> secondPos, */ Color color_, Direction direction_, GhostState startPath, std::pair<int,int> scatter_pos );
+        // GETTERS
         PacBot getPac();
+        std::pair<int, int> getGhostLocation();
+        Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
+        std::vector<std::vector<int>> getGrid();
+
+        // CALCULATING FUNCTIONS, WILL MOST LIKELY MOVE TO DIFFERENT CLASS
         std::pair<std::pair<int, int>, Ghost::Direction> get_move_based_on_target(std::pair<int, int> target);
-
-        // pair<int,int> Ghost::getRedGhostPos() { return ghostlocs[0]; }
-        // pair<int,int> Ghost::getOrangeGhostPos() { return ghostlocs[1]; }
-        // pair<int,int> Ghost::getBlueGhostPos() { return ghostlocs[2]; }
-        // pair<int,int> Ghost::getPinkGhostPos() { return ghostlocs[3]; }
-
-
-        // void moveOrange();
-        // void moveRed();
-        // void movePink();
-        // void moveBlue();
-
-        // void moveRedChase();
-        // void moveOrangeChase();
-        // void moveBlueChase();
-        // void movePinkChase();
-
-        // void moveBlueScatter();
-        // void moveRedScatter();
-        // void moveOrangeScatter();
-        // void movePinkScatter();
-    
-        // void moveRedFrightened();
-        // void moveOrangeFrightened();
-        // void moveBlueFrightened();
-        // void movePinkFrightened();
-
-        void /* some return type for get scatter move*/ get_next_scatter_move();
-        double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
-        std::vector<std::pair<int, int>> find_possible_moves();
-        bool is_move_legal(std::pair<int, int> move);
-
         std::pair<std::pair<int, int>, Direction> _get_next_pink_chase_move();
         std::pair<std::pair<int, int>, Direction> _get_next_red_chase_move();
         std::pair<std::pair<int, int>, Direction> _get_next_orange_chase_move();
-
-        std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
-
-        Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
-        std::pair<int, int> getGhostLocation();
-
-        void ghostMove(std::pair<int, int> pair);
-        std::vector<std::vector<int>> getGrid();
-
+        std::pair<std::pair<int, int>, Direction> _get_next_blue_chase_move();
         vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
         vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
 
+        // UNFINISHED/DIFFERENT STATE
+        void /* some return type for get scatter move*/ get_next_scatter_move();
+        std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
         std::pair<std::pair<int, int>, Direction>  /* some return type for get frightened move*/ get_next_frightened_move();
+
+        // UTILITY FUNCTIONS
+        void ghostMove(std::pair<int, int> pair);
+        double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
+        std::vector<std::pair<int, int>> find_possible_moves();
+        bool is_move_legal(std::pair<int, int> move);
     
     private:
 
@@ -89,6 +63,7 @@ class Ghost {
         
         // RED, ORANGE, BLUE, PINK
         // vector<pair<int,int>> ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
+        
         std::pair<int, int> curGhostLocation;
         std::pair<int, int> scatterLocation;
 
