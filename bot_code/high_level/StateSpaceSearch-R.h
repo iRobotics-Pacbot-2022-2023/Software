@@ -76,6 +76,10 @@ class StateSpaceSearchR {
 
         vector<pair<int, int>> getNeighborsBase(pair<int, int> pos, vector<vector<int>> grid);
 
+        void updateFreightenedTimeLeft(int time) { freightened_time_left = time; }
+
+        int getFreightenedTimeLeft() { return freightened_time_left; }
+
         
 
     private:
@@ -85,6 +89,8 @@ class StateSpaceSearchR {
         PacmanState::Direction pacman_dir = PacmanState::getDirection();
 
         vector<vector<int>> grid = PacmanState::getGrid();
+
+        int freightened_time_left = 0;
 
 
         

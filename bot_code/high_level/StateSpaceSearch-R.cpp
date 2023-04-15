@@ -58,6 +58,7 @@ void StateSpaceSearchR::updateGameState() {
 
         if (curr_powerups_eaten > prev_powerups_eaten) {
             PacmanState::setPrevPowerupsEaten(curr_powerups_eaten);
+            updateFreightenedTimeLeft(30); // idk the time for the freightened state
             state = FREIGHTENED;
         }
 
