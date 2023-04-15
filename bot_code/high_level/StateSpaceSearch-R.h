@@ -70,6 +70,8 @@ class StateSpaceSearchR {
             int depth; // depth of parent = 0
         };
 
+        bool equals(BaseNode a, BaseNode b);
+
         // CHERRYONE state
 
         int euclideanDistance(pair<int, int> start, pair<int, int> goal);
