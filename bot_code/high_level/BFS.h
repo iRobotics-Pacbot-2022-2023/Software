@@ -19,6 +19,8 @@ public:
 
     vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid);
 
+    vector<pair<int, int>> bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid);
+
     vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
 
 

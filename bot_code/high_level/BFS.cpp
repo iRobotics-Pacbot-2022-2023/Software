@@ -88,6 +88,42 @@ vector<pair<int, int>> BFS::bfsPathMultiple(pair<int, int> start, set<pair<int, 
     return {};
 }
 
+vector<pair<int, int>> BFS::bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    while(!queue.empty()) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (grid[current.first][current.second] == goal) {
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            return path;
+        }
+
+        vector<pair<int, int>> neighbors = getNeighbors(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return {};
+}
+
 vector<pair<int, int>> BFS::getNeighbors(pair<int, int> node, vector<vector<int>> grid) {
     // grid range:
     // x : [0, 27]

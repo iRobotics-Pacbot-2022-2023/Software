@@ -406,7 +406,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
 }
 
-// Don't hit the power up
+// Don't hit the power up and cherry
 vector<pair<int, int>> StateSpaceSearchR::getNeighborsCherryOne(pair<int, int> pos, vector<vector<int>> grid) {
     vector<pair<int, int>> neighbors;
     neighbors.push_back(make_pair(pos.first - 1, pos.second)); // left
