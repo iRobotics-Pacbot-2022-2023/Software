@@ -124,8 +124,87 @@ vector<pair<int, int>> BFS::bfsPathUnkownGoal(pair<int, int> start, int goal, ve
     return {};
 }
 
+// we r finding the distance to the cherry pos and nearest pellet
+map<string, vector<pair<int, int>>> BFS::bfsCherryOne(pair<int, int> start, vector<vector<int>> grid) {
+    int pellet = o;
+    pair<int, int> cherry_pos = make_pair(13, 13);
+
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    bool checking_for_pellet = true;
+    bool checking_for_cherry = true;
+
+    map<string, vector<pair<int, int>>> paths = {};
+
+    while(!queue.empty() && (checking_for_pellet || checking_for_cherry)) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (checking_for_pellet && grid[current.first][current.second] == pellet
+            && checking_for_cherry && current == cherry_pos) {
+            checking_for_pellet = false;
+            checking_for_cherry = false;
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.insert(make_pair("pellet", path));
+            paths.insert(make_pair("cherry", path));
+
+            break;
+        }
+
+        if (checking_for_pellet && grid[current.first][current.second] == pellet) {
+            checking_for_pellet = false;
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.insert(make_pair("pellet", path));
+
+        }
+
+        if (checking_for_cherry && current == cherry_pos) {
+            checking_for_cherry = false;
+            
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.insert(make_pair("cherry", path));
+        }
+
+        vector<pair<int, int>> neighbors = getNeighbors(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return paths;
+
+}
+
 vector<pair<int, int>> BFS::getNeighbors(pair<int, int> node, vector<vector<int>> grid) {
-    // grid range:
+    // grid range:v
     // x : [0, 27]
     // y :[0, 30]
 
