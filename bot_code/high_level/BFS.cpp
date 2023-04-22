@@ -15,7 +15,7 @@ const int empty = 7; // No pellets here
 
 */
 
-vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
+vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
     visited_nodes_to_parents[start] = make_pair(-1, -1); // start doesn't have a parent so we set it to (-1, -1)
 
@@ -52,7 +52,7 @@ vector<pair<int, int>> BFS::bfsPathSingle(pair<int, int> start, pair<int, int> g
     return {};
 }
 
-vector<pair<int, int>> BFS::bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid) {
+vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
     visited_nodes_to_parents[start] = make_pair(-1, -1);
 
@@ -88,7 +88,7 @@ vector<pair<int, int>> BFS::bfsPathMultiple(pair<int, int> start, set<pair<int, 
     return {};
 }
 
-vector<pair<int, int>> BFS::bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid) {
+vector<pair<int, int>> bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
     visited_nodes_to_parents[start] = make_pair(-1, -1);
 
@@ -125,7 +125,7 @@ vector<pair<int, int>> BFS::bfsPathUnkownGoal(pair<int, int> start, int goal, ve
 }
 
 // we r finding the distance to the cherry pos and nearest pellet
-map<string, vector<pair<int, int>>> BFS::bfsCherryOne(pair<int, int> start, vector<vector<int>> grid) {
+map<string, vector<pair<int, int>>> bfsCherryOne(pair<int, int> start, vector<vector<int>> grid) {
     int pellet = o;
     pair<int, int> cherry_pos = make_pair(13, 13);
 
@@ -203,7 +203,7 @@ map<string, vector<pair<int, int>>> BFS::bfsCherryOne(pair<int, int> start, vect
 
 }
 
-vector<pair<int, int>> BFS::getNeighbors(pair<int, int> node, vector<vector<int>> grid) {
+vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid) {
     // grid range:v
     // x : [0, 27]
     // y :[0, 30]
