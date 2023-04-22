@@ -6,6 +6,7 @@
 #include <cmath>
 #include "grid.h"
 #include "PacBot.h"
+#include "PacmanState.h"
 
 #include <queue>
 #include <map>
@@ -29,7 +30,7 @@ class Ghost {
             frightened, chase, scatter
         };
         Ghost();
-        Ghost(PacBot & pac);
+        Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state); 
         // GETTERS
         PacBot getPac();
         std::pair<int, int> getGhostLocation();
@@ -39,10 +40,10 @@ class Ghost {
 
         // CALCULATING FUNCTIONS, WILL MOST LIKELY MOVE TO DIFFERENT CLASS
         std::pair<std::pair<int, int>, Ghost::Direction> get_move_based_on_target(std::pair<int, int> target);
-        std::pair<std::pair<int, int>, Direction> _get_next_pink_chase_move();
-        std::pair<std::pair<int, int>, Direction> _get_next_red_chase_move();
-        std::pair<std::pair<int, int>, Direction> _get_next_orange_chase_move();
-        std::pair<std::pair<int, int>, Direction> _get_next_blue_chase_move();
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_pink_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_red_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_orange_chase_move(std::pair<int, int> pacbotPos, std::pair<int, int> ghostPos);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
         vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
         vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
 
@@ -50,6 +51,7 @@ class Ghost {
         void /* some return type for get scatter move*/ get_next_scatter_move();
         std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_frightened_move();
+        std::pair<std::pair<int, int> , Ghost::Direction > _get_next_state_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
 
         // UTILITY FUNCTIONS
         void ghostMove(std::pair<int, int> pair);
@@ -68,11 +70,10 @@ class Ghost {
         
         std::pair<int, int> curGhostLocation;
         std::pair<int, int> scatterLocation;
+        std::pair<int, int> pacBotPos;
 
         // gonna create some variables for testing
         // Grid grid;
-        PacBot pacbot;
-
 
         vector<vector<int>> grid =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                                         {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},

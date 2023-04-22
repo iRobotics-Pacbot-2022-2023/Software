@@ -2,9 +2,9 @@
 #include <iostream>
 
 int main () {
-    PacBot pac;
+    // PacBot pac;
     // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
-    Ghost ghost(pac);
+    // Ghost ghost();
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
     // std::cout << ghost.is_move_legal(std::pair<int, int>(0,0)) << std::endl;
     // std::cout << ghost._get_next_pink_chase_move().first.first << " " << ghost._get_next_pink_chase_move().first.second << std::endl;

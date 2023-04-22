@@ -30,9 +30,7 @@ private:
   // cherry time
     
     //********************************** Direction and grid
-    enum Direction {
-        right, up, left, down
-    };
+    
     Direction direction_facing = up;
     void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM
     vector<vector<int>> getGrid() { return grid; }
@@ -52,9 +50,12 @@ public:
         prev_powerups_eaten = 0; // retrieve from server
         curr_powerups_eaten = 0; // retrieve from server
     }
+    enum Direction {
+        right, up, left, down
+    };
     //************************
                                  // Bottom Left
-           vector<vector<int>>  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
+           vector<vector<int>> grid =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                                         {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},
                                         {I,o,I,I,o,I,I,o,I,I,o,I,e,e,e,I,v,I,e,e,e,I,o,I,I,o,I,I,I,o,I},
                                         {I,o,I,I,o,o,o,o,I,I,o,I,e,e,e,I,v,I,e,e,e,I,o,I,I,o,I,I,I,o,I},
