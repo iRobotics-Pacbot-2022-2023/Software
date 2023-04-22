@@ -3,6 +3,7 @@
 //Therefore we want numbers from 0 to 2^64-1 this is also to avoid assigning the same hash values
 unsigned long long ZorbTable [28][31][7]; 
 
+//Random Number generator for 64 bits
 unsigned long long randomNum(){ 
     std::random_device rd;
     std::mt19937_64 gen(rd());
@@ -36,24 +37,24 @@ for(i = 0; i < 30; i++){
             if(grid[i][j] != v){ // need to figure out how to detect if a cell isnt empty
             //Need to have a specfic int value for each piece
             if(grid[i][j] == I){
-                piece = 8;
+                piece = I;
             }
             else if(grid[i][j] == o){
-                piece = 9;
+                piece = o;
             }
             else if(grid[i][j] == e){
-                piece = 10;
+                piece = e;
             }
             else if(grid[i][j] == O){
-                piece = 11;
+                piece = O;
             }
             else if(grid[i][j] == n){
-                piece = 12; 
+                piece = n; 
             }
             else if(grid[i][j] == P){
-                piece = 13; 
+                piece = P; 
             }
-            hash ^= ZorbTable[i][j][piece];              
+            hash ^= ZorbTable[i][j][piece]; //Use xor to calculate hash value and allows for hash's to be reused             
             }
         }
       }
