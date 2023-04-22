@@ -1,7 +1,7 @@
 #include "Hash_shit.h"
 //create keys that are random  unsigned long long  since they have to be at least 64 bits
 //Therefore we want numbers from 0 to 2^64-1 this is also to avoid assigning the same hash values
-
+unsigned long long ZorbTable[28][31][7];
 
 //Random Number generator for 64 bits
 unsigned long long randomNum(){ 
