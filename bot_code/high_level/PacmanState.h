@@ -31,7 +31,7 @@ private:
     
     //********************************** Direction and grid
     
-    Direction direction_facing = up;
+    Direction direction_facing;
     void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM
     vector<vector<int>> getGrid() { return grid; }
    //*********************/
@@ -55,11 +55,7 @@ public:
     };
     //************************
                                  // Bottom Left
-<<<<<<< HEAD
-           vector<vector<int>> grid =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
-=======
            vector<vector<int>> grid  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
->>>>>>> 5dc61725c88512c6a127e055262389e64cdc354f
                                         {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},
                                         {I,o,I,I,o,I,I,o,I,I,o,I,e,e,e,I,v,I,e,e,e,I,o,I,I,o,I,I,I,o,I},
                                         {I,o,I,I,o,o,o,o,I,I,o,I,e,e,e,I,v,I,e,e,e,I,o,I,I,o,I,I,I,o,I},
