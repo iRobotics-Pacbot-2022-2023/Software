@@ -156,8 +156,8 @@ map<string, vector<pair<int, int>>> bfsCherryOne(pair<int, int> start, vector<ve
                 current = visited_nodes_to_parents[current];
             }
 
-            paths.insert(make_pair("pellet", path));
-            paths.insert(make_pair("cherry", path));
+            paths.emplace(make_pair("pellet", path));
+            paths.emplace(make_pair("cherry", path));
 
             break;
         }
@@ -172,7 +172,7 @@ map<string, vector<pair<int, int>>> bfsCherryOne(pair<int, int> start, vector<ve
                 current = visited_nodes_to_parents[current];
             }
 
-            paths.insert(make_pair("pellet", path));
+            paths.emplace(make_pair("pellet", path));
 
         }
 
@@ -186,7 +186,7 @@ map<string, vector<pair<int, int>>> bfsCherryOne(pair<int, int> start, vector<ve
                 current = visited_nodes_to_parents[current];
             }
 
-            paths.insert(make_pair("cherry", path));
+            paths.emplace(make_pair("cherry", path));
         }
 
         vector<pair<int, int>> neighbors = getNeighbors(current, grid);
