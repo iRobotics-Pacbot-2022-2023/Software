@@ -52,6 +52,8 @@ vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, 
     return {};
 }
 
+// use for freightened state - goals refers to all ghosts in frieghtened state
+// use for power up state, goals refer to power up points
 vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
     visited_nodes_to_parents[start] = make_pair(-1, -1);
@@ -125,7 +127,9 @@ vector<pair<int, int>> bfsPathUnkownGoal(pair<int, int> start, int goal, vector<
 }
 
 // we r finding the distance to the cherry pos and nearest pellet
-map<string, vector<pair<int, int>>> bfsCherryOne(pair<int, int> start, vector<vector<int>> grid) {
+// If check_nearest_pellet=true, map will have "cherry" and "pellet" keys - cherry one
+// if check_nearest_pellet=false, the map will only have "cherry" key. - cherry two
+map<string, vector<pair<int, int>>> bfsCherry(bool check_nearest_pellet, pair<int, int> start, vector<vector<int>> grid) {
     int pellet = o;
     pair<int, int> cherry_pos = make_pair(13, 13);
 
@@ -135,7 +139,7 @@ map<string, vector<pair<int, int>>> bfsCherryOne(pair<int, int> start, vector<ve
     queue<pair<int, int>> queue;
     queue.push(start);
 
-    bool checking_for_pellet = true;
+    bool checking_for_pellet = (check_nearest_pellet) ? true : false;
     bool checking_for_cherry = true;
 
     map<string, vector<pair<int, int>>> paths = {};

@@ -17,8 +17,8 @@ void tablefiller(){
 int i, j, k;
 //fill zorobist table
 for(i = 0; i < 30; i++){
-    for(j = 0; j < 30; j++){
-        for(k = 0; k < 7; k++){
+    for(j = 0; j < 30; j++) {
+        for(k = 0; k < 7; k++) {
         ZorbTable[i][j][k] = randomNum();
         }
     }
