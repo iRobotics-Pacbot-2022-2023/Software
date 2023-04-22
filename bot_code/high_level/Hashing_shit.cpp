@@ -1,7 +1,7 @@
 #include "Hash_shit.h"
 //create keys that are random  unsigned long long  since they have to be at least 64 bits
 //Therefore we want numbers from 0 to 2^64-1 this is also to avoid assigning the same hash values
-unsigned long long ZorbTable [28][31][7]; 
+
 
 //Random Number generator for 64 bits
 unsigned long long randomNum(){ 
@@ -31,7 +31,7 @@ for(i = 0; i < 30; i++){
 
  unsigned long long hashgenerator(vector<vector<int>> grid){
  int i, j, piece;
- int hash = 0;
+ unsigned long long hash = 0;
       for(i = 0; i < grid.size(); i++){
         for(j = 0; j < grid[i].size(); j++){
             if(grid[i][j] != v){ // need to figure out how to detect if a cell isnt empty
