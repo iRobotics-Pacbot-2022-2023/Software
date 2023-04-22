@@ -15,7 +15,7 @@ const int empty = 7; // No pellets here
 */
 
 
-vector<pair<int, int>> AStar::aStarPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
+vector<pair<int, int>> aStarPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
     visited_nodes_to_parents[start] = make_pair(-1, -1);
 
@@ -56,7 +56,7 @@ vector<pair<int, int>> AStar::aStarPathSingle(pair<int, int> start, pair<int, in
 
 
 
-vector<pair<int, int>> AStar::getNeighborsAStar(pair<int, int> node, vector<vector<int>> grid) {
+vector<pair<int, int>> getNeighborsAStar(pair<int, int> node, vector<vector<int>> grid) {
     // grid range:
     // x : [0, 27]
     // y :[0, 30]
@@ -80,6 +80,6 @@ vector<pair<int, int>> AStar::getNeighborsAStar(pair<int, int> node, vector<vect
     return neighbors;
 }
 
-int AStar::euclideanDistance(pair<int, int> start, pair<int, int> goal) {
+int euclideanDistance(pair<int, int> start, pair<int, int> goal) {
     return pow(start.first - goal.first, 2) + pow(start.second - goal.second, 2);
 }

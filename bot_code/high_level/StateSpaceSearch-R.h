@@ -62,9 +62,13 @@ class StateSpaceSearchR {
             pair<int, int> pacman_pos; // first = x, second - y
             PacmanState::Direction pacman_dir;
             pair<int, int> red_ghost_pos;
+            Ghost::Direction red_ghost_dir;
             pair<int, int> blue_ghost_pos;
+            Ghost::Direction blue_ghost_dir;
             pair<int, int> orange_ghost_pos;
+            Ghost::Direction orange_ghost_dir;
             pair<int, int> pink_ghost_pos;
+            Ghost::Direction pink_ghost_dir;
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
