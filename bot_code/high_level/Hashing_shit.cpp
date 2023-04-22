@@ -29,14 +29,34 @@ for(i = 0; i < 30; i++){
 
 
  unsigned long long hashgenerator(vector<vector<int>> grid){
- int i, j;
+ int i, j, piece;
+ int hash = 0;
       for(i = 0; i < grid.size(); i++){
         for(j = 0; j < grid[i].size(); j++){
             if(grid[i][j] != v){ // need to figure out how to detect if a cell isnt empty
-            int piece = grid[i][j]; 
-                         
+            //Need to have a specfic int value for each piece
+            if(grid[i][j] == I){
+                piece = 8;
+            }
+            else if(grid[i][j] == o){
+                piece = 9;
+            }
+            else if(grid[i][j] == e){
+                piece = 10;
+            }
+            else if(grid[i][j] == O){
+                piece = 11;
+            }
+            else if(grid[i][j] == n){
+                piece = 12; 
+            }
+            else if(grid[i][j] == P){
+                piece = 13; 
+            }
+            hash ^= ZorbTable[i][j][piece];              
             }
         }
       }
+      return hash; 
     }
     
