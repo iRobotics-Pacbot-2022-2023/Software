@@ -26,7 +26,8 @@ const int O = 4; // power point
 const int n = 5; // untouchable
 const int P = 6; // Pacbot
 const int v = 7; // visited - No pellets here
-const int ch = 8; // cherry
+// const int ch = 8; // cherry
+
 // Points
 const int CHERRY_POINTS = 100;
 const int POWER_POINTS = 50;
