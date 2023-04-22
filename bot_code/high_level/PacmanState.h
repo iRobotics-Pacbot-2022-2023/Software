@@ -13,6 +13,11 @@
 
 
 class PacmanState {
+    public:
+    enum Direction {
+            right, up, left, down
+        };    
+    
 private:
 
     // int score;
@@ -50,9 +55,7 @@ public:
         prev_powerups_eaten = 0; // retrieve from server
         curr_powerups_eaten = 0; // retrieve from server
     }
-    enum Direction {
-        right, up, left, down
-    };
+    
     //************************
                                  // Bottom Left
 <<<<<<< HEAD
