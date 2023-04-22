@@ -41,7 +41,7 @@
     // we will move this to the state space search since this depends on the pacbot direction
     // im starting to think all of harvards code is kinda janky for ghost cuz 
     // this is probs not correct
-    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_pink_chase_move() {
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_pink_chase_move(std::vector<std::vector<int>> grid, std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Direction ghostDirection) {
         std::pair<int, int> pinkMove;
         if (pacbot.getPacDirection() == PacBot::up) {
             pinkMove.first = pacbot.getPos().first - 4;
@@ -60,7 +60,26 @@
 
     }
 
-std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_move(){
+    std::pair<std::pair<int, int> , Ghost::Direction > Ghost::_get_next_state_move(std::vector<std::vector<int>> grid, std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Direction ghostDirection) {
+        if (current_ghost_state == frightened) {
+            return _get_next_frightened_move();
+        } else if (current_ghost_state == chase) {
+            if (ghost_color == orange) {
+                return _get_next_orange_chase_move(grid, pacbotPos, pacbotDirection,ghostPos, ghostDirection );
+            } else if (ghost_color == blue) {
+                return _get_next_blue_chase_move(grid, pacbotPos, pacbotDirection,ghostPos, ghostDirection);
+            } else if (ghost_color == red) {
+                return _get_next_red_chase_move(grid, pacbotPos, pacbotDirection,ghostPos, ghostDirection);
+            } else {
+                return _get_next_pink_chase_move(grid, pacbotPos, pacbotDirection,ghostPos, ghostDirection);
+            }
+        } else {
+            return _get_next_scatter_move();
+        }
+    }
+
+
+std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_move(std::vector<std::vector<int>> grid, std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Direction ghostDirection){
 
      std::pair<int, int> bluezooms;
         if(pacbot.getPacDirection() == PacBot::up){
@@ -86,15 +105,15 @@ std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_mov
 
     }
     // we will put this into the state class to have access to the pacbot location
-    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_red_chase_move() {
-        return get_move_based_on_target(pacbot.getPos());
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_red_chase_move(std::vector<std::vector<int>> grid, std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Direction ghostDirection) {
+        return get_move_based_on_target(pacbotPos);
     }
 
-    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move() {
-        if (get_euclidian_distance(curGhostLocation, pacbot.getPos()) < 8) {
+    std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_orange_chase_move(std::vector<std::vector<int>> grid, std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Direction ghostDirection) {
+        if (get_euclidian_distance(pacbotPos, ghostPos) < 8) {
             return _get_next_scatter_move();
         }
-        return get_move_based_on_target(pacbot.getPos());
+        return get_move_based_on_target(pacbotPos);
     }
 
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_scatter_move() {
@@ -300,6 +319,7 @@ std::vector<std::pair<int, int>> Ghost::find_possible_moves() {
         }
         return possible;
     }
+
 
 
 
