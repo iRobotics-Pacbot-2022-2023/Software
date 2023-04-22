@@ -8,6 +8,7 @@
         pacbot = test;
         curGhostLocation = std::pair<int, int>(1, 1);
         direction_facing = up;
+        scatterLocation = std::pair<int, int>(25,32);
     }
 
     PacBot Ghost::getPac() {

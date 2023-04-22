@@ -41,11 +41,15 @@ int main () {
     ghost.ghostMove(std::pair<int, int>(1,1));
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
     // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
-    while ((ghost.getGhostLocation().first != pac.getPos().first) || (ghost.getGhostLocation().second != pac.getPos().second)) {
-        std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
+
+    // (ghost.getGhostLocation().first != pac.getPos().first) || (ghost.getGhostLocation().second != pac.getPos().second)
+    int count = 100;
+    while (count > 0) {
+        std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << " " << ghost.get_euclidian_distance(ghost.getGhostLocation(), pac.getPos()) << std::endl;
         // std::cout << ghost._get_next_red_chase_move().first.first << " " << ghost._get_next_red_chase_move().first.second << std::endl;
-        std::pair<int, int> newMove(ghost._get_next_red_chase_move().first.first, ghost._get_next_red_chase_move().first.second);
+        std::pair<int, int> newMove(ghost._get_next_orange_chase_move().first.first, ghost._get_next_orange_chase_move().first.second);
         ghost.ghostMove(newMove);
+        --count;
     }
     return 0;
 }
