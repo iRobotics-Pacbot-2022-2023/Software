@@ -15,7 +15,7 @@ unsigned long long randomNum(){
 //fills table function with the generated keys
 void tablefiller(){
 int i, j, k;
-
+//fill zorobist table
 for(i = 0; i < 30; i++){
     for(j = 0; j < 30; j++) {
         for(k = 0; k < 7; k++) {
@@ -27,9 +27,16 @@ for(i = 0; i < 30; i++){
 
 }
 
-//need to figure out what would be considered empty for each cell
+
  unsigned long long hashgenerator(vector<vector<int>> grid){
  int i, j;
-
+      for(i = 0; i < grid.size(); i++){
+        for(j = 0; j < grid[i].size(); j++){
+            if(grid[i][j] != v){ // need to figure out how to detect if a cell isnt empty
+            int piece = grid[i][j]; 
+                         
+            }
+        }
+      }
     }
     
