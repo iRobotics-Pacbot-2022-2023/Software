@@ -13,6 +13,11 @@
 
 
 class PacmanState {
+    public:
+    enum Direction {
+            right, up, left, down
+        };    
+    
 private:
 
     // int score;
@@ -30,10 +35,8 @@ private:
   // cherry time
     
     //********************************** Direction and grid
-    enum Direction {
-        right, up, left, down
-    };
-    Direction direction_facing = up;
+    
+    Direction direction_facing;
     void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM
     vector<vector<int>> getGrid() { return grid; }
    //*********************/
@@ -52,6 +55,7 @@ public:
         prev_powerups_eaten = 0; // retrieve from server
         curr_powerups_eaten = 0; // retrieve from server
     }
+    
     //************************
                                  // Bottom Left
            vector<vector<int>> grid  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0

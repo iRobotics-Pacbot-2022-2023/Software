@@ -1,8 +1,7 @@
 #include "Hash_shit.h"
 //create keys that are random  unsigned long long  since they have to be at least 64 bits
 //Therefore we want numbers from 0 to 2^64-1 this is also to avoid assigning the same hash values
-
-
+unsigned long long ZorbTable[28][31][7]; //28 31 7
 //Random Number generator for 64 bits
 unsigned long long randomNum(){ 
     std::random_device rd;
@@ -17,8 +16,8 @@ unsigned long long randomNum(){
 void tablefiller(){
 int i, j, k;
 //fill zorobist table
-for(i = 0; i < 30; i++){
-    for(j = 0; j < 30; j++) {
+for(i = 0; i < 28; i++){
+    for(j = 0; j < 31; j++) {
         for(k = 0; k < 7; k++) {
         ZorbTable[i][j][k] = randomNum();
         }
