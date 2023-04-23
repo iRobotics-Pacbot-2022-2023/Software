@@ -622,5 +622,5 @@ int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> go
     int x2 = goal.first;
     int y2 = goal.second;
 
-    return pow(x2 - x1, 2) + pow(y2 - y1, 2);
+    return (int) sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
