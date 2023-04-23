@@ -28,7 +28,8 @@ private:
     // *************************  Data for pellets, powerups and cherries
     int pellets_left;
     int pellets_eaten;
-    int cherries_eaten;
+    int prev_cherries_eaten;
+    int curr_cherries_eaten;
     int prev_powerups_eaten; // update after we change state (+1) (POWERUP -> FREIGHTENED)
     int curr_powerups_eaten; // update after we eat a powerup (+1)
     //***************************
@@ -51,9 +52,10 @@ public:
         pos = botPos; // retrieve from server
         pellets_left = 0; // retrieve from server
         pellets_eaten = 0; // retrieve from server
-        cherries_eaten = 0; // retrieve from server
+        prev_cherries_eaten = 0; // retireve from server
+        curr_cherries_eaten = prev_cherries_eaten;
         prev_powerups_eaten = 0; // retrieve from server
-        curr_powerups_eaten = 0; // retrieve from server
+        curr_powerups_eaten = prev_powerups_eaten; 
     }
     
     //************************
@@ -106,22 +108,32 @@ public:
     }
     //*****************************
 
-    //************************Cherry getter and setter
-    int getCherriesEaten() {
-        return cherries_eaten;
+    //************************Prev Cherry getter and setter
+    int getPrevCherriesEaten() {
+        return prev_cherries_eaten;
     }
 
-    void setCherriesEaten(int new_cherries_eaten) {
-        cherries_eaten = new_cherries_eaten;
+    void setPrevCherriesEaten(int new_cherries_eaten) {
+        prev_cherries_eaten = new_cherries_eaten;
     }
+
+    //************************Curr Cherry getter and setter
+    int getCurrCherriesEaten() {
+        return curr_cherries_eaten;
+    }
+
+    void setCurrCherriesEaten(int new_cherries_eaten) {
+        curr_cherries_eaten = new_cherries_eaten;
+    }
+
     //************************
 
     //************************ Prepowerup getter and setter
-    void setPrePowerUpsEaten(int new_powerups_eaten) {
+    void setPrevPowerUpsEaten(int new_powerups_eaten) {
         prev_powerups_eaten = new_powerups_eaten;
     }
 
-    int getPrePowerUpsEaten() {
+    int getPrevPowerUpsEaten() {
         return prev_powerups_eaten;
     }
     //************************
