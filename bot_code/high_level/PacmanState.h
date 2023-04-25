@@ -17,52 +17,9 @@ class PacmanState {
     enum Direction {
             right, up, left, down
         };    
-<<<<<<< HEAD
     //************************ Constructor
     PacmanState();
     PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int prev_powerups, int curr_powerup);
-=======
-    
-private:
-
-    // int score;
-    std::pair<int, int> pos;
-    // int lives;
-
-    bool gameover = false;
-    // *************************  Data for pellets, powerups and cherries
-    int pellets_left;
-    int pellets_eaten;
-    int prev_cherries_eaten;
-    int curr_cherries_eaten;
-    int prev_powerups_eaten; // update after we change state (+1) (POWERUP -> FREIGHTENED)
-    int curr_powerups_eaten; // update after we eat a powerup (+1)
-    //***************************
-  // cherry time
-    
-    //********************************** Direction and grid
-    
-    Direction direction_facing;
-    void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM
-    vector<vector<int>> getGrid() { return grid; }
-   //*********************/
-    // Position, gameover, pellets/cherries/powerups, direction_facing, grid
-public:
-    //************************ Constructor
-    PacmanState();
-    PacmanState(std::pair<int, int> botPos) {
-        // score = 0; // retrieve from server
-        // lives = 3; // retrieve from server
-        gameover = false; // retrieve from server
-        pos = botPos; // retrieve from server
-        pellets_left = 0; // retrieve from server
-        pellets_eaten = 0; // retrieve from server
-        prev_cherries_eaten = 0; // retireve from server
-        curr_cherries_eaten = prev_cherries_eaten;
-        prev_powerups_eaten = 0; // retrieve from server
-        curr_powerups_eaten = prev_powerups_eaten; 
-    }
->>>>>>> fa171f58509dfc781fd059d8c724814c980817ca
     
     void updateGrid(vector<vector<int>> new_grid); // GET FROM SYSTEM
     vector<vector<int>> getGrid();

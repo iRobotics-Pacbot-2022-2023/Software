@@ -3,7 +3,6 @@
 #include <iostream>
 #include "Hash_shit.h"
 int main () {
-<<<<<<< HEAD
     // PacBot pac;
     vector<vector<int>> grid  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                                         {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},
@@ -50,9 +49,7 @@ int main () {
     // }
     
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
-=======
     //PacBot pac;
->>>>>>> fa171f58509dfc781fd059d8c724814c980817ca
     // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
     //Ghost ghost(pac);
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
@@ -88,7 +85,6 @@ int main () {
 
 
 
-<<<<<<< HEAD
     // ghost.ghostMove(std::pair<int, int>(1,1));
     // // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
     // // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
@@ -102,7 +98,6 @@ int main () {
         ghost.ghostMove(newMove);
     }
     std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
-=======
     //ghost.ghostMove(std::pair<int, int>(1,1));
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
     // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
@@ -149,11 +144,10 @@ int main () {
     tablefiller(); 
     unsigned long long grit = hashgenerator(grid); 
     //initial grid state
-    cout << "Hash Value: " << grit << std::endl; 
+    std::cout << "Hash Value: " << grit << std::endl; 
     //if we change the grid state
     int piece = grid[22][14]; 
     grid[22][14] = v; 
     ///grit ^= ZorbTable[22][14][piece]; 
->>>>>>> fa171f58509dfc781fd059d8c724814c980817ca
     return 0;
 }
