@@ -4,6 +4,8 @@ using namespace std;
 
 #include <vector>
 
+#include <utility>
+
 // Variables
 
 // Game params

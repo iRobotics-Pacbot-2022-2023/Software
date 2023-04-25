@@ -72,23 +72,42 @@ class StateSpaceSearchR {
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
+            // bool cherry_eaten;
+            // bool powerup_eaten;
         };
 
-        // BASE state
-        struct PowerUpNode {
+        // FREIGHTENED state
+        struct FreightenedNode {
             pair<int, int> pacman_pos; // first = x, second - y
             PacmanState::Direction pacman_dir;
+
             pair<int, int> red_ghost_pos;
+            Ghost::Direction red_ghost_dir;
+            Ghost::GhostState red_ghost_state;
+
             pair<int, int> blue_ghost_pos;
+            Ghost::Direction blue_ghost_dir;
+            Ghost::GhostState blue_ghost_state;
+
             pair<int, int> orange_ghost_pos;
+            Ghost::Direction orange_ghost_dir;
+            Ghost::GhostState orange_ghost_state;
+
             pair<int, int> pink_ghost_pos;
+            Ghost::Direction pink_ghost_dir;
+            Ghost::GhostState pink_ghost_state;
+
             vector<vector<int>> grid;
-            float points; // pellets collected & distance to ghosts
+            int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
-            bool powerup_eaten;
+            // bool cherry_eaten;
+            // bool powerup_eaten;
         };
 
+        
         bool baseNodeEquals(BaseNode a, BaseNode b);
+
+        bool freightenedNodeEquals(FreightenedNode a, FreightenedNode b);
 
         // CHERRYONE state
 
@@ -98,11 +117,48 @@ class StateSpaceSearchR {
 
         vector<pair<int, int>> getNeighborsCherryOne(pair<int, int> pos, vector<vector<int>> grid);
 
+        vector<pair<int, int>> getNeighborsPowerUp(pair<int, int> pos, vector<vector<int>> grid);
+
         void updateFreightenedTimeLeft(int time) { freightened_time_left = time; }
 
         int getFreightenedTimeLeft() { return freightened_time_left; }
 
-        
+
+        //************************ Prepowerup getter and setter
+        void setPrevPowerUpsEaten(int new_powerups_eaten) {
+            prev_powerups_eaten = new_powerups_eaten;
+        }
+
+        int getPrevPowerUpsEaten() {
+            return prev_powerups_eaten;
+        }
+        //************************
+        //*********************** Currpowerup getter and setter
+        void setCurrPowerUpsEaten(int new_powerups_eaten) {
+            curr_powerups_eaten = new_powerups_eaten;
+        }
+
+        int getCurrPowerUpsEaten() {
+            return curr_powerups_eaten;
+        }
+
+        //************************Prev Cherry getter and setter
+        int getPrevCherriesEaten() {
+            return prev_cherries_eaten;
+        }
+
+        void setPrevCherriesEaten(int new_cherries_eaten) {
+            prev_cherries_eaten = new_cherries_eaten;
+        }
+
+        //************************Curr Cherry getter and setter
+        int getCurrCherriesEaten() {
+            return curr_cherries_eaten;
+        }
+
+        void setCurrCherriesEaten(int new_cherries_eaten) {
+            curr_cherries_eaten = new_cherries_eaten;
+        }
 
     private:
 
@@ -113,6 +169,19 @@ class StateSpaceSearchR {
         vector<vector<int>> grid = PacmanState::getGrid();
 
         int freightened_time_left = 0;
+
+        int prev_powerups_eaten = 0; // retrieve from server
+
+        int curr_powerups_eaten = prev_powerups_eaten;
+
+        int prev_cherries_eaten = 0; // retrieve from server
+
+        int curr_cherries_eaten = prev_cherries_eaten;
+
+        Ghost::GhostState red_ghost_state = GhostState::getRedGhostState();
+        Ghost::GhostState blue_ghost_state = GhostState::getBlueGhostState();
+        Ghost::GhostState orange_ghost_state = GhostState::getOrangeGhostState();
+        Ghost::GhostState pink_ghost_state = GhostState::getPinkGhostState();
 
 
         
