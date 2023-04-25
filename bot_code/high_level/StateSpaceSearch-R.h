@@ -18,6 +18,10 @@
 class StateSpaceSearchR {
     public:
 
+        StateSpaceSearchR(PacmanState p, Ghost g) {
+
+        }
+
         enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
 
         // void updateGameState(GameState newState) { state = newState; }
@@ -124,6 +128,8 @@ class StateSpaceSearchR {
         int getFreightenedTimeLeft() { return freightened_time_left; }
 
 
+        // POWER UP
+
         //************************ Prepowerup getter and setter
         void setPrevPowerUpsEaten(int new_powerups_eaten) {
             prev_powerups_eaten = new_powerups_eaten;
@@ -142,6 +148,8 @@ class StateSpaceSearchR {
             return curr_powerups_eaten;
         }
 
+        // CHERRY 
+        
         //************************Prev Cherry getter and setter
         int getPrevCherriesEaten() {
             return prev_cherries_eaten;

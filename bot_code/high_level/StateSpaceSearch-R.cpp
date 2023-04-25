@@ -110,7 +110,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
    map<BaseNode, BaseNode> node_to_parent;
 
-   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+   vector<BaseNode&> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
    queue<BaseNode> queue;
 
@@ -227,8 +227,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     BaseNode best_node;
     best_node.points = -1;
 
-    for (auto n : node_to_parent) {
-        BaseNode curr = n.first;
+    for (auto n : final_positions) { // node_to_parent
+        BaseNode curr = n; // n.first
 
         if (curr.depth == length) {
             int red_distance = euclideanDistance(curr.pacman_pos, curr.red_ghost_pos);
@@ -301,7 +301,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
    map<BaseNode, BaseNode> node_to_parent;
 
-   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+   vector<BaseNode&> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
    queue<BaseNode> queue;
 
@@ -406,8 +406,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     BaseNode best_node;
     best_node.points = -1;
 
-    for (auto n : node_to_parent) {
-        BaseNode curr = n.first;
+    for (auto n : final_positions) { // node_to_parent
+        BaseNode curr = n; // n.first
         
         if (curr.depth == length && curr.points > best_node.points) {
             int red_distance = euclideanDistance(curr.pacman_pos, curr.red_ghost_pos);
@@ -474,7 +474,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
 
     map<BaseNode, BaseNode> node_to_parent;
 
-   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+   vector<BaseNode&> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
    queue<BaseNode> queue;
 
@@ -598,8 +598,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     BaseNode best_node;
     best_node.points = -1;
 
-    for (auto n : node_to_parent) {
-        BaseNode curr = n.first;
+    for (auto n : final_positions) { // node_to_parent
+        BaseNode curr = n; // n.first
         
         if (curr.depth == length && curr.points > best_node.points) {
             int red_distance = euclideanDistance(curr.pacman_pos, curr.red_ghost_pos);
@@ -645,7 +645,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
     map<BaseNode, BaseNode> node_to_parent;
 
-   vector<BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
+   vector<BaseNode&> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
    queue<BaseNode> queue;
 
@@ -772,8 +772,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
     BaseNode best_node;
     best_node.points = -1;
 
-    for (auto n : node_to_parent) {
-        BaseNode curr = n.first;
+    for (auto n : final_positions) { // node_to_parent
+        BaseNode curr = n; // n.first
         
         if (curr.depth == length && curr.points > best_node.points) {
             int red_distance = euclideanDistance(curr.pacman_pos, curr.red_ghost_pos);
@@ -983,8 +983,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     FreightenedNode best_node;
     best_node.points = -1;
 
-    for (auto n : node_to_parent) {
-        FreightenedNode curr = n.first;
+    for (auto n : final_positions) { // node_to_parent
+        FreightenedNode curr = n; // n.first
         
         if (curr.depth == length && curr.points > best_node.points) {
 

@@ -3,10 +3,8 @@
 //************************ Constructor and Destructor
 PacmanState::PacmanState() {
 }
-// PacmanState::~PacmanState() {
 
-// }
-PacmanState::PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int prev_powerups, int curr_powerup) {
+PacmanState::PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int powerups) {
      {
         // score = 0; // retrieve from server
         // lives = 3; // retrieve from server
@@ -16,8 +14,7 @@ PacmanState::PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacD
         pellets_left = pelletsLeft; // retrieve from server
         pellets_eaten = pellets_eat; // retrieve from server
         cherries_eaten = cherries_eat; // retrieve from server
-        prev_powerups_eaten = prev_powerups; // retrieve from server
-        curr_powerups_eaten = curr_powerup; // retrieve from server
+        powerups_eaten = powerups; // retrieve from server
     }
 }
 //************************ Constructor and Destructor
@@ -27,29 +24,29 @@ std::pair<int, int> PacmanState::getBotPos() {
 }
 //************************
 
-void PacmanState::movePlayer(std::pair<int, int> move) {
+// void PacmanState::movePlayer(std::pair<int, int> move) {
     
-    if (move.first > pos.first) {
-            direction_facing = PacmanState::Direction::right;
-        } else if (move.first < pos.first) {
-            direction_facing = PacmanState::Direction::left;
-        } else if (move.second > pos.second) {
-            direction_facing = PacmanState::Direction::up;
-        } else if (move.second < pos.second) {
-            direction_facing = PacmanState::Direction::down;
-        }
-        pos.first = move.first;
-        pos.second = move.second; 
-}
+//     if (move.first > pos.first) {
+//             direction_facing = PacmanState::Direction::right;
+//         } else if (move.first < pos.first) {
+//             direction_facing = PacmanState::Direction::left;
+//         } else if (move.second > pos.second) {
+//             direction_facing = PacmanState::Direction::up;
+//         } else if (move.second < pos.second) {
+//             direction_facing = PacmanState::Direction::down;
+//         }
+//         pos.first = move.first;
+//         pos.second = move.second; 
+// }
 
-    bool PacmanState::hasCollided(std::vector<std::pair<int, int>> ghostLocs) {
-        for (int i = 0; i < ghostLocs.size(); ++i) {
-            if ((ghostLocs.at(i).first == pos.first && ghostLocs.at(i).second == pos.second)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//     bool PacmanState::hasCollided(std::vector<std::pair<int, int>> ghostLocs) {
+//         for (int i = 0; i < ghostLocs.size(); ++i) {
+//             if ((ghostLocs.at(i).first == pos.first && ghostLocs.at(i).second == pos.second)) {
+//                 return true;
+//             }
+//         }
+//         return false;
+//     }
     // void PacmanState::addPowerUpScore() {
     //     increaseScore(50);
     // }
