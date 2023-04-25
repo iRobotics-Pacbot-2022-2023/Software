@@ -2,13 +2,23 @@
 
 //************************ Constructor and Destructor
 PacmanState::PacmanState() {
-        gameover = false;
-        pos.first = 14;
-        pos.second = 7;
-        pellets_left = 236;
 }
-PacmanState::~PacmanState() {
+// PacmanState::~PacmanState() {
 
+// }
+PacmanState::PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int prev_powerups, int curr_powerup) {
+     {
+        // score = 0; // retrieve from server
+        // lives = 3; // retrieve from server
+        gameover = false; // retrieve from server
+        pos = botPos; // retrieve from server
+        direction_facing = pacDirection;
+        pellets_left = pelletsLeft; // retrieve from server
+        pellets_eaten = pellets_eat; // retrieve from server
+        cherries_eaten = cherries_eat; // retrieve from server
+        prev_powerups_eaten = prev_powerups; // retrieve from server
+        curr_powerups_eaten = curr_powerup; // retrieve from server
+    }
 }
 //************************ Constructor and Destructor
 //************************ Position getter and setter
@@ -17,52 +27,24 @@ std::pair<int, int> PacmanState::getBotPos() {
 }
 //************************
 
-void PacmanState::movePlayer(int dx, int dy) {
-    pos.first += dx;
-    pos.second += dy; 
-    if (dx > 0 && dy == 0) {
-        direction_facing = right;
-    }   else if (dx < 0 && dy == 0) {
-        direction_facing = left;
-    }  else if (dx == 0 && dy > 0) {
-            direction_facing = up;
-    } else {
-        direction_facing = down;
-    }
-    bool collision = hasCollided();
+void PacmanState::movePlayer(std::pair<int, int> move) {
+    
+    if (move.first > pos.first) {
+            direction_facing = PacmanState::Direction::right;
+        } else if (move.first < pos.first) {
+            direction_facing = PacmanState::Direction::left;
+        } else if (move.second > pos.second) {
+            direction_facing = PacmanState::Direction::up;
+        } else if (move.second < pos.second) {
+            direction_facing = PacmanState::Direction::down;
+        }
+        pos.first = move.first;
+        pos.second = move.second; 
 }
 
-// void PacmanState::updateScore(int points) {
-//         score = points;
-//     }
-// int PacmanState::getScore() {
-//         return score;
-// }
-
-// void PacmanState::decreaseLives() {
-//         // lives--;
-//         // if (lives == 0) {
-//         //     gameover = true;
-//         // }
-// }
-// bool PacmanState::isGameOver() {
-//         return gameover;        
-//  }
-    // int PacmanState::getLives() {
-    //     return lives;
-    // }
-
-    // int PacmanState::getLevel() {
-    //     return level;
-    // }
-
-    // void PacmanState::addPelletScore() {
-    //     increaseScore(10);
-    // }
-
-    bool PacmanState::hasCollided() {
-        for(int i = 0; i < ghostlocs.size(); i += 2) {
-            if (ghostlocs[i].first == pos.first && ghostlocs[i].second == pos.second) {
+    bool PacmanState::hasCollided(std::vector<std::pair<int, int>> ghostLocs) {
+        for (int i = 0; i < ghostLocs.size(); ++i) {
+            if ((ghostLocs.at(i).first == pos.first && ghostLocs.at(i).second == pos.second)) {
                 return true;
             }
         }
@@ -131,6 +113,10 @@ void PacmanState::movePlayer(int dx, int dy) {
             possible.push_back(down);
         }
         return possible;
+    }
+
+    vector<vector<int>> PacmanState::getGrid() {
+        return grid;
     }
     bool PacmanState::is_move_legal(std::pair<int, int> move) {
         // how do i check the actual grid? perhaps we should have a private member for the grid?
