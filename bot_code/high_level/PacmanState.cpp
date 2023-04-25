@@ -80,6 +80,15 @@ void PacmanState::movePlayer(int dx, int dy) {
     //     increaseScore(100);
     // }
 
+
+
+
+
+
+
+
+    /*
+
     void PacmanState::introduceCherry() {
         if (getPelletsEaten() + getCurrPowerUpsEaten() == 170) {
             //introduce cherry at 13,13
@@ -132,3 +141,4 @@ void PacmanState::movePlayer(int dx, int dy) {
 
     //**************************************************
 
+*/

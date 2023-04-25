@@ -33,12 +33,12 @@ void StateSpaceSearchR::updateGameState() {
     if (state == BASE) {
         // can only change to CHERRYONE or POWERUP
 
-        if (euclideanDistance(pacman_pos, red_pos) <= 25 || euclideanDistance(pacman_pos, red_pos) <= 25
-            || euclideanDistance(pacman_pos, red_pos) <= 25 || euclideanDistance(pacman_pos, red_pos) <= 25) {
+        if (euclideanDistance(pacman_pos, red_pos) <= 5 || euclideanDistance(pacman_pos, red_pos) <= 5
+            || euclideanDistance(pacman_pos, red_pos) <= 5 || euclideanDistance(pacman_pos, red_pos) <= 5) {
             state = POWERUP;
         }
 
-        if ((curr_cherries_eaten == 0 && pellets_eaten >= 50) || (curr_cherries_eaten == 1 && pellets_eaten >= 150)) {
+        else if ((curr_cherries_eaten == 0 && pellets_eaten >= 50) || (curr_cherries_eaten == 1 && pellets_eaten >= 150)) {
             state = CHERRYONE;
         }
 
