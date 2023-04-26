@@ -20,17 +20,7 @@ class PacmanState {
         };    
     //************************ Constructor
     PacmanState();
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int powerups) {
-            // score = 0; // retrieve from server
-            // lives = 3; // retrieve from server
-            gameover = false; // retrieve from server
-            pos = botPos; // retrieve from server
-            direction_facing = pacDirection;
-            pellets_left = pelletsLeft; // retrieve from server
-            pellets_eaten = pellets_eat; // retrieve from server
-            cherries_eaten = cherries_eat; // retrieve from server
-            powerups_eaten = powerups; // retrieve from server
-    }
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int powerups);
     
     void updateGrid(vector<vector<int>> new_grid); // GET FROM SYSTEM
     vector<vector<int>> getGrid();
