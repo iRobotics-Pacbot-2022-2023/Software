@@ -24,6 +24,10 @@
         return current_ghost_state;
     }
 
+    void Ghost::changeGhostState(Ghost::GhostState new_state) {
+        current_ghost_state = new_state;
+    }
+
 
     
     

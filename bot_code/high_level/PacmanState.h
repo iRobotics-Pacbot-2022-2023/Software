@@ -20,7 +20,15 @@ class PacmanState {
             right, up, left, down
         };    
     //************************ Constructor
-    // PacmanState();
+    PacmanState() {
+        pos = make_pair(13, 13);
+        direction_facing = right;
+        grid = GRID;
+        pellets_eaten = 0;
+        cherries_eaten = 0;
+        powerups_eaten = 0;
+    }
+
     PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, /*int pelletsLeft*/ int pellets_eat, int cherries_eat, int powerups) {
             
             pos = botPos; // retrieve from server
