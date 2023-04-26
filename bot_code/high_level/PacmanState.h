@@ -15,39 +15,50 @@ using namespace std;
 
 class PacmanState {
     public:
+
     enum Direction {
             right, up, left, down
         };    
     //************************ Constructor
-    PacmanState();
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int powerups) {
-            // score = 0; // retrieve from server
-            // lives = 3; // retrieve from server
-            gameover = false; // retrieve from server
+    // PacmanState();
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, /*int pelletsLeft, int pellets_eat,*/ int cherries_eat, int powerups) {
+            
             pos = botPos; // retrieve from server
             direction_facing = pacDirection;
-            pellets_left = pelletsLeft; // retrieve from server
-            pellets_eaten = pellets_eat; // retrieve from server
+            grid = our_grid;
+            // pellets_left = pelletsLeft; // retrieve from server
+            // pellets_eaten = pellets_eat; // retrieve from server
             cherries_eaten = cherries_eat; // retrieve from server
             powerups_eaten = powerups; // retrieve from server
     }
     
-    void updateGrid(vector<vector<int>> new_grid); // GET FROM SYSTEM
-    vector<vector<int>> getGrid();
+    void updateGrid(vector<vector<int>> new_grid) {
+        grid = new_grid;
+    }
+
+    vector<vector<int>> getGrid() {
+        return grid;
+    }
 
     //************************ Position getter and setter 
-    std::pair<int, int> getBotPos();
-    void changePos(std::pair<int, int> new_pos);
+
+    std::pair<int, int> getBotPos() {
+        return pos;
+    }
+    
+    void changePos(std::pair<int, int> new_pos) {
+        pos = new_pos;
+    }
     //**************************
 
     //*******************Pellet getter and setter
-    int getPelletsEaten() {
-        return pellets_eaten;
-    }
+    // int getPelletsEaten() {
+    //     return pellets_eaten;
+    // }
 
-    void setPelletsEaten(int new_pellets_eaten) {
-        pellets_eaten = new_pellets_eaten;
-    }
+    // void setPelletsEaten(int new_pellets_eaten) {
+    //     pellets_eaten = new_pellets_eaten;
+    // }
     
    //************************ Direction getter and setter
     Direction getDirection() {
@@ -73,10 +84,10 @@ private:
     std::pair<int, int> pos;
     // int lives;
 
-    bool gameover = false;
+    // bool gameover = false;
     // *************************  Data for pellets, powerups and cherries
-    int pellets_left;
-    int pellets_eaten;
+    // int pellets_left;
+    // int pellets_eaten;
     int cherries_eaten;
     int powerups_eaten; 
 
@@ -90,7 +101,7 @@ private:
     std::vector<std::vector<int>> grid;
     
    //*********************/
-    // Position, gameover, pellets/cherries/powerups, direction_facing, grid
+
     // //************************
     //                              // Bottom Left
         //    vector<vector<int>> grid  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
