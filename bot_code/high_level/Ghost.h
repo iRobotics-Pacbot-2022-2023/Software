@@ -44,7 +44,7 @@ class Ghost {
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_pink_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_red_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_orange_chase_move(std::pair<int, int> pacbotPos, std::pair<int, int> ghostPos);
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, std::pair<int, int> redPos);
         vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
         vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
 
@@ -75,6 +75,7 @@ class Ghost {
 
         // gonna create some variables for testing
         // Grid grid;
+        
 
         vector<vector<int>> grid = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,I,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                                         {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},
@@ -108,6 +109,10 @@ class Ghost {
                                 //        0         5         10        15        20        25       30
 
         ///
+        
+        
+
+
         
         // const std::pair<int,int> red_init_pos = {13,19};
         // const std::pair<int,int> red_init_npos = {12,19};

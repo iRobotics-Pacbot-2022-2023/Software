@@ -11,10 +11,11 @@ using namespace std;
 
 class StateSpaceSearch{
     public:
-
-    
-
-
+        StateSpaceSearch(PacmanState state, Ghost red, Ghost blue, Ghost orange, Ghost pink);
+        std::pair<int, int> _state_space_search(int depth, PacmanState current_state);
+        int evaluate(int depth, Pacmanstate current_state);
+        std::vector<std::pair<int,int>> validMoves(Pacmanstate current, int depth);
+        int evaluatePosition(Pacmanstate current_state);
 
 
 
