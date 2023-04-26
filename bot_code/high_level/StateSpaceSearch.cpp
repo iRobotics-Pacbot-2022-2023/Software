@@ -16,8 +16,8 @@
 // return final position
 std::pair<int, int> _state_space_search(int depth, PacmanState current_state) {
     // std::vector<>
-    int bestMove = 0; //just to initialize
-    std::pair<int, int> finalcoordinate = {0,0};
+    // int bestMove = 0; //just to initialize
+    std::pair<int, int> finalcoordinate;
     // char bestMoveFound = ''; // for now im thinking we will have the best move be a char representing which direction to move
     // PacmanGame p;
     // p.changeX(self.x_pos);
@@ -25,9 +25,10 @@ std::pair<int, int> _state_space_search(int depth, PacmanState current_state) {
 
     // move should be a vector of coordinates we have traversed
     for (auto move : current_state.find_possible_moves()) {
-        const PacmanState child = current_state; // potentially have this be a copy of the state itself. Psuedo, no class implemented yet
+        // const PacmanState child = current_state; // potentially have this be a copy of the state itself. Psuedo, no class implemented yet
+        PacmanState child(current_state);
         // child.Move(move);
-        Move(move, child); //this function essentially simulates what the grid/state will look like after the move
+        child.move(move); //this function essentially simulates what the grid/state will look like after the move
         int value = evaluate(depth-1, &child); // function that will go down the tree of possible moves
         if (value >= bestMove) {
             bestMove = value;
@@ -115,3 +116,5 @@ void Move(std::vector<std::pair<int,int>> move_s, Pacmanstate & current) {
     // everything else should be static
     
 }
+
+

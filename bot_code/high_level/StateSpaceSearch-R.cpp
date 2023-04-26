@@ -166,6 +166,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             // p, v, o
             BaseNode child;
             child.pacman_pos = neighbor;
+            std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
 
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
@@ -237,7 +238,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             int pink_distance = euclideanDistance(curr.pacman_pos, curr.pink_ghost_pos);
 
             curr.points += (red_distance + blue_distance + orange_distance + pink_distance);
-
+            std::cout << "Current node points: " << curr.points << std::endl;
             if (curr.points > best_node.points) best_node = curr;
 
         }
@@ -251,7 +252,9 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     while (!baseNodeEquals(filler, nil)) {
         path.insert(path.begin(), filler.pacman_pos);
+        std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl; 
         filler = node_to_parent[filler];
+        std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
 
     return path;

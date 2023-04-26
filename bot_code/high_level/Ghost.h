@@ -29,10 +29,10 @@ class Ghost {
         enum GhostState {
             frightened, chase, scatter
         };
-        Ghost();
+        // Ghost();
         Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state); 
         // GETTERS
-        PacBot getPac();
+        PacBot getPac(); // for test only
         std::pair<int, int> getGhostLocation();
         Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
         std::vector<std::vector<int>> getGrid();
@@ -44,9 +44,9 @@ class Ghost {
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_pink_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_red_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_orange_chase_move(std::pair<int, int> pacbotPos, std::pair<int, int> ghostPos);
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, std::pair<int, int> redPos);
         vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
-        vector<pair<int, int>> getNeighbors(pair<int, int> node, vector<vector<int>> grid);
+        vector<pair<int, int>> getNeighborsGhost(pair<int, int> node, vector<vector<int>> grid);
 
         // UNFINISHED/DIFFERENT STATE
         // void /* some return type for get scatter move*/ get_next_scatter_move();
@@ -75,6 +75,7 @@ class Ghost {
 
         // gonna create some variables for testing
         // Grid grid;
+        
 
         vector<vector<int>> grid = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,I,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                                         {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},
@@ -108,6 +109,10 @@ class Ghost {
                                 //        0         5         10        15        20        25       30
 
         ///
+        
+        
+
+
         
         // const std::pair<int,int> red_init_pos = {13,19};
         // const std::pair<int,int> red_init_npos = {12,19};
