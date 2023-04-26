@@ -10,6 +10,7 @@
 #include <cmath>
 #include <utility>
 
+using namespace std;
 
 
 class PacmanState {
@@ -19,7 +20,21 @@ class PacmanState {
         };    
     //************************ Constructor
     PacmanState();
+<<<<<<< HEAD
     PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int prev_powerups, int curr_powerup);
+=======
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int powerups) {
+            // score = 0; // retrieve from server
+            // lives = 3; // retrieve from server
+            gameover = false; // retrieve from server
+            pos = botPos; // retrieve from server
+            direction_facing = pacDirection;
+            pellets_left = pelletsLeft; // retrieve from server
+            pellets_eaten = pellets_eat; // retrieve from server
+            cherries_eaten = cherries_eat; // retrieve from server
+            powerups_eaten = powerups; // retrieve from server
+    }
+>>>>>>> db3cac582a71b58221f55094d33d66f2f4974499
     
     void updateGrid(vector<vector<int>> new_grid); // GET FROM SYSTEM
     vector<vector<int>> getGrid();
@@ -37,46 +52,7 @@ class PacmanState {
     void setPelletsEaten(int new_pellets_eaten) {
         pellets_eaten = new_pellets_eaten;
     }
-    //*****************************
-
-    //************************Prev Cherry getter and setter
-    int getPrevCherriesEaten() {
-        return prev_cherries_eaten;
-    }
-
-    void setPrevCherriesEaten(int new_cherries_eaten) {
-        prev_cherries_eaten = new_cherries_eaten;
-    }
-
-    //************************Curr Cherry getter and setter
-    int getCurrCherriesEaten() {
-        return curr_cherries_eaten;
-    }
-
-    void setCurrCherriesEaten(int new_cherries_eaten) {
-        curr_cherries_eaten = new_cherries_eaten;
-    }
-
-    //************************
-
-    //************************ Prepowerup getter and setter
-    void setPrevPowerUpsEaten(int new_powerups_eaten) {
-        prev_powerups_eaten = new_powerups_eaten;
-    }
-
-    int getPrevPowerUpsEaten() {
-        return prev_powerups_eaten;
-    }
-    //************************
-    //*********************** Currpowerup getter and setter
-    void setCurrPowerUpsEaten(int new_powerups_eaten) {
-        curr_powerups_eaten = new_powerups_eaten;
-    }
-
-    int getCurrPowerUpsEaten() {
-        return curr_powerups_eaten;
-    }
-    //************************
+    
    //************************ Direction getter and setter
     Direction getDirection() {
         return direction_facing;
@@ -88,12 +64,12 @@ class PacmanState {
     //************************
 
     //************************ Other stuff
-    double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
-    std::vector<std::pair<int, int>> find_possible_moves();
-    bool is_move_legal(std::pair<int, int> move);
-    void movePlayer(std::pair<int, int> move);
-    bool hasCollided(std::vector<std::pair<int, int>> ghostLocs);
-    void introduceCherry();
+    // double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
+    // std::vector<std::pair<int, int>> find_possible_moves();
+    // bool is_move_legal(std::pair<int, int> move);
+    // void movePlayer(std::pair<int, int> move);
+    // bool hasCollided(std::vector<std::pair<int, int>> ghostLocs);
+    // void introduceCherry();
     //************************
 private:
 
@@ -106,8 +82,8 @@ private:
     int pellets_left;
     int pellets_eaten;
     int cherries_eaten;
-    int prev_powerups_eaten; // update after we change state (+1) (POWERUP -> FREIGHTENED)
-    int curr_powerups_eaten; // update after we eat a powerup (+1)
+    int powerups_eaten; 
+
     //***************************
   // cherry time
     
