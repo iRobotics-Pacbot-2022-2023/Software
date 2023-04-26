@@ -18,7 +18,7 @@
 class StateSpaceSearchR {
     public:
 
-        StateSpaceSearchR(PacmanState p, Ghost g) {
+        StateSpaceSearchR(PacmanState p, Ghost red, Ghost blue, Ghost orange, Ghost pink) {
 
         }
 
@@ -160,11 +160,11 @@ class StateSpaceSearchR {
 
         /////////////////////////////////////////////////////////// GHOST ////////////////////////////////////////////////////////////
 
-        enum Direction {
+        enum GhostDirection {
             right, up, left, down
         };
 
-        enum Color {
+        enum GhostColor {
             red, blue, pink, orange
         };
 
