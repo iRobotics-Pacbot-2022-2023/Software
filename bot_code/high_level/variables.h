@@ -55,6 +55,12 @@ third = 800
 fourth = 1600
 */
 
+// Pacman state global
+
+int PELLETS_EATEN = 0;
+int CHERRIES_EATEN = 0;
+int POWERUPS_EATEN = 0;
+
 vector<vector<int>> GRID = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,I,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
                             {I,o,o,o,o,I,I,O,o,o,o,I,e,e,e,I,v,I,e,e,e,I,o,o,o,o,o,O,o,o,I},
                             {I,o,I,I,o,I,I,o,I,I,o,I,e,e,e,I,v,I,e,e,e,I,o,I,I,o,I,I,I,o,I},

@@ -29,14 +29,14 @@ class PacmanState {
         powerups_eaten = 0;
     }
 
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, /*int pelletsLeft*/ int pellets_eat, int cherries_eat, int powerups) {
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid /*, int pelletsLeft*/) {
             
             pos = botPos; // retrieve from server
             direction_facing = pacDirection;
             grid = our_grid;
-            pellets_eaten = pellets_eat; 
-            cherries_eaten = cherries_eat; // retrieve from server
-            powerups_eaten = powerups; // retrieve from server
+            pellets_eaten = PELLETS_EATEN; 
+            cherries_eaten = CHERRIES_EATEN; // retrieve from server
+            powerups_eaten = POWERUPS_EATEN; // retrieve from server
     }
     
     void updateGrid(vector<vector<int>> new_grid) {
