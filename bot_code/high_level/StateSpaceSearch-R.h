@@ -24,8 +24,6 @@ class StateSpaceSearchR {
 
         enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
 
-        // void updateGameState(GameState newState) { state = newState; }
-
         void updateGameState();
 
         GameState getGameState() { return state; }
@@ -80,6 +78,8 @@ class StateSpaceSearchR {
             // bool powerup_eaten;
         };
 
+        bool baseNodeEquals(BaseNode a, BaseNode b);
+
         // FREIGHTENED state
         struct FreightenedNode {
             pair<int, int> pacman_pos; // first = x, second - y
@@ -108,12 +108,7 @@ class StateSpaceSearchR {
             // bool powerup_eaten;
         };
 
-        
-        bool baseNodeEquals(BaseNode a, BaseNode b);
-
         bool freightenedNodeEquals(FreightenedNode a, FreightenedNode b);
-
-        // CHERRYONE state
 
         int euclideanDistance(pair<int, int> start, pair<int, int> goal);
 
@@ -126,9 +121,6 @@ class StateSpaceSearchR {
         void updateFreightenedTimeLeft(int time) { freightened_time_left = time; }
 
         int getFreightenedTimeLeft() { return freightened_time_left; }
-
-
-        // POWER UP
 
         //************************ Prepowerup getter and setter
         void setPrevPowerUpsEaten(int new_powerups_eaten) {
@@ -148,8 +140,6 @@ class StateSpaceSearchR {
             return curr_powerups_eaten;
         }
 
-        // CHERRY 
-        
         //************************Prev Cherry getter and setter
         int getPrevCherriesEaten() {
             return prev_cherries_eaten;
@@ -168,11 +158,47 @@ class StateSpaceSearchR {
             curr_cherries_eaten = new_cherries_eaten;
         }
 
+        /////////////////////////////////////////////////////////// GHOST ////////////////////////////////////////////////////////////
+
+        enum Direction {
+            right, up, left, down
+        };
+
+        enum Color {
+            red, blue, pink, orange
+        };
+
+        enum GhostState {
+            frightened, chase, scatter
+        };
+
+        // CALCULATING FUNCTIONS, WILL MOST LIKELY MOVE TO DIFFERENT CLASS
+        // THE PACMANSTATE::DIRECTION CAUSES ERRORS FOR NOW, BUT WE WILL FIX LATER
+        std::pair<std::pair<int, int>, Ghost::Direction> get_move_based_on_target(std::pair<int, int> target);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_pink_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_red_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_orange_chase_move(std::pair<int, int> pacbotPos, std::pair<int, int> ghostPos);
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
+        vector<pair<int, int>> getNeighborsGhost(pair<int, int> node, vector<vector<int>> grid);
+
+        // UNFINISHED/DIFFERENT STATE
+        // void /* some return type for get scatter move*/ get_next_scatter_move();
+        std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_frightened_move();
+        std::pair<std::pair<int, int> , Ghost::Direction > _get_next_state_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+
+        // UTILITY FUNCTIONS
+        void ghostMove(std::pair<int, int> pair);
+        double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
+        std::vector<std::pair<int, int>> find_possible_moves();
+        bool is_move_legal(std::pair<int, int> move);
+
     private:
 
         GameState state = BASE;
 
-        PacmanState::Direction pacman_dir = PacmanState::getDirection();
+        PacmanState::Direction pacman_dir;
 
         vector<vector<int>> grid = PacmanState::getGrid();
 

@@ -1,8 +1,6 @@
 #include "Ghost.h"
     // do nothing
-    Ghost::Ghost() {
-
-    }
+    
     Ghost::Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state) {
         curGhostLocation = ghostLoc;
         scatterLocation = scatterLoc;
@@ -220,7 +218,7 @@ std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_mov
 
             }
 
-            vector<pair<int, int>> neighbors = getNeighbors(current, grid);
+            vector<pair<int, int>> neighbors = getNeighborsGhost(current, grid);
 
             for (pair<int, int> neighbor : neighbors) {
                 if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
@@ -233,7 +231,7 @@ std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_mov
         return {};
     }
 
-vector<pair<int, int>> Ghost::getNeighbors(pair<int, int> node, vector<vector<int>> grid) {
+vector<pair<int, int>> Ghost::getNeighborsGhost(pair<int, int> node, vector<vector<int>> grid) {
     // grid range:
     // x : [0, 27]
     // y :[0, 30]

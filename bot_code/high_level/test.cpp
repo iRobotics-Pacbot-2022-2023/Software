@@ -2,6 +2,8 @@
 #include "PacmanState.h"
 #include <iostream>
 #include "Hash_shit.h"
+
+using namespace std;
 int main () {
     // PacBot pac;
     vector<vector<int>> grid  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
