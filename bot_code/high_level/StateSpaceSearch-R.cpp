@@ -936,10 +936,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
             if (child.pacman_pos == curr_position) child.pacman_dir = curr_direction;
-            else if (child.pacman_pos.second == curr_position.second + 1) child.pacman_dir = PacmanState::Direction::Up;
-            else if (child.pacman_pos.second == curr_position.second - 1) child.pacman_dir = PacmanState::Direction::Down;
-            else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::Right;
-            else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::Left;
+            else if (child.pacman_pos.second == curr_position.second + 1) child.pacman_dir = PacmanState::Direction::up;
+            else if (child.pacman_pos.second == curr_position.second - 1) child.pacman_dir = PacmanState::Direction::down;
+            else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::right;
+            else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::left;
 
             if ((child.pacman_pos == child.red_ghost_pos && child.red_ghost_state != GhostState::frightened) 
                 || (child.pacman_pos == child.blue_ghost_pos && child.red_ghost_state != GhostState::frightened)
