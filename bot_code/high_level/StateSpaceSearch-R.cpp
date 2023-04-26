@@ -184,26 +184,34 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
             // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
 
-            if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
-                || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
+            // BEFORE MOVE SO CURR
+            if (child.pacman_pos == curr.red_ghost_pos || child.pacman_pos == curr.blue_ghost_pos
+                || child.pacman_pos == curr.orange_ghost_pos || child.pacman_pos == curr.pink_ghost_pos) {
                 child.points = -1;
                 node_to_parent[child] = curr;
                 continue;
             }
 
-            pair<pair<int, int>, Ghost::Ghost::Direction> red_neighbor = Ghost::moveRed(child.pacman_pos, child.pacman_dir, curr_red_ghost_pos, curr_red_ghost_dir);
+            pair<pair<int, int>, Ghost::Ghost::Direction> red_neighbor = red._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> blue_neighbor = blue._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> orange_neighbor = orange._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> pink_neighbor = pink._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
 
-            child.red_ghost_pos, child.red_ghost_dir = Ghost::moveRed(child.pacman_pos, child.pacman_dir, curr_red_ghost_pos, curr_red_ghost_dir);
-            child.blue_ghost_pos, child.blue_ghost_dir = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.red_ghost_pos, child.red_ghost_dir, curr_blue_ghost_pos, curr_blue_ghost_dir);
-            child.orange_ghost_pos, child.orange_ghost_dir = Ghost::moveOrange(curr_orange_ghost_pos, curr_orange_ghost_dir);
-            child.pink_ghost_pos, child.pink_ghost_dir = Ghost::movePink(child.pacman_pos, child.pacman_dir, curr_pink_ghost_pos, curr_pink_ghost_dir);
+            child.red_ghost_pos = red_neighbor.first;
+            child.red_ghost_dir = red_neighbor.second;
+            child.blue_ghost_pos = blue_neighbor.first;
+            child.blue_ghost_dir = blue_neighbor.second;
+            child.orange_ghost_pos = orange_neighbor.first;
+            child.orange_ghost_dir = orange_neighbor.second;
+            child.pink_ghost_pos = pink_neighbor.first;
+            child.pink_ghost_dir = pink_neighbor.second;
 
             // OR we could add these ghost positions to a std::set and just check
             // if we have pacman_pos in the set or not
 
             // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
 
-            // DOUBLE CHECK
+            // DOUBLE CHECK - AFTER MOVE SO CHILD
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
                 child.points = -1;
@@ -399,6 +407,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsCherryOne(curr_position, curr_grid);
 
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+
         for (auto neighbor : neighbors) {
             std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             BaseNode child;
@@ -412,17 +425,26 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
             else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::right;
             else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::left;
 
-            if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
-                || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
+            if (child.pacman_pos == curr.red_ghost_pos || child.pacman_pos == curr.blue_ghost_pos
+                || child.pacman_pos == curr.orange_ghost_pos || child.pacman_pos == curr.pink_ghost_pos) {
                 child.points = -1;
                 node_to_parent[child] = curr;
                 continue;
             }
 
-            child.red_ghost_pos, child.red_ghost_dir = Ghost::moveRed(child.pacman_pos, child.pacman_dir, curr_red_ghost_pos, curr_red_ghost_dir);
-            child.blue_ghost_pos, child.blue_ghost_dir = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.red_ghost_pos, child.red_ghost_dir, curr_blue_ghost_pos, curr_blue_ghost_dir);
-            child.orange_ghost_pos, child.orange_ghost_dir = Ghost::moveOrange(curr_orange_ghost_pos, curr_orange_ghost_dir);
-            child.pink_ghost_pos, child.pink_ghost_dir = Ghost::movePink(child.pacman_pos, child.pacman_dir, curr_pink_ghost_pos, curr_pink_ghost_dir);
+            pair<pair<int, int>, Ghost::Ghost::Direction> red_neighbor = red._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> blue_neighbor = blue._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> orange_neighbor = orange._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> pink_neighbor = pink._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+
+            child.red_ghost_pos = red_neighbor.first;
+            child.red_ghost_dir = red_neighbor.second;
+            child.blue_ghost_pos = blue_neighbor.first;
+            child.blue_ghost_dir = blue_neighbor.second;
+            child.orange_ghost_pos = orange_neighbor.first;
+            child.orange_ghost_dir = orange_neighbor.second;
+            child.pink_ghost_pos = pink_neighbor.first;
+            child.pink_ghost_dir = pink_neighbor.second;
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
@@ -584,6 +606,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsBase(curr_position, curr_grid); // Base works fine for cherry two
 
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+
         for (auto neighbor : neighbors) {
             std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             BaseNode child;
@@ -597,17 +624,26 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
             else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::right;
             else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::left;
 
-            if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
-                || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
+            if (child.pacman_pos == curr.red_ghost_pos || child.pacman_pos == curr.blue_ghost_pos
+                || child.pacman_pos == curr.orange_ghost_pos || child.pacman_pos == curr.pink_ghost_pos) {
                 child.points = -1;
                 node_to_parent[child] = curr;
                 continue;
             }
 
-            child.red_ghost_pos, child.red_ghost_dir = Ghost::moveRed(child.pacman_pos, child.pacman_dir, curr_red_ghost_pos, curr_red_ghost_dir);
-            child.blue_ghost_pos, child.blue_ghost_dir = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.red_ghost_pos, child.red_ghost_dir, curr_blue_ghost_pos, curr_blue_ghost_dir);
-            child.orange_ghost_pos, child.orange_ghost_dir = Ghost::moveOrange(curr_orange_ghost_pos, curr_orange_ghost_dir);
-            child.pink_ghost_pos, child.pink_ghost_dir = Ghost::movePink(child.pacman_pos, child.pacman_dir, curr_pink_ghost_pos, curr_pink_ghost_dir);
+            pair<pair<int, int>, Ghost::Ghost::Direction> red_neighbor = red._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> blue_neighbor = blue._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> orange_neighbor = orange._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> pink_neighbor = pink._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+
+            child.red_ghost_pos = red_neighbor.first;
+            child.red_ghost_dir = red_neighbor.second;
+            child.blue_ghost_pos = blue_neighbor.first;
+            child.blue_ghost_dir = blue_neighbor.second;
+            child.orange_ghost_pos = orange_neighbor.first;
+            child.orange_ghost_dir = orange_neighbor.second;
+            child.pink_ghost_pos = pink_neighbor.first;
+            child.pink_ghost_dir = pink_neighbor.second;
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
@@ -769,6 +805,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsPowerUp(curr_position, curr_grid);
 
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+
         for (auto neighbor : neighbors) {
             BaseNode child;
             std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
@@ -782,17 +823,26 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
             else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::right;
             else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::left;
 
-            if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
-                || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
+            if (child.pacman_pos == curr.red_ghost_pos || child.pacman_pos == curr.blue_ghost_pos
+                || child.pacman_pos == curr.orange_ghost_pos || child.pacman_pos == curr.pink_ghost_pos) {
                 child.points = -1;
                 node_to_parent[child] = curr;
                 continue;
             }
 
-            child.red_ghost_pos, child.red_ghost_dir = Ghost::moveRed(child.pacman_pos, child.pacman_dir, curr_red_ghost_pos, curr_red_ghost_dir);
-            child.blue_ghost_pos, child.blue_ghost_dir = Ghost::moveBlue(child.pacman_pos, child.pacman_dir, child.red_ghost_pos, child.red_ghost_dir, curr_blue_ghost_pos, curr_blue_ghost_dir);
-            child.orange_ghost_pos, child.orange_ghost_dir = Ghost::moveOrange(curr_orange_ghost_pos, curr_orange_ghost_dir);
-            child.pink_ghost_pos, child.pink_ghost_dir = Ghost::movePink(child.pacman_pos, child.pacman_dir, curr_pink_ghost_pos, curr_pink_ghost_dir);
+            pair<pair<int, int>, Ghost::Ghost::Direction> red_neighbor = red._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> blue_neighbor = blue._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> orange_neighbor = orange._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+            pair<pair<int, int>, Ghost::Ghost::Direction> pink_neighbor = pink._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
+
+            child.red_ghost_pos = red_neighbor.first;
+            child.red_ghost_dir = red_neighbor.second;
+            child.blue_ghost_pos = blue_neighbor.first;
+            child.blue_ghost_dir = blue_neighbor.second;
+            child.orange_ghost_pos = orange_neighbor.first;
+            child.orange_ghost_dir = orange_neighbor.second;
+            child.pink_ghost_pos = pink_neighbor.first;
+            child.pink_ghost_dir = pink_neighbor.second;
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
@@ -989,6 +1039,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsBase(curr_position, curr_grid); // Base works fine for freightened
 
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+
         for (auto neighbor : neighbors) {
             FreightenedNode child;
             std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
@@ -1002,13 +1057,33 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
             else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::right;
             else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::left;
 
-            if ((child.pacman_pos == child.red_ghost_pos && child.red_ghost_state != GhostState::frightened) 
-                || (child.pacman_pos == child.blue_ghost_pos && child.red_ghost_state != GhostState::frightened)
-                || (child.pacman_pos == child.orange_ghost_pos && child.red_ghost_state != GhostState::frightened) 
-                || (child.pacman_pos == child.pink_ghost_pos && child.red_ghost_state != GhostState::frightened)) {
+            if ((child.pacman_pos == curr.red_ghost_pos && curr.red_ghost_state != GhostState::frightened) 
+                || (child.pacman_pos == curr.blue_ghost_pos && curr.red_ghost_state != GhostState::frightened)
+                || (child.pacman_pos == curr.orange_ghost_pos && curr.red_ghost_state != GhostState::frightened) 
+                || (child.pacman_pos == curr.pink_ghost_pos && curr.red_ghost_state != GhostState::frightened)) {
                 child.points = -1;
                 node_to_parent[child] = curr;
                 continue;
+            }
+
+            if (child.pacman_pos == curr.red_ghost_pos && curr.red_ghost_state == GhostState::frightened) {
+                child.red_ghost_state = Ghost::GhostState::scatter; // I think
+                child.points += 200;
+            }
+
+            if (child.pacman_pos == curr.blue_ghost_pos && curr.blue_ghost_state == GhostState::frightened) {
+                child.blue_ghost_state = Ghost::GhostState::scatter; // I think
+                child.points += 200;
+            }
+
+            if (child.pacman_pos == curr.orange_ghost_pos && curr.orange_ghost_state == GhostState::frightened) {
+                child.orange_ghost_state = Ghost::GhostState::scatter; // I think
+                child.points += 200;
+            }
+
+            if (child.pacman_pos == curr.pink_ghost_pos && curr.pink_ghost_state == GhostState::frightened) {
+                child.pink_ghost_state = Ghost::GhostState::scatter; // I think
+                child.points += 200;
             }
 
             child.red_ghost_pos, child.red_ghost_dir = Ghost::moveRed(child.pacman_pos, child.pacman_dir, curr_red_ghost_pos, curr_red_ghost_dir);
