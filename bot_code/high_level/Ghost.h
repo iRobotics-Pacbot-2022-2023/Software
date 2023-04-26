@@ -40,6 +40,8 @@ class Ghost {
 
         GhostState getGhostState();
 
+        void changeGhostState(GhostState new_state);
+
 
 
 

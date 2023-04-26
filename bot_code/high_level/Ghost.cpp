@@ -32,6 +32,10 @@
     Ghost::GhostState Ghost::getGhostState() {
         return current_ghost_state;
     }
+
+    void Ghost::changeGhostState(Ghost::GhostState new_state) {
+        current_ghost_state = new_state;
+    }
     
     bool Ghost::ghostInN() {
         return (grid[curGhostLocation.first][curGhostLocation.second] = 5);

@@ -70,6 +70,7 @@ class StateSpaceSearchR {
 
         // BASE state
         struct BaseNode {
+
             pair<int, int> pacman_pos; // first = x, second - y
             PacmanState::Direction pacman_dir;
             pair<int, int> red_ghost_pos;
@@ -80,12 +81,23 @@ class StateSpaceSearchR {
             Ghost::Direction orange_ghost_dir;
             pair<int, int> pink_ghost_pos;
             Ghost::Direction pink_ghost_dir;
+
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
             // bool cherry_eaten;
             // bool powerup_eaten;
         };
+
+        /*
+        
+        PacmanState p; // pacman_pos, pacman_dir, grid
+        Ghost red; // red_ghost_pos, red_ghost_dir
+        Ghost blue; // blue_ghost_pos, blue_ghost_dir
+        Ghost orange; // orange_ghost_pos, orange_ghost_dir
+        Ghost pink; // pink_ghost_pos, pink_ghost_dir
+        
+        */
 
         bool baseNodeEquals(BaseNode a, BaseNode b);
 
@@ -251,11 +263,11 @@ class StateSpaceSearchR {
 
         int freightened_time_left = 0;
 
-        int prev_powerups_eaten = 0; // retrieve from server
+        int prev_powerups_eaten = pacman.getPowerupsEaten(); // retrieve from server
 
         int curr_powerups_eaten = prev_powerups_eaten;
 
-        int prev_cherries_eaten = 0; // retrieve from server
+        int prev_cherries_eaten = pacman.getCherriesEaten(); // retrieve from server
 
         int curr_cherries_eaten = prev_cherries_eaten;
 
