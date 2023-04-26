@@ -218,7 +218,7 @@ std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_mov
 
             }
 
-            vector<pair<int, int>> neighbors = getNeighbors(current, grid);
+            vector<pair<int, int>> neighbors = getNeighborsGhost(current, grid);
 
             for (pair<int, int> neighbor : neighbors) {
                 if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
