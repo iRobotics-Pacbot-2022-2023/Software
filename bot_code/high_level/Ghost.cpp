@@ -1,6 +1,8 @@
 #include "Ghost.h"
     // do nothing
 
+    Ghost::Ghost() {}
+
     Ghost::Ghost(std::pair<int, int> ghostLoc, Direction ghostDir, Color ghostColor, GhostState ghostState) {
         curGhostLocation = ghostLoc;
         direction_facing = ghostDir;

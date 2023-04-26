@@ -29,7 +29,7 @@ class Ghost {
         enum GhostState {
             frightened, chase, scatter
         };
-        // Ghost();
+        Ghost();
         Ghost(std::pair<int, int> ghostLoc, Direction ghostDir, Color ghostColor, GhostState ghostState);
 
         std::pair<int, int> getGhostLocation();
