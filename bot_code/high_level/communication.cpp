@@ -2,6 +2,14 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
+#include <iostream>
+
+#include "PacmanState.h"
+#include "Ghost.h"
+#include "StateSpaceSearch-R.h"
+
+
+
 int main()
 {
     Py_Initialize();
@@ -19,6 +27,14 @@ int main()
     PyObject* result = PyObject_CallObject(main_func, NULL);
 
     Py_Finalize();
+
+    PacmanState ourBot = PacmanState();
+
+
+
+
+
+
     return 0;
 }
 

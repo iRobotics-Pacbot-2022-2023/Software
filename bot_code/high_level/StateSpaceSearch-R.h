@@ -41,7 +41,7 @@ class StateSpaceSearchR {
 
         // Position
 
-        pair<int, int> getPacmanPos() { return PacmanState::getBotPos(); }
+        pair<int, int> getPacmanPos() { return pacman.getBotPos(); }
 
         vector<vector<int>> getGrid() { return grid; }
 
@@ -193,7 +193,7 @@ class StateSpaceSearchR {
 
         // UNFINISHED/DIFFERENT STATE
         // void /* some return type for get scatter move*/ get_next_scatter_move();
-        std::pair<std::pair<int, int>, Direction> _get_next_scatter_move();
+        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_scatter_move();
         std::pair<std::pair<int, int>, Ghost::Direction> _get_next_frightened_move();
         std::pair<std::pair<int, int> , Ghost::Direction > _get_next_state_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
 
@@ -247,6 +247,8 @@ class StateSpaceSearchR {
 
         vector<vector<int>> grid;
 
+        int pellets_eaten = pacman.getPelletsEaten();
+
         int freightened_time_left = 0;
 
         int prev_powerups_eaten = 0; // retrieve from server
@@ -257,9 +259,5 @@ class StateSpaceSearchR {
 
         int curr_cherries_eaten = prev_cherries_eaten;
 
-        
-
-
-        
 
 };

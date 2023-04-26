@@ -21,13 +21,12 @@ class PacmanState {
         };    
     //************************ Constructor
     // PacmanState();
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, /*int pelletsLeft, int pellets_eat,*/ int cherries_eat, int powerups) {
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, /*int pelletsLeft*/ int pellets_eat, int cherries_eat, int powerups) {
             
             pos = botPos; // retrieve from server
             direction_facing = pacDirection;
             grid = our_grid;
-            // pellets_left = pelletsLeft; // retrieve from server
-            // pellets_eaten = pellets_eat; // retrieve from server
+            pellets_eaten = pellets_eat; 
             cherries_eaten = cherries_eat; // retrieve from server
             powerups_eaten = powerups; // retrieve from server
     }
@@ -53,7 +52,19 @@ class PacmanState {
     Direction getDirection() {
         return direction_facing;
     }
-    
+
+    int getPelletsEaten() {
+        return pellets_eaten;
+    }
+
+    int getCherriesEaten() {
+        return cherries_eaten;
+    }
+
+    int getPowerupsEaten() {
+        return powerups_eaten;
+    }
+
     //**************************
 
     //*******************Pellet getter and setter
@@ -92,7 +103,7 @@ private:
     // bool gameover = false;
     // *************************  Data for pellets, powerups and cherries
     // int pellets_left;
-    // int pellets_eaten;
+    int pellets_eaten;
     int cherries_eaten;
     int powerups_eaten; 
 

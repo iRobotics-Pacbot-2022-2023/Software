@@ -14,27 +14,20 @@
 
 void StateSpaceSearchR::updateGameState() {
 
-    pair<int, int> pacman_pos = getPacmanPos();
-
-    pair<int, int> red_pos = Ghost::getRedGhostPos();
-    pair<int, int> orange_pos = Ghost::getOrangeGhostPos();
-    pair<int, int> blue_pos = Ghost::getBlueGhostPos();
-    pair<int, int> pink_pos = Ghost::getPinkGhostPos();
-
-    int prev_cherries_eaten = PacmanState::getPrevCherriesEaten();
-    int curr_cherries_eaten = PacmanState::getCurrCherriesEaten();
+    // int prev_cherries_eaten = pacman.getCherriesEaten();
+    // int curr_cherries_eaten = PacmanState::getCurrCherriesEaten();
 
 
-    int pellets_eaten = PacmanState::getPelletsEaten();
+    int pellets_eaten = pacman.getPelletsEaten();
 
-    int prev_powerups_eaten = getPrevPowerupsEaten();
-    int curr_powerups_eaten = getCurrPowerupsEaten();
+    // int prev_powerups_eaten = 
+    // int curr_powerups_eaten = ();
 
     if (state == BASE) {
         // can only change to CHERRYONE or POWERUP
 
-        if (euclideanDistance(pacman_pos, red_pos) <= 5 || euclideanDistance(pacman_pos, red_pos) <= 5
-            || euclideanDistance(pacman_pos, red_pos) <= 5 || euclideanDistance(pacman_pos, red_pos) <= 5) {
+        if (euclideanDistance(pacman_pos, red_ghost_pos) <= 5 || euclideanDistance(pacman_pos, blue_ghost_pos) <= 5
+            || euclideanDistance(pacman_pos, orange_ghost_pos) <= 5 || euclideanDistance(pacman_pos, pink_ghost_pos) <= 5) {
             state = POWERUP;
         }
 
