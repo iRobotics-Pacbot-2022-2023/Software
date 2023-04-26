@@ -46,6 +46,8 @@ const int CHERRY_POINTS = 100;
 const int POWER_POINTS = 50;
 const int PELLET_POINTS = 10;
 
+set<pair<int, int>> POWER_POINTS_LOCATIONS = {{1, 7}, {1, 27}, {26, 7}, {26, 27}};
+
 /* Ghosts Points
 first = 200
 second = 400
@@ -83,4 +85,3 @@ vector<vector<int>> GRID = {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,I,I,e,e,e,I,I,I,I,I
                             {I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,I,I,e,e,e,I,I,I,I,I,I,I,I,I,I}};
                     //       |         |         |         |         |         |         |
                     //       0         5         10        15        20        25       30
-
