@@ -37,9 +37,9 @@ int main() {
                         //       |         |         |         |         |         |         |
                         //       0         5         10        15        20        25       30
     
-    pair<int, int> start = {16, 7};
+    pair<int, int> start = {1, 1};
 
-    pair<int, int> end = {26, 27};
+    pair<int, int> end = {14, 7};
 
     vector<pair<int, int>> path = bfsPathSingle(start, end, grid);
 
