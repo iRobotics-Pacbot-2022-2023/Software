@@ -37,6 +37,7 @@ class Ghost {
         Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
         std::vector<std::vector<int>> getGrid();
         Direction getterDirection();
+        bool ghostInN();
 
         // CALCULATING FUNCTIONS, WILL MOST LIKELY MOVE TO DIFFERENT CLASS
         // THE PACMANSTATE::DIRECTION CAUSES ERRORS FOR NOW, BUT WE WILL FIX LATER

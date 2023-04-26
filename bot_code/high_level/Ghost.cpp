@@ -12,6 +12,9 @@
     std::pair<int, int> Ghost::getGhostLocation() {
         return curGhostLocation;
     }
+    bool Ghost::ghostInN() {
+        return (grid[curGhostLocation.first][curGhostLocation.second] = 5);
+    }
 
     std::vector<std::vector<int>> Ghost::getGrid() {
         return grid;
