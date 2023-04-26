@@ -1,5 +1,31 @@
 #include "Ghost.h"
     // do nothing
+
+    Ghost::Ghost(std::pair<int, int> ghostLoc, Direction ghostDir, Color ghostColor, GhostState ghostState) {
+        curGhostLocation = ghostLoc;
+        direction_facing = ghostDir;
+        ghost_color = ghostColor;
+        current_ghost_state = ghostState;
+    }
+
+    pair<int, int> Ghost::getGhostLocation() {
+        return curGhostLocation;
+    }
+
+    Ghost::Direction Ghost::getGhostDirection() {
+        return direction_facing;
+    }
+
+    Ghost::Color Ghost::getGhostColor() {
+        return ghost_color;
+    }
+
+    Ghost::GhostState Ghost::getGhostState() {
+        return current_ghost_state;
+    }
+
+
+    
     
     Ghost::Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state) {
         curGhostLocation = ghostLoc;
@@ -9,9 +35,7 @@
         direction_facing = facing;
         current_ghost_state = state;
     }
-    std::pair<int, int> Ghost::getGhostLocation() {
-        return curGhostLocation;
-    }
+    
     bool Ghost::ghostInN() {
         return (grid[curGhostLocation.first][curGhostLocation.second] = 5);
     }

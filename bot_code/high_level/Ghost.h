@@ -30,10 +30,24 @@ class Ghost {
             frightened, chase, scatter
         };
         // Ghost();
+        Ghost(std::pair<int, int> ghostLoc, Direction ghostDir, Color ghostColor, GhostState ghostState);
+
+        std::pair<int, int> getGhostLocation();
+
+        Direction getGhostDirection();
+
+        Color getGhostColor();
+
+        GhostState getGhostState();
+
+
+
+
+
         Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state); 
         // GETTERS
         PacBot getPac(); // for test only
-        std::pair<int, int> getGhostLocation();
+        
         Direction getDirection( std::pair<int, int> prevPos, std::pair<int, int> newPos);
         std::vector<std::vector<int>> getGrid();
         Direction getterDirection();
@@ -63,10 +77,14 @@ class Ghost {
     
     private:
 
-        GhostState current_ghost_state; //tells us what mode the ghosts are in (frightened, chase, scatter)
-        Color ghost_color;
+        std::pair<int, int> curGhostLocation;
         Direction direction_facing;
+        Color ghost_color;
+        GhostState current_ghost_state; //tells us what mode the ghosts are in (frightened, chase, scatter)        
         
+
+
+
         // RED, ORANGE, BLUE, PINK
         // vector<pair<int,int>> ghostlocs = { {13, 19}, {15,15}, {12,15}, {14, 15} };
         
