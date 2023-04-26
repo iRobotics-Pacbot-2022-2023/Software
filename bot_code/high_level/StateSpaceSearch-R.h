@@ -18,8 +18,13 @@
 class StateSpaceSearchR {
     public:
 
-        StateSpaceSearchR(PacmanState p, Ghost red, Ghost blue, Ghost orange, Ghost pink) {
-
+        StateSpaceSearchR(PacmanState p, Ghost red, Ghost blue, Ghost orange, Ghost pink, vector<vector<int>> g) {
+            pacman = p;
+            red_ghost = red;
+            blue_ghost = blue;
+            orange_ghost = orange;
+            pink_ghost = pink;
+            grid = g;
         }
 
         enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
@@ -28,9 +33,13 @@ class StateSpaceSearchR {
 
         GameState getGameState() { return state; }
 
+        // Direction 
+
         void updatePacmanDir(PacmanState::Direction newDir) { pacman_dir = newDir; }
 
         PacmanState::Direction getPacmanDir() { return pacman_dir; }
+
+        // Position
 
         pair<int, int> getPacmanPos() { return PacmanState::getBotPos(); }
 
@@ -196,11 +205,47 @@ class StateSpaceSearchR {
 
     private:
 
+        PacmanState pacman;
+
+        Ghost red_ghost;
+
+        Ghost blue_ghost;
+
+        Ghost orange_ghost;
+
+        Ghost pink_ghost;
+
         GameState state = BASE;
 
-        PacmanState::Direction pacman_dir;
+        pair<int, int> pacman_pos = pacman.getBotPos();
 
-        vector<vector<int>> grid = PacmanState::getGrid();
+        PacmanState::Direction pacman_dir = pacman.getDirection();
+
+        pair<int, int> red_ghost_pos = red_ghost.getGhostLocation();
+
+        Ghost::Direction red_ghost_dir = red_ghost.getGhostDirection();
+
+        Ghost::GhostState red_ghost_state = red_ghost.getGhostState();
+
+        pair<int, int> blue_ghost_pos = blue_ghost.getGhostLocation();
+
+        Ghost::Direction blue_ghost_dir = blue_ghost.getGhostDirection();
+
+        Ghost::GhostState blue_ghost_state = blue_ghost.getGhostState();
+
+        pair<int, int> orange_ghost_pos = orange_ghost.getGhostLocation();
+
+        Ghost::Direction orange_ghost_dir = orange_ghost.getGhostDirection();
+
+        Ghost::GhostState orange_ghost_state = orange_ghost.getGhostState();
+
+        pair<int, int> pink_ghost_pos = pink_ghost.getGhostLocation();
+
+        Ghost::Direction pink_ghost_dir = pink_ghost.getGhostDirection();
+
+        Ghost::GhostState pink_ghost_state = pink_ghost.getGhostState();
+
+        vector<vector<int>> grid;
 
         int freightened_time_left = 0;
 
@@ -212,10 +257,7 @@ class StateSpaceSearchR {
 
         int curr_cherries_eaten = prev_cherries_eaten;
 
-        Ghost::GhostState red_ghost_state = GhostState::getRedGhostState();
-        Ghost::GhostState blue_ghost_state = GhostState::getBlueGhostState();
-        Ghost::GhostState orange_ghost_state = GhostState::getOrangeGhostState();
-        Ghost::GhostState pink_ghost_state = GhostState::getPinkGhostState();
+        
 
 
         

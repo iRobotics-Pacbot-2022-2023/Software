@@ -20,21 +20,6 @@ class PacmanState {
             right, up, left, down
         };    
     //************************ Constructor
-<<<<<<< HEAD
-    PacmanState();
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> grid, int pelletsLeft, int pellets_eat, int cherries_eat, int powerups);
-    PacmanState(PacmanState & state);
-    // void updateGrid(vector<vector<int>> new_grid); // GET FROM SYSTEM
-    // vector<vector<int>> getGrid();
-
-    //************************ Position getter and setter 
-    std::pair<int, int> getBotPos();
-    std::vector<std::pair<int, int>> find_possible_moves();
-    bool is_move_legal(std::pair<int, int> move);
-    void PacmanState::move(std::pair<int, int> move);
-    PacmanState::Direction getDirection(std::pair<int, int> prevPos, std::pair<int, int> newPos);
-    // void changePos(std::pair<int, int> new_pos);
-=======
     // PacmanState();
     PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, /*int pelletsLeft, int pellets_eat,*/ int cherries_eat, int powerups) {
             
@@ -64,7 +49,11 @@ class PacmanState {
     void changePos(std::pair<int, int> new_pos) {
         pos = new_pos;
     }
->>>>>>> 872854cbfe89c18760403ec2a870bf28e1c221d9
+
+    Direction getDirection() {
+        return direction_facing;
+    }
+    
     //**************************
 
     //*******************Pellet getter and setter
