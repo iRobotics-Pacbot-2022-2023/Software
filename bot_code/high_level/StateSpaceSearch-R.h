@@ -86,6 +86,22 @@ class StateSpaceSearchR {
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
+
+            bool operator<(const BaseNode& other) const {
+                if (points < other.points) return true;
+                if (depth < other.depth) return true;
+                if (pacman_pos.first < other.pacman_pos.first) return true;
+                if (pacman_pos.second < other.pacman_pos.second) return true;
+                if (red_ghost_pos.first < other.red_ghost_pos.first) return true;
+                if (red_ghost_pos.second < other.red_ghost_pos.second) return true;
+                if (blue_ghost_pos.first < other.blue_ghost_pos.first) return true;
+                if (blue_ghost_pos.second < other.blue_ghost_pos.second) return true;
+                if (orange_ghost_pos.first < other.orange_ghost_pos.first) return true;
+                if (orange_ghost_pos.second < other.orange_ghost_pos.second) return true;
+                if (pink_ghost_pos.first < other.pink_ghost_pos.first) return true;
+                if (pink_ghost_pos.second < other.pink_ghost_pos.second) return true;
+                else return false;
+            }
             // bool cherry_eaten;
             // bool powerup_eaten;
 
@@ -136,6 +152,22 @@ class StateSpaceSearchR {
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
+
+            bool operator<(const FreightenedNode& other) const {
+                if (points < other.points) return true;
+                if (depth < other.depth) return true;
+                if (pacman_pos.first < other.pacman_pos.first) return true;
+                if (pacman_pos.second < other.pacman_pos.second) return true;
+                if (red_ghost_pos.first < other.red_ghost_pos.first) return true;
+                if (red_ghost_pos.second < other.red_ghost_pos.second) return true;
+                if (blue_ghost_pos.first < other.blue_ghost_pos.first) return true;
+                if (blue_ghost_pos.second < other.blue_ghost_pos.second) return true;
+                if (orange_ghost_pos.first < other.orange_ghost_pos.first) return true;
+                if (orange_ghost_pos.second < other.orange_ghost_pos.second) return true;
+                if (pink_ghost_pos.first < other.pink_ghost_pos.first) return true;
+                if (pink_ghost_pos.second < other.pink_ghost_pos.second) return true;
+                else return false;
+            }
             // bool cherry_eaten;
             // bool powerup_eaten;
         };
