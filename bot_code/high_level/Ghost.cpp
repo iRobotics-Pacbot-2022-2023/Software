@@ -18,6 +18,13 @@
             scatterLocation = std::pair<int, int>(0, -1);
         }
     }
+Ghost::Ghost(Ghost & g){
+        curGhostLocation = g.curGhostLocation;
+        direction_facing = g.direction_facing;
+        ghost_color = g.ghost_color;
+        current_ghost_state = g.current_ghost_state;
+        scatterLocation = g.scatterLocation;
+    }
 
     pair<int, int> Ghost::getGhostLocation() {
         return curGhostLocation;
