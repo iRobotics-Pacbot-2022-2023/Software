@@ -334,7 +334,7 @@ vector<pair<int, int>> StateSpaceSearchR::getNeighborsBase(pair<int, int> pos, v
         pair<int, int> neighbor = neighbors[i];
         int x = neighbor.first;
         int y = neighbor.second;
-        if (x < 0 || y > 27 || y < 0 || y > 30 
+        if (x < 0 || x > 27 || y < 0 || y > 30 
             || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n || grid[x][y] == O) neighbors.erase(neighbors.begin() + i); 
         else i++;
     }
@@ -538,7 +538,7 @@ vector<pair<int, int>> StateSpaceSearchR::getNeighborsCherryOne(pair<int, int> p
         pair<int, int> neighbor = neighbors[i];
         int x = neighbor.first;
         int y = neighbor.second;
-        if (x < 0 || y > 27 || y < 0 || y > 30 
+        if (x < 0 || x > 27 || y < 0 || y > 30 
             || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n 
             || grid[x][y] == O || (x == 13 && y == 13)) neighbors.erase(neighbors.begin() + i); 
         else i++;
@@ -970,7 +970,7 @@ vector<pair<int, int>> StateSpaceSearchR::getNeighborsPowerUp(pair<int, int> pos
         pair<int, int> neighbor = neighbors[i];
         int x = neighbor.first;
         int y = neighbor.second;
-        if (x < 0 || y > 27 || y < 0 || y > 30 
+        if (x < 0 || x > 27 || y < 0 || y > 30 
             || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) neighbors.erase(neighbors.begin() + i); 
         else i++;
     }
