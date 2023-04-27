@@ -655,7 +655,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
             if (child.pacman_pos.first == 13 && child.pacman_pos.second == 13) {
 
                 curr_cherries_eaten++;
-                CHERRIES_EATEN++;
+                pacman.setCherriesEaten(curr_cherries_eaten);
                 // setCurrCherriesEaten(getCurrCherriesEaten() + 1);
                 std::cout << "You have reached the cherry! " << "Cherries: " << curr_cherries_eaten << std::endl; 
                 updatePacmanDir(child.pacman_dir); // or we can get this from robomodules
@@ -856,7 +856,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
             if (grid[child.pacman_pos.first][child.pacman_pos.second] == O) {
                 
                 curr_powerups_eaten++;
-                POWERUPS_EATEN++;
+                pacman.setPowerupsEaten(curr_powerups_eaten);
 
                 POWER_POINTS_LOCATIONS.erase(child.pacman_pos);
 

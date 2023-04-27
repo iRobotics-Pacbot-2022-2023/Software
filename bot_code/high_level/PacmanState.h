@@ -23,20 +23,20 @@ class PacmanState {
     PacmanState() {
         pos = make_pair(13, 13);
         direction_facing = right;
-        grid = GRID;
+        grid = {};
         pellets_eaten = 0;
         cherries_eaten = 0;
         powerups_eaten = 0;
     }
 
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid /*, int pelletsLeft*/) {
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, int p_eaten, int c_eaten, int pu_eaten) {
             
             pos = botPos; // retrieve from server
             direction_facing = pacDirection;
             grid = our_grid;
-            pellets_eaten = PELLETS_EATEN; 
-            cherries_eaten = CHERRIES_EATEN; // retrieve from server
-            powerups_eaten = POWERUPS_EATEN; // retrieve from server
+            pellets_eaten = p_eaten; // PELLETS_EATEN; 
+            cherries_eaten = c_eaten; // CHERRIES_EATEN; // retrieve from server
+            powerups_eaten = pu_eaten; // POWERUPS_EATEN; // retrieve from server
     }
     
     void updateGrid(vector<vector<int>> new_grid) {
@@ -69,8 +69,16 @@ class PacmanState {
         return cherries_eaten;
     }
 
+    void setCherriesEaten(int new_cherries_eaten) {
+        cherries_eaten = new_cherries_eaten;
+    }
+
     int getPowerupsEaten() {
         return powerups_eaten;
+    }
+
+    void setPowerupsEaten(int new_powerups_eaten) {
+        powerups_eaten = new_powerups_eaten;
     }
 
     //**************************
