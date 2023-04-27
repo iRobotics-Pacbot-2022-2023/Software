@@ -653,9 +653,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
             }
 
             if (child.pacman_pos.first == 13 && child.pacman_pos.second == 13) {
-                
-                setCurrCherriesEaten(getCurrCherriesEaten() + 1);
-                std::cout << "You have reached the cherry! " << "Cherries: " << getCurrCherriesEaten() << std::endl; 
+
+                curr_cherries_eaten++;
+                // setCurrCherriesEaten(getCurrCherriesEaten() + 1);
+                std::cout << "You have reached the cherry! " << "Cherries: " << curr_cherries_eaten << std::endl; 
                 updatePacmanDir(child.pacman_dir); // or we can get this from robomodules
 
                 vector<pair<int, int>> path;
@@ -853,11 +854,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
             if (grid[child.pacman_pos.first][child.pacman_pos.second] == O) {
                 
-                setCurrPowerUpsEaten(getCurrPowerUpsEaten() + 1);
+                curr_powerups_eaten++;
 
                 POWER_POINTS_LOCATIONS.erase(child.pacman_pos);
 
-                std::cout << "You have reached the powerup! " << "Powerups: " << getCurrCherriesEaten() << std::endl;
+                std::cout << "You have reached the powerup! " << "Powerups: " << curr_powerups_eaten << std::endl;
                 child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
                 updatePacmanDir(child.pacman_dir); // or we can get this from robomodules
@@ -1210,6 +1211,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
         filler = node_to_parent[filler];
         std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
+
+    freightened_time_left -= (length / 2);
 
     return path;
 

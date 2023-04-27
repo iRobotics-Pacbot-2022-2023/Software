@@ -143,41 +143,41 @@ class StateSpaceSearchR {
 
         int getFreightenedTimeLeft() { return freightened_time_left; }
 
-        //************************ Prepowerup getter and setter
-        void setPrevPowerUpsEaten(int new_powerups_eaten) {
-            prev_powerups_eaten = new_powerups_eaten;
-        }
+        // //************************ Prepowerup getter and setter
+        // void setPrevPowerUpsEaten(int new_powerups_eaten) {
+        //     prev_powerups_eaten = new_powerups_eaten;
+        // }
 
-        int getPrevPowerUpsEaten() {
-            return prev_powerups_eaten;
-        }
-        //************************
-        //*********************** Currpowerup getter and setter
-        void setCurrPowerUpsEaten(int new_powerups_eaten) {
-            curr_powerups_eaten = new_powerups_eaten;
-        }
+        // int getPrevPowerUpsEaten() {
+        //     return prev_powerups_eaten;
+        // }
+        // //************************
+        // //*********************** Currpowerup getter and setter
+        // void setCurrPowerUpsEaten(int new_powerups_eaten) {
+        //     curr_powerups_eaten = new_powerups_eaten;
+        // }
 
-        int getCurrPowerUpsEaten() {
-            return curr_powerups_eaten;
-        }
+        // int getCurrPowerUpsEaten() {
+        //     return curr_powerups_eaten;
+        // }
 
-        //************************Prev Cherry getter and setter
-        int getPrevCherriesEaten() {
-            return prev_cherries_eaten;
-        }
+        // //************************Prev Cherry getter and setter
+        // int getPrevCherriesEaten() {
+        //     return prev_cherries_eaten;
+        // }
 
-        void setPrevCherriesEaten(int new_cherries_eaten) {
-            prev_cherries_eaten = new_cherries_eaten;
-        }
+        // void setPrevCherriesEaten(int new_cherries_eaten) {
+        //     prev_cherries_eaten = new_cherries_eaten;
+        // }
 
-        //************************Curr Cherry getter and setter
-        int getCurrCherriesEaten() {
-            return curr_cherries_eaten;
-        }
+        // //************************Curr Cherry getter and setter
+        // int getCurrCherriesEaten() {
+        //     return curr_cherries_eaten;
+        // }
 
-        void setCurrCherriesEaten(int new_cherries_eaten) {
-            curr_cherries_eaten = new_cherries_eaten;
-        }
+        // void setCurrCherriesEaten(int new_cherries_eaten) {
+        //     curr_cherries_eaten = new_cherries_eaten;
+        // }
 
         /////////////////////////////////////////////////////////// GHOST ////////////////////////////////////////////////////////////
 
