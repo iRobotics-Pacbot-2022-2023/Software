@@ -256,9 +256,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     //         int orange_distance = euclideanDistance(curr.pacman_pos, curr.orange_ghost_pos);
     //         int pink_distance = euclideanDistance(curr.pacman_pos, curr.pink_ghost_pos);
 
-    //         curr.points += (red_distance + blue_distance + orange_distance + pink_distance);
-    //         // std::cout << "Current node points: " << curr.points << std::endl;
-    //         if (curr.points > best_node.points) best_node = curr;
+            // curr.points += (red_distance + blue_distance + orange_distance + pink_distance);
+            // std::cout << "Current node points: " << curr.points << std::endl;
+            // if (curr.points > best_node.points) {
+            //     best_node.points = curr.points;
+            //     best_node = curr;
+            // }
 
     //     }
     // }
@@ -328,15 +331,15 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 //     neighbors.push_back(make_pair(pos.first, pos.second + 1)); // up
 //     neighbors.push_back(make_pair(pos.first, pos.second)); // Itself
 
-//     size_t i = 0;
-//     while (i < neighbors.size()) {
-//         pair<int, int> neighbor = neighbors[i];
-//         int x = neighbor.first;
-//         int y = neighbor.second;
-//         if (x < 0 || y > 27 || y < 0 || y > 30 
-//             || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n || grid[x][y] == O) neighbors.erase(neighbors.begin() + i); 
-//         else i++;
-//     }
+    // int i = 0;
+    // while (i < neighbors.size()) {
+    //     pair<int, int> neighbor = neighbors[i];
+    //     int x = neighbor.first;
+    //     int y = neighbor.second;
+    //     if (x < 0 || x > 27 || y < 0 || y > 30 
+    //         || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n || grid[x][y] == O) neighbors.erase(neighbors.begin() + i); 
+    //     else i++;
+    // }
 
 //     return neighbors;
 // }
@@ -498,9 +501,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 //             curr.points += (30 / cherry_and_pellet["cherry"].size()) + (50 / cherry_and_pellet["pellet"].size());
 //             // std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
             
-//             if (curr.points > best_node.points) best_node = curr;
-//         }
-//     }
+    //         if (curr.points > best_node.points) {
+    //             best_node.points = curr.points;
+    //             best_node = curr;
+    //         }
+    //     }
+    // }
 
 //     StateSpaceSearchR::BaseNode filler = best_node;
 //     // std::cout << "Best points is: " << filler.points << std::endl;
@@ -529,16 +535,16 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 //     neighbors.push_back(make_pair(pos.first, pos.second + 1)); // up
 //     neighbors.push_back(make_pair(pos.first, pos.second)); // Itself
 
-//     size_t i = 0;
-//     while (i < neighbors.size()) {
-//         pair<int, int> neighbor = neighbors[i];
-//         int x = neighbor.first;
-//         int y = neighbor.second;
-//         if (x < 0 || y > 27 || y < 0 || y > 30 
-//             || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n 
-//             || grid[x][y] == O || (x == 13 && y == 13)) neighbors.erase(neighbors.begin() + i); 
-//         else i++;
-//     }
+    // int i = 0;
+    // while (i < neighbors.size()) {
+    //     pair<int, int> neighbor = neighbors[i];
+    //     int x = neighbor.first;
+    //     int y = neighbor.second;
+    //     if (x < 0 || x > 27 || y < 0 || y > 30 
+    //         || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n 
+    //         || grid[x][y] == O || (x == 13 && y == 13)) neighbors.erase(neighbors.begin() + i); 
+    //     else i++;
+    // }
 
 //     return neighbors;
 // }
@@ -720,9 +726,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 //             curr.points += (50 / cherry_and_pellet["cherry"].size());
 //             // std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
             
-//             if (curr.points > best_node.points) best_node = curr;
-//         }
-//     }
+    //         if (curr.points > best_node.points) {
+    //             best_node.points = curr.points;
+    //             best_node = curr;
+    //         }
+    //     }
+    // }
 
 //     StateSpaceSearchR::BaseNode filler = best_node;
 //     // std::cout << "Best points is: " << filler.points << std::endl;
@@ -923,9 +932,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
 //             curr.points += (50 / nearest_powerup.size());
             
-//             if (curr.points > best_node.points) best_node = curr;
-//         }
-//     }
+    //         if (curr.points > best_node.points) {
+    //             best_node.points = curr.points;
+    //             best_node = curr;
+    //         }
+    //     }
+    // }
 
 //     StateSpaceSearchR::BaseNode filler = best_node;
 
@@ -955,15 +967,15 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 //     neighbors.push_back(make_pair(pos.first, pos.second + 1)); // up
 //     neighbors.push_back(make_pair(pos.first, pos.second)); // Itself
 
-//     size_t i = 0;
-//     while (i < neighbors.size()) {
-//         pair<int, int> neighbor = neighbors[i];
-//         int x = neighbor.first;
-//         int y = neighbor.second;
-//         if (x < 0 || y > 27 || y < 0 || y > 30 
-//             || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) neighbors.erase(neighbors.begin() + i); 
-//         else i++;
-//     }
+    // int i = 0;
+    // while (i < neighbors.size()) {
+    //     pair<int, int> neighbor = neighbors[i];
+    //     int x = neighbor.first;
+    //     int y = neighbor.second;
+    //     if (x < 0 || x > 27 || y < 0 || y > 30 
+    //         || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) neighbors.erase(neighbors.begin() + i); 
+    //     else i++;
+    // }
 
 //     return neighbors;
 // }
@@ -1197,9 +1209,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
 //             curr.points += (50 / nearest_powerup.size());
             
-//             if (curr.points > best_node.points) best_node = curr;
-//         }
-//     }
+    //         if (curr.points > best_node.points) {
+    //             best_node.points = curr.points;
+    //             best_node = curr;
+    //         }
+    //     }
+    // }
 
 //     StateSpaceSearchR::FreightenedNode filler = best_node;
 
