@@ -271,5 +271,7 @@ class StateSpaceSearchR {
 
         int curr_cherries_eaten = prev_cherries_eaten;
 
+        set<pair<int, int>> POWER_POINTS_LOCATIONS = {{1, 7}, {1, 27}, {26, 7}, {26, 27}};
+
 
 };
