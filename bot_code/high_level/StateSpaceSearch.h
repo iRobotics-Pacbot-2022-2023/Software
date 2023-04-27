@@ -13,9 +13,9 @@ class StateSpaceSearch{
     public:
         StateSpaceSearch(PacmanState state, Ghost red, Ghost blue, Ghost orange, Ghost pink);
         std::pair<int, int> _state_space_search(int depth, PacmanState current_state);
-        int evaluate(int depth, Pacmanstate current_state);
-        std::vector<std::pair<int,int>> validMoves(Pacmanstate current, int depth);
-        int evaluatePosition(Pacmanstate current_state);
+        int evaluate(int depth, PacmanState current_state);
+        std::vector<std::pair<int,int>> validMoves(PacmanState current, int depth);
+        int evaluatePosition(PacmanState current_state);
 
 
 
@@ -29,6 +29,12 @@ class StateSpaceSearch{
         void updateGameState(GameState state);
 
         GameState state = BASE;
+
+        PacmanState state_;
+        Ghost red_;
+        Ghost blue_;
+        Ghost orange_;
+        Ghost pink_;
 
 
      

@@ -2,6 +2,14 @@
 
 #include <iostream>
 
+
+// positions current parent child ghosts (new and old)
+// depth, pellets picked up or not
+// final score
+// print out the vector of paths
+
+
+
 using namespace std;
 
 int main() {
