@@ -1252,3 +1252,236 @@ int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> go
 
     return (int) sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////// BFS PATHS //////////////////////////////////////////////////
+
+vector<pair<int, int>> StateSpaceSearchR::bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1); // start doesn't have a parent so we set it to (-1, -1)
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    while (!queue.empty()) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (current == goal) { // current.x = goal.x && current.y = goal.y
+            
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            return path;
+
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return {};
+}
+
+// use for freightened state - goals refers to all ghosts in frieghtened state
+// use for power up state, goals refer to power up points
+vector<pair<int, int>> StateSpaceSearchR::bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    while (!queue.empty()) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (goals.find(current) == goals.end()) { // current.x = goal.x && current.y = goal.y
+            
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            return path;
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return {};
+}
+
+vector<pair<int, int>> StateSpaceSearchR::bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    while(!queue.empty()) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (grid[current.first][current.second] == goal) {
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            return path;
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return {};
+}
+
+// we r finding the distance to the cherry pos and nearest pellet
+// If check_nearest_pellet=true, map will have "cherry" and "pellet" keys - cherry one
+// if check_nearest_pellet=false, the map will only have "cherry" key. - cherry two
+map<string, vector<pair<int, int>>> StateSpaceSearchR::bfsCherry(bool check_nearest_pellet, pair<int, int> start, vector<vector<int>> grid) {
+    int pellet = o;
+    pair<int, int> cherry_pos = make_pair(13, 13);
+
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    bool checking_for_pellet = (check_nearest_pellet) ? true : false;
+    bool checking_for_cherry = true;
+
+    map<string, vector<pair<int, int>>> paths = {};
+
+    while(!queue.empty() && (checking_for_pellet || checking_for_cherry)) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (checking_for_pellet && grid[current.first][current.second] == pellet
+            && checking_for_cherry && current == cherry_pos) {
+            checking_for_pellet = false;
+            checking_for_cherry = false;
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.emplace(make_pair("pellet", path));
+            paths.emplace(make_pair("cherry", path));
+
+            break;
+        }
+
+        if (checking_for_pellet && grid[current.first][current.second] == pellet) {
+            checking_for_pellet = false;
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.emplace(make_pair("pellet", path));
+
+        }
+
+        if (checking_for_cherry && current == cherry_pos) {
+            checking_for_cherry = false;
+            
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.emplace(make_pair("cherry", path));
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return paths;
+
+}
+
+vector<pair<int, int>> StateSpaceSearchR::getNeighborsBFS(pair<int, int> node, vector<vector<int>> grid) {
+    // grid range:v
+    // x : [0, 27]
+    // y :[0, 30]
+
+    vector<pair<int, int>> neighbors;
+
+
+    neighbors.push_back(make_pair(node.first - 1, node.second)); // left
+    neighbors.push_back(make_pair(node.first, node.second - 1)); // down
+    neighbors.push_back(make_pair(node.first + 1, node.second)); // right
+    neighbors.push_back(make_pair(node.first, node.second + 1)); // up
+    
+    int i = 0;
+    while (i < neighbors.size()) {
+        pair<int, int> neighbor = neighbors[i];
+        int x = neighbor.first;
+        int y = neighbor.second;
+        if (x < 0 || x > 27 || y > 30 || y < 0 || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) {
+            neighbors.erase(neighbors.begin() + i);
+        } 
+        else {
+            i++;
+        }
+    }
+
+    return neighbors;
+}

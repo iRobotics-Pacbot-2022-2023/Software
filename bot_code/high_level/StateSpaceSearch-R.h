@@ -257,6 +257,17 @@ class StateSpaceSearchR {
         std::vector<std::pair<int, int>> find_possible_moves();
         bool is_move_legal(std::pair<int, int> move);
 
+        // BFS 
+        vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
+
+        vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid);
+
+        vector<pair<int, int>> bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid);
+
+        map<string, vector<pair<int, int>>> bfsCherry(bool check_nearest_pellet, pair<int, int> start, vector<vector<int>> grid);
+
+        vector<pair<int, int>> getNeighborsBFS(pair<int, int> node, vector<vector<int>> grid);
+
     private:
 
         PacmanState pacman;
