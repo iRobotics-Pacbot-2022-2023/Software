@@ -103,7 +103,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     Only look at o & v for neighbors
     */
 
-   map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
+   unordered_map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
 
    vector<StateSpaceSearchR::BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
@@ -354,7 +354,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     don't collect power pellet (neighbor thing)
     */
 
-   map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
+   unordered_map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
 
    vector<StateSpaceSearchR::BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
@@ -556,7 +556,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     - Distance to cherry (minimize) (BFS / A*)
     */
 
-    map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
+    unordered_map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
 
    vector<StateSpaceSearchR::BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
@@ -760,7 +760,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
     if we hit power up, add it to map, but not to queue, but put a special condition on it.
     */
 
-    map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
+    unordered_map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
 
    vector<StateSpaceSearchR::BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
@@ -987,7 +987,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     - Distance to normal ghost (maximize) (average)
     */
 
-   map<StateSpaceSearchR::FreightenedNode, StateSpaceSearchR::FreightenedNode> node_to_parent;
+   unordered_map<StateSpaceSearchR::FreightenedNode, StateSpaceSearchR::FreightenedNode> node_to_parent;
 
    vector<StateSpaceSearchR::FreightenedNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
 
