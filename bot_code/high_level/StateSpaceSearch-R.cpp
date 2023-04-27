@@ -1253,14 +1253,6 @@ int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> go
 
 
 
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////// BFS PATHS //////////////////////////////////////////////////
 
 vector<pair<int, int>> StateSpaceSearchR::bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid) {
