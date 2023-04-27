@@ -1,4 +1,4 @@
-#pragma once
+
 #include "Ghost.h"
 #include "PacmanState.h"
 #include <iostream>
@@ -38,17 +38,24 @@ int main () {
                                   
     std::pair<int, int> pos = {14, 7};
     // int pelletsLeft = 50;
-    // int pellets_eat = 0;
-    // int prev_powerups = 0;
-    // int curr_powerup = 0;
+    int pellets_eat = 0;
+    int prev_powerups = 0;
+    int curr_powerup = 0;
     // int cherries_eat = 0;
-    PacmanState pac(pos, PacmanState::Direction::right, grid);
+    PacmanState pac(pos, PacmanState::Direction::right, grid, pellets_eat, prev_powerups, curr_powerup);
 
     std::pair<int, int> ghostLoc = {1, 1};
     // std::pair<int, int> scatterLoc = {, 1};
-    Ghost ghost(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
+    Ghost ghost_red(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
 
     Ghost ghost_blue(ghostLoc, Ghost::Direction::up, Ghost::Color::blue, Ghost::GhostState::chase);
+
+    Ghost ghost_orange(ghostLoc, Ghost::Direction::up, Ghost::Color::orange, Ghost::GhostState::chase);
+    Ghost ghost_pink(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
+
+    StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
+    // searchState.generatePath(4);
+    
 
     // std::cout << "Blue" << " " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << " " << ghost_blue.get_euclidian_distance(ghost_blue.getGhostLocation(), pac.getBotPos()) << std::endl;
     // std::cout << "Red" << " " << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << " " << ghost.get_euclidian_distance(ghost.getGhostLocation(), pac.getBotPos()) << std::endl;
@@ -136,20 +143,11 @@ int main () {
     //ghost.ghostMove(std::pair<int, int>(1,1));
     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
     // std::cout << pac.getPos().first << " " << pac.getPos().second << std::endl;
-    // while ((ghost.getGhostLocation().first != pac.getBotPos().first) || (ghost.getGhostLocation().second != pac.getBotPos().second)) {
-    //     for (int i = 0; i < grid.size(); ++i) {
-    //         for (int j = 0; j < grid.at(i).size(); ++j) {
-    //             if (ghost.getGhostLocation().first == i && ghost.getGhostLocation().second == j) {
-    //                 grid[i][j] = P;
-    //             }
-    //             std::cout << grid[i][j] << " ";
-    //         }
-    //         std::cout << std::endl;
-    //     }
-    //     // std::cout << ghost.getGhostLocation().first << " " << ghost.getGhostLocation().second << std::endl;
+    // while ((ghost_red.getGhostLocation().first != pac.getBotPos().first) || (ghost_red.getGhostLocation().second != pac.getBotPos().second)) {
+    //     std::cout << ghost_red.getGhostLocation().first << " " << ghost_red.getGhostLocation().second << std::endl;
     //     // std::cout << ghost._get_next_red_chase_move(pac.getBotPos()).first.first << " " << ghost._get_next_red_chase_move(pac.getBotPos()).first.second << std::endl;
-    //     std::pair<int, int> newMove(ghost._get_next_red_chase_move(pac.getBotPos()).first.first, ghost._get_next_red_chase_move(pac.getBotPos()).first.second);
-    //     ghost.ghostMove(newMove);
+    //     std::pair<int, int> newMove(ghost_red._get_next_state_move(pac.getBotPos(), PacmanState::Direction::up, ghost_red).first.first, ghost_red._get_next_state_move(pac.getBotPos(), PacmanState::Direction::up, ghost_red).first.second);
+    //     ghost_red.ghostMove(newMove);
     // }
 
     // this is for testing the hashing 
