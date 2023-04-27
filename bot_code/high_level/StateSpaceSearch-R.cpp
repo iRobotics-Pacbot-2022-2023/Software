@@ -1266,14 +1266,6 @@ int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> go
 
 
 
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////// BFS PATHS //////////////////////////////////////////////////
 
 // use for freightened state - goals refers to all ghosts in frieghtened state
