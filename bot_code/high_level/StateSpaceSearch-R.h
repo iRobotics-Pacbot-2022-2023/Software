@@ -70,7 +70,6 @@ class StateSpaceSearchR {
 
         // BASE state
         struct BaseNode {
-
             pair<int, int> pacman_pos; // first = x, second - y
             PacmanState::Direction pacman_dir;
             pair<int, int> red_ghost_pos;
