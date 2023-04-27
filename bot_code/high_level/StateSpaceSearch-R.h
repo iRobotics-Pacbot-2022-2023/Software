@@ -14,6 +14,7 @@
 #include <map>
 #include <set>
 #include <cmath>
+#include <unordered_map>
 
 class StateSpaceSearchR {
     public:
@@ -86,6 +87,16 @@ class StateSpaceSearchR {
             int depth; // depth of parent = 0
             // bool cherry_eaten;
             // bool powerup_eaten;
+
+            // bool operator<(const BaseNode& other) const {
+            //     if (x < other.x) {
+            //     return true;
+            //     } else if (x == other.x) {
+            //     return y < other.y;
+            //     } else {
+            //     return false;
+            //     }
+            // }
         };
 
         /*
