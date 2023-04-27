@@ -31,7 +31,7 @@ class Ghost {
         };
         Ghost();
         Ghost(std::pair<int, int> ghostLoc, Direction ghostDir, Color ghostColor, GhostState ghostState);
-
+        Ghost( Ghost & g);
         std::pair<int, int> getGhostLocation();
 
         Direction getGhostDirection();
