@@ -5,7 +5,7 @@
 #include "PacmanState.h"
 #include "Ghost.h"
 
-#include "BFS.h"
+// #include "BFS.h"
 #include "AStar.h"
 
 #include <vector>
@@ -14,11 +14,14 @@
 #include <map>
 #include <set>
 #include <cmath>
+#include <unordered_map>
 
 class StateSpaceSearchR {
     public:
 
         StateSpaceSearchR(PacmanState p, Ghost red, Ghost blue, Ghost orange, Ghost pink, vector<vector<int>> g) {
+
+            red_ghost = red;
             pacman = p;
             red_ghost = red;
             blue_ghost = blue;
@@ -70,7 +73,6 @@ class StateSpaceSearchR {
 
         // BASE state
         struct BaseNode {
-
             pair<int, int> pacman_pos; // first = x, second - y
             PacmanState::Direction pacman_dir;
             pair<int, int> red_ghost_pos;
@@ -85,8 +87,34 @@ class StateSpaceSearchR {
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
+
+            bool operator<(const BaseNode& other) const {
+                if (points < other.points) return true;
+                if (depth < other.depth) return true;
+                if (pacman_pos.first < other.pacman_pos.first) return true;
+                if (pacman_pos.second < other.pacman_pos.second) return true;
+                if (red_ghost_pos.first < other.red_ghost_pos.first) return true;
+                if (red_ghost_pos.second < other.red_ghost_pos.second) return true;
+                if (blue_ghost_pos.first < other.blue_ghost_pos.first) return true;
+                if (blue_ghost_pos.second < other.blue_ghost_pos.second) return true;
+                if (orange_ghost_pos.first < other.orange_ghost_pos.first) return true;
+                if (orange_ghost_pos.second < other.orange_ghost_pos.second) return true;
+                if (pink_ghost_pos.first < other.pink_ghost_pos.first) return true;
+                if (pink_ghost_pos.second < other.pink_ghost_pos.second) return true;
+                else return false;
+            }
             // bool cherry_eaten;
             // bool powerup_eaten;
+
+            // bool operator<(const BaseNode& other) const {
+            //     if (x < other.x) {
+            //     return true;
+            //     } else if (x == other.x) {
+            //     return y < other.y;
+            //     } else {
+            //     return false;
+            //     }
+            // }
         };
 
         /*
@@ -125,6 +153,22 @@ class StateSpaceSearchR {
             vector<vector<int>> grid;
             int points; // pellets collected & distance to ghosts
             int depth; // depth of parent = 0
+
+            bool operator<(const FreightenedNode& other) const {
+                if (points < other.points) return true;
+                if (depth < other.depth) return true;
+                if (pacman_pos.first < other.pacman_pos.first) return true;
+                if (pacman_pos.second < other.pacman_pos.second) return true;
+                if (red_ghost_pos.first < other.red_ghost_pos.first) return true;
+                if (red_ghost_pos.second < other.red_ghost_pos.second) return true;
+                if (blue_ghost_pos.first < other.blue_ghost_pos.first) return true;
+                if (blue_ghost_pos.second < other.blue_ghost_pos.second) return true;
+                if (orange_ghost_pos.first < other.orange_ghost_pos.first) return true;
+                if (orange_ghost_pos.second < other.orange_ghost_pos.second) return true;
+                if (pink_ghost_pos.first < other.pink_ghost_pos.first) return true;
+                if (pink_ghost_pos.second < other.pink_ghost_pos.second) return true;
+                else return false;
+            }
             // bool cherry_eaten;
             // bool powerup_eaten;
         };
@@ -193,27 +237,16 @@ class StateSpaceSearchR {
             frightened, chase, scatter
         };
 
-        // CALCULATING FUNCTIONS, WILL MOST LIKELY MOVE TO DIFFERENT CLASS
-        // THE PACMANSTATE::DIRECTION CAUSES ERRORS FOR NOW, BUT WE WILL FIX LATER
-        std::pair<std::pair<int, int>, Ghost::Direction> get_move_based_on_target(std::pair<int, int> target);
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_pink_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_red_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_orange_chase_move(std::pair<int, int> pacbotPos, std::pair<int, int> ghostPos);
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_blue_chase_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
-        vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
-        vector<pair<int, int>> getNeighborsGhost(pair<int, int> node, vector<vector<int>> grid);
 
-        // UNFINISHED/DIFFERENT STATE
-        // void /* some return type for get scatter move*/ get_next_scatter_move();
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_scatter_move();
-        std::pair<std::pair<int, int>, Ghost::Direction> _get_next_frightened_move();
-        std::pair<std::pair<int, int> , Ghost::Direction > _get_next_state_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, std::pair<int, int> ghostPos, Ghost::Direction ghostDirection);
+        // BFS
 
-        // UTILITY FUNCTIONS
-        void ghostMove(std::pair<int, int> pair);
-        double get_euclidian_distance(std::pair<int, int> pos_a, std::pair<int, int> pos_b);
-        std::vector<std::pair<int, int>> find_possible_moves();
-        bool is_move_legal(std::pair<int, int> move);
+        vector<pair<int, int>> bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid);
+
+        vector<pair<int, int>> bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid);
+
+        map<string, vector<pair<int, int>>> bfsCherry(bool check_nearest_pellet, pair<int, int> start, vector<vector<int>> grid);
+
+        vector<pair<int, int>> getNeighborsBFS(pair<int, int> node, vector<vector<int>> grid);
 
     private:
 

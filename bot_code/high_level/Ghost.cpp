@@ -26,6 +26,16 @@ Ghost::Ghost(Ghost & g){
         scatterLocation = g.scatterLocation;
     }
 
+    Ghost Ghost::operator=(const Ghost& rhs) {
+        curGhostLocation = rhs.curGhostLocation;
+        direction_facing = rhs.direction_facing;
+        ghost_color = rhs.ghost_color;
+        current_ghost_state = rhs.current_ghost_state;
+        scatterLocation = rhs.scatterLocation;
+        grid = rhs.grid;
+        return *this;
+    }
+
     pair<int, int> Ghost::getGhostLocation() {
         return curGhostLocation;
     }

@@ -1,6 +1,6 @@
 #include "StateSpaceSearch-R.h"
 
-#include "BFS.h"
+// #include "BFS.h"
 
 /*
 
@@ -27,6 +27,12 @@ void StateSpaceSearchR::updateGameState() {
 
     if (state == StateSpaceSearchR::GameState::BASE) {
         // can only change to CHERRYONE or POWERUP
+
+        cout << "red ghost position: " << red_ghost.getGhostLocation().first << red_ghost.getGhostLocation().second << endl;
+        cout << "red ghost position: " << blue_ghost_pos.first << blue_ghost_pos.second << endl;
+        cout << "red ghost position: " << orange_ghost_pos.first << orange_ghost_pos.second << endl;
+        cout << "red ghost position: " << pink_ghost_pos.first << pink_ghost_pos.second << endl;
+
 
         if (euclideanDistance(pacman_pos, red_ghost_pos) <= 5 || euclideanDistance(pacman_pos, blue_ghost_pos) <= 5
             || euclideanDistance(pacman_pos, orange_ghost_pos) <= 5 || euclideanDistance(pacman_pos, pink_ghost_pos) <= 5) {
@@ -77,10 +83,11 @@ void StateSpaceSearchR::updateGameState() {
 }
 
 vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
-
+    
     updateGameState();
-
+    
     if (state == StateSpaceSearchR::GameState::BASE) {
+        std::cout << "hello" << std::endl;
         return generatePathBase(length);
     } else if (state == StateSpaceSearchR::GameState::CHERRYONE) {
         return generatePathCherryOne(length);
@@ -91,9 +98,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
     } else if (state == StateSpaceSearchR::GameState::FREIGHTENED) {
         return generatePathFreightened(length);
     }
+
+    return {};
 }
 
-////////////////////////////////////////////////////////////// BASE //////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////// BASE //////////////////////////////////////////////////////////////
 
 vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     /*
@@ -102,7 +111,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     - (DO NOT COLLECT POWER UP) - 0 pts
     Only look at o & v for neighbors
     */
-
+//    std::cout << "hello" << std::endl;
    map<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode> node_to_parent;
 
    vector<StateSpaceSearchR::BaseNode> final_positions; // or we could do a vector of final positions (pairs) (IDK if we need this)
@@ -115,18 +124,18 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
     parent.pacman_pos = getPacmanPos();
     parent.pacman_dir = getPacmanDir();
 
-    parent.red_ghost_pos = red_ghost_pos;
-    std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
-    parent.red_ghost_dir = red_ghost_dir;
-    parent.blue_ghost_pos = blue_ghost_pos;
-    std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
-    parent.blue_ghost_dir = blue_ghost_dir;
-    parent.orange_ghost_pos = orange_ghost_pos;
-    std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
-    parent.orange_ghost_dir = orange_ghost_dir;
-    parent.pink_ghost_pos = pink_ghost_pos;
-    std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
-    parent.pink_ghost_dir = pink_ghost_dir;
+    parent.red_ghost_pos = red_ghost.getGhostLocation();
+    cout << "red ghost position: " << parent.red_ghost_pos.first << red_ghost.getGhostLocation().second << endl;
+    parent.red_ghost_dir = red_ghost.getterDirection();
+    parent.blue_ghost_pos = blue_ghost.getGhostLocation();
+    std::cout << "Blue ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
+    parent.blue_ghost_dir = blue_ghost.getterDirection();
+    parent.orange_ghost_pos = orange_ghost.getGhostLocation();
+    std::cout << "Orange ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
+    parent.orange_ghost_dir = orange_ghost.getterDirection();
+    parent.pink_ghost_pos = pink_ghost.getGhostLocation();
+    std::cout << "Pink ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
+    parent.pink_ghost_dir = pink_ghost.getterDirection();
 
     parent.grid = grid;
     parent.points = 0;
@@ -134,6 +143,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
     node_to_parent[parent] = nil;
 
+    // node_to_parent.insert(make_pair<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode>(parent, nil));
+    node_to_parent.insert(std::pair<StateSpaceSearchR::BaseNode, StateSpaceSearchR::BaseNode>(parent, nil));
     queue.push(parent);
 
     while (!queue.empty()) {
@@ -165,7 +176,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
         Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
         Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
 
-        // if depth = length dont add to queue
+    //     // if depth = length dont add to queue
 
         for (pair<int, int> neighbor : neighbors) {
             // p, v, o
@@ -182,9 +193,9 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             else if (child.pacman_pos.first == curr_position.first + 1) child.pacman_dir = PacmanState::Direction::right;
             else if (child.pacman_pos.first == curr_position.first - 1) child.pacman_dir = PacmanState::Direction::left;
 
-            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
+    //         // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
 
-            // BEFORE MOVE SO CURR
+    //         // BEFORE MOVE SO CURR
             if (child.pacman_pos == curr.red_ghost_pos || child.pacman_pos == curr.blue_ghost_pos
                 || child.pacman_pos == curr.orange_ghost_pos || child.pacman_pos == curr.pink_ghost_pos) {
                 child.points = -1;
@@ -206,12 +217,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             child.pink_ghost_pos = pink_neighbor.first;
             child.pink_ghost_dir = pink_neighbor.second;
 
-            // OR we could add these ghost positions to a std::set and just check
-            // if we have pacman_pos in the set or not
+    //         // OR we could add these ghost positions to a std::set and just check
+    //         // if we have pacman_pos in the set or not
 
-            // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
+    //         // if one of the ghost positions is equal to the neighbor position, dont add to queue and set points to -1 or something
 
-            // DOUBLE CHECK - AFTER MOVE SO CHILD
+    //         // DOUBLE CHECK - AFTER MOVE SO CHILD
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
                 child.points = -1;
@@ -224,8 +235,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
             
             child.depth = curr_depth + 1;
 
-            // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
-            // if depth < length add to queue and node_to_parent map but not final_positions vector
+    //         // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
+    //         // if depth < length add to queue and node_to_parent map but not final_positions vector
             std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
             "Depth: " << child.depth << std::endl;
             
@@ -277,7 +288,9 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
         filler = node_to_parent[filler];
         std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
-
+    for (size_t i = 0; i < path.size(); ++i) {
+        std::cout << path.at(i).first << " " << path.at(i).second << std::endl;
+    }
     return path;
 
     /*
@@ -313,7 +326,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
 }
 
-bool StateSpaceSearchR::baseNodeEquals(BaseNode a, BaseNode b) {
+bool StateSpaceSearchR::baseNodeEquals(StateSpaceSearchR::BaseNode a, StateSpaceSearchR::BaseNode b) {
     return a.pacman_pos == b.pacman_pos && a.pacman_dir == b.pacman_dir && a.red_ghost_pos == b.red_ghost_pos
         && a.blue_ghost_pos == b.blue_ghost_pos && a.orange_ghost_pos == b.orange_ghost_pos
         && a.pink_ghost_pos == b.pink_ghost_pos && a.points == b.points && a.depth == b.depth;
@@ -367,16 +380,16 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     parent.pacman_dir = getPacmanDir();
 
     parent.red_ghost_pos = red_ghost_pos;
-    std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
     parent.red_ghost_dir = red_ghost_dir;
     parent.blue_ghost_pos = blue_ghost_pos;
-    std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
     parent.blue_ghost_dir = blue_ghost_dir;
     parent.orange_ghost_pos = orange_ghost_pos;
-    std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
     parent.orange_ghost_dir = orange_ghost_dir;
     parent.pink_ghost_pos = pink_ghost_pos;
-    std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
     parent.pink_ghost_dir = pink_ghost_dir;
 
     parent.grid = grid;
@@ -389,7 +402,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
     while (!queue.empty()) {
         StateSpaceSearchR::BaseNode curr = queue.front();
-        std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
+        // std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
@@ -416,7 +429,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
         Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
 
         for (auto neighbor : neighbors) {
-            std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
+            // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             StateSpaceSearchR::BaseNode child;
             child.pacman_pos = neighbor;
 
@@ -463,8 +476,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
-            std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
-            "Depth: " << child.depth << std::endl;
+            // std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
+            // "Depth: " << child.depth << std::endl;
             
             if (child.depth == length) {
                 node_to_parent[child] = curr;
@@ -492,12 +505,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
             int pink_distance = euclideanDistance(curr.pacman_pos, curr.pink_ghost_pos);
 
             curr.points += ((red_distance + blue_distance + orange_distance + pink_distance) / 4);
-            std::cout << "Current node points before cherry calculation: " << curr.points << std::endl;
+            // std::cout << "Current node points before cherry calculation: " << curr.points << std::endl;
 
             map<string, vector<pair<int, int>>> cherry_and_pellet = bfsCherry(true, curr.pacman_pos, curr.grid);
 
             curr.points += (30 / cherry_and_pellet["cherry"].size()) + (50 / cherry_and_pellet["pellet"].size());
-            std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
+            // std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
             
             if (curr.points > best_node.points) {
                 best_node.points = curr.points;
@@ -507,17 +520,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
     }
 
     StateSpaceSearchR::BaseNode filler = best_node;
-    std::cout << "Best points is: " << filler.points << std::endl;
+    // std::cout << "Best points is: " << filler.points << std::endl;
 
     updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
 
     vector<pair<int, int>> path;
 
     while (!baseNodeEquals(filler, nil)) {
-        std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
-        std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
 
     return path;
@@ -569,16 +582,16 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     parent.pacman_dir = getPacmanDir();
 
     parent.red_ghost_pos = red_ghost_pos;
-    std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
     parent.red_ghost_dir = red_ghost_dir;
     parent.blue_ghost_pos = blue_ghost_pos;
-    std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
     parent.blue_ghost_dir = blue_ghost_dir;
     parent.orange_ghost_pos = orange_ghost_pos;
-    std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
     parent.orange_ghost_dir = orange_ghost_dir;
     parent.pink_ghost_pos = pink_ghost_pos;
-    std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
     parent.pink_ghost_dir = pink_ghost_dir;
 
     parent.grid = grid;
@@ -591,7 +604,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
 
     while (!queue.empty()) {
         StateSpaceSearchR::BaseNode curr = queue.front();
-        std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
+        // std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
@@ -618,7 +631,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
         Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
 
         for (auto neighbor : neighbors) {
-            std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
+            // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             StateSpaceSearchR::BaseNode child;
             child.pacman_pos = neighbor;
 
@@ -663,13 +676,13 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
                 curr_cherries_eaten++;
                 pacman.setCherriesEaten(curr_cherries_eaten);
                 // setCurrCherriesEaten(getCurrCherriesEaten() + 1);
-                std::cout << "You have reached the cherry! " << "Cherries: " << curr_cherries_eaten << std::endl; 
+                // std::cout << "You have reached the cherry! " << "Cherries: " << curr_cherries_eaten << std::endl; 
                 updatePacmanDir(child.pacman_dir); // or we can get this from robomodules
 
                 vector<pair<int, int>> path;
 
                 while (!baseNodeEquals(child, nil)) {
-                    std::cout << "CherryPath: " << child.pacman_pos.first << " " << child.pacman_pos.second << std::endl;
+                    // std::cout << "CherryPath: " << child.pacman_pos.first << " " << child.pacman_pos.second << std::endl;
                     path.insert(path.begin(), child.pacman_pos);
                     child = node_to_parent[child];
                 }
@@ -687,8 +700,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
 
-            std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
-            "Depth: " << child.depth << std::endl;
+            // std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
+            // "Depth: " << child.depth << std::endl;
 
             if (child.depth == length) {
                 node_to_parent[child] = curr;
@@ -717,12 +730,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
             int pink_distance = euclideanDistance(curr.pacman_pos, curr.pink_ghost_pos);
 
             curr.points += ((red_distance + blue_distance + orange_distance + pink_distance) / 4);
-            std::cout << "Current node points before cherry calculation: " << curr.points << std::endl;
+            // std::cout << "Current node points before cherry calculation: " << curr.points << std::endl;
 
             map<string, vector<pair<int, int>>> cherry_and_pellet = bfsCherry(false, curr.pacman_pos, curr.grid);
 
             curr.points += (50 / cherry_and_pellet["cherry"].size());
-            std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
+            // std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
             
             if (curr.points > best_node.points) {
                 best_node.points = curr.points;
@@ -732,17 +745,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     }
 
     StateSpaceSearchR::BaseNode filler = best_node;
-    std::cout << "Best points is: " << filler.points << std::endl;
+    // std::cout << "Best points is: " << filler.points << std::endl;
 
     updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
 
     vector<pair<int, int>> path;
 
     while (!baseNodeEquals(filler, nil)) {
-        std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
-        std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
 
     return path;
@@ -773,16 +786,16 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
     parent.pacman_dir = getPacmanDir();
 
     parent.red_ghost_pos = red_ghost_pos;
-    std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
     parent.red_ghost_dir = red_ghost_dir;
     parent.blue_ghost_pos = blue_ghost_pos;
-    std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
     parent.blue_ghost_dir = blue_ghost_dir;
     parent.orange_ghost_pos = orange_ghost_pos;
-    std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
     parent.orange_ghost_dir = orange_ghost_dir;
     parent.pink_ghost_pos = pink_ghost_pos;
-    std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
     parent.pink_ghost_dir = pink_ghost_dir;
 
     parent.grid = grid;
@@ -795,7 +808,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
     while (!queue.empty()) {
         StateSpaceSearchR::BaseNode curr = queue.front();
-        std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
+        // std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
@@ -823,7 +836,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
         for (auto neighbor : neighbors) {
             StateSpaceSearchR::BaseNode child;
-            std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
+            // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             child.pacman_pos = neighbor;
 
             // child.grid = changeGrid(curr_grid, curr_position, neighbor); ------- Placed after if statement
@@ -869,7 +882,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
                 POWER_POINTS_LOCATIONS.erase(child.pacman_pos);
 
-                std::cout << "You have reached the powerup! " << "Powerups: " << curr_powerups_eaten << std::endl;
+                // std::cout << "You have reached the powerup! " << "Powerups: " << curr_powerups_eaten << std::endl;
                 child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
                 updatePacmanDir(child.pacman_dir); // or we can get this from robomodules
@@ -877,7 +890,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
                 vector<pair<int, int>> path;
 
                 while (!baseNodeEquals(child, nil)) {
-                    std::cout << "PowerupPath: " << child.pacman_pos.first << " " << child.pacman_pos.second << std::endl;
+                    // std::cout << "PowerupPath: " << child.pacman_pos.first << " " << child.pacman_pos.second << std::endl;
                     path.insert(path.begin(), child.pacman_pos);
                     child = node_to_parent[child];
                 }
@@ -895,8 +908,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
-            std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
-            "Depth: " << child.depth << std::endl;
+            // std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
+            // "Depth: " << child.depth << std::endl;
             
             if (child.depth == length) {
                 node_to_parent[child] = curr;
@@ -939,17 +952,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
     StateSpaceSearchR::BaseNode filler = best_node;
 
-    std::cout << "Best points is: " << filler.points << std::endl;
+    // std::cout << "Best points is: " << filler.points << std::endl;
 
     updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
 
     vector<pair<int, int>> path;
 
     while (!baseNodeEquals(filler, nil)) {
-        std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
-        std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
 
     return path;
@@ -1000,22 +1013,22 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     parent.pacman_dir = getPacmanDir();
 
     parent.red_ghost_pos = red_ghost_pos;
-    std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
     parent.red_ghost_dir = red_ghost_dir;
     parent.red_ghost_state = red_ghost_state;
 
     parent.blue_ghost_pos = blue_ghost_pos;
-    std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
     parent.blue_ghost_dir = blue_ghost_dir;
     parent.blue_ghost_state = blue_ghost_state;
 
     parent.orange_ghost_pos = orange_ghost_pos;
-    std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
     parent.orange_ghost_dir = orange_ghost_dir;
     parent.orange_ghost_state = orange_ghost_state;
 
     parent.pink_ghost_pos = pink_ghost_pos;
-    std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
+    // std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
     parent.pink_ghost_dir = pink_ghost_dir;
     parent.pink_ghost_state = pink_ghost_state;
 
@@ -1029,7 +1042,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
     while (!queue.empty()) {
         StateSpaceSearchR::FreightenedNode curr = queue.front();
-        std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
+        // std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
@@ -1064,7 +1077,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
         for (auto neighbor : neighbors) {
             StateSpaceSearchR::FreightenedNode child;
-            std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
+            // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             child.pacman_pos = neighbor;
 
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
@@ -1161,8 +1174,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
             // if depth = length, dont add to queue but add to the node_to_parent map & final_positions vector
             // if depth < length add to queue and node_to_parent map but not final_positions vector
 
-            std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
-            "Depth: " << child.depth << std::endl;
+            // std::cout << "The parent is at: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << "Child at: " << child.pacman_pos.first << " " << child.pacman_pos.second << 
+            // "Depth: " << child.depth << std::endl;
 
             if (child.depth == length) {
                 node_to_parent[child] = curr;
@@ -1216,17 +1229,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
     StateSpaceSearchR::FreightenedNode filler = best_node;
 
-    std::cout << "Best points is: " << filler.points << std::endl;
+    // std::cout << "Best points is: " << filler.points << std::endl;
 
     updatePacmanDir(filler.pacman_dir); // or we can get this from robomodules
 
     vector<pair<int, int>> path;
 
     while (!freightenedNodeEquals(filler, nil)) {
-        std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The child node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
         path.insert(path.begin(), filler.pacman_pos);
         filler = node_to_parent[filler];
-        std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
+        // std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
 
     freightened_time_left -= (length / 2);
@@ -1235,7 +1248,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
 }
 
-bool StateSpaceSearchR::freightenedNodeEquals(FreightenedNode a, FreightenedNode b) {
+bool StateSpaceSearchR::freightenedNodeEquals(StateSpaceSearchR::FreightenedNode a, StateSpaceSearchR::FreightenedNode b) {
     return a.pacman_pos == b.pacman_pos && a.pacman_dir == b.pacman_dir && a.red_ghost_pos == b.red_ghost_pos
         && a.blue_ghost_pos == b.blue_ghost_pos && a.orange_ghost_pos == b.orange_ghost_pos
         && a.pink_ghost_pos == b.pink_ghost_pos && a.points == b.points && a.depth == b.depth;
@@ -1249,4 +1262,192 @@ int StateSpaceSearchR::euclideanDistance(pair<int, int> start, pair<int, int> go
     int y2 = goal.second;
 
     return (int) sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+}
+
+
+
+////////////////////////////////////////////////// BFS PATHS //////////////////////////////////////////////////
+
+// use for freightened state - goals refers to all ghosts in frieghtened state
+// use for power up state, goals refer to power up points
+vector<pair<int, int>> StateSpaceSearchR::bfsPathMultiple(pair<int, int> start, set<pair<int, int>> goals, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    while (!queue.empty()) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (goals.find(current) == goals.end()) { // current.x = goal.x && current.y = goal.y
+            
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            return path;
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return {};
+}
+
+vector<pair<int, int>> StateSpaceSearchR::bfsPathUnkownGoal(pair<int, int> start, int goal, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    while(!queue.empty()) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (grid[current.first][current.second] == goal) {
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            return path;
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return {};
+}
+
+// we r finding the distance to the cherry pos and nearest pellet
+// If check_nearest_pellet=true, map will have "cherry" and "pellet" keys - cherry one
+// if check_nearest_pellet=false, the map will only have "cherry" key. - cherry two
+map<string, vector<pair<int, int>>> StateSpaceSearchR::bfsCherry(bool check_nearest_pellet, pair<int, int> start, vector<vector<int>> grid) {
+    int pellet = o;
+    pair<int, int> cherry_pos = make_pair(13, 13);
+
+    map<pair<int, int>, pair<int, int>> visited_nodes_to_parents = {};
+    visited_nodes_to_parents[start] = make_pair(-1, -1);
+
+    queue<pair<int, int>> queue;
+    queue.push(start);
+
+    bool checking_for_pellet = (check_nearest_pellet) ? true : false;
+    bool checking_for_cherry = true;
+
+    map<string, vector<pair<int, int>>> paths = {};
+
+    while(!queue.empty() && (checking_for_pellet || checking_for_cherry)) {
+        pair<int, int> current = queue.front();
+        queue.pop();
+
+        if (checking_for_pellet && grid[current.first][current.second] == pellet
+            && checking_for_cherry && current == cherry_pos) {
+            checking_for_pellet = false;
+            checking_for_cherry = false;
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.emplace(make_pair("pellet", path));
+            paths.emplace(make_pair("cherry", path));
+
+            break;
+        }
+
+        if (checking_for_pellet && grid[current.first][current.second] == pellet) {
+            checking_for_pellet = false;
+
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.emplace(make_pair("pellet", path));
+
+        }
+
+        if (checking_for_cherry && current == cherry_pos) {
+            checking_for_cherry = false;
+            
+            vector<pair<int, int>> path;
+
+            while (current.first != -1 && current.second != -1) { // current != (-1, -1)
+                path.insert(path.begin(), current);
+                current = visited_nodes_to_parents[current];
+            }
+
+            paths.emplace(make_pair("cherry", path));
+        }
+
+        vector<pair<int, int>> neighbors = getNeighborsBFS(current, grid);
+
+        for (pair<int, int> neighbor : neighbors) {
+            if (visited_nodes_to_parents.find(neighbor) == visited_nodes_to_parents.end()) {
+                visited_nodes_to_parents[neighbor] = current;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    return paths;
+
+}
+
+vector<pair<int, int>> StateSpaceSearchR::getNeighborsBFS(pair<int, int> node, vector<vector<int>> grid) {
+    // grid range:v
+    // x : [0, 27]
+    // y :[0, 30]
+
+    vector<pair<int, int>> neighbors;
+
+
+    neighbors.push_back(make_pair(node.first - 1, node.second)); // left
+    neighbors.push_back(make_pair(node.first, node.second - 1)); // down
+    neighbors.push_back(make_pair(node.first + 1, node.second)); // right
+    neighbors.push_back(make_pair(node.first, node.second + 1)); // up
+    
+    int i = 0;
+    while (i < neighbors.size()) {
+        pair<int, int> neighbor = neighbors[i];
+        int x = neighbor.first;
+        int y = neighbor.second;
+        if (x < 0 || x > 27 || y > 30 || y < 0 || grid[x][y] == I || grid[x][y] == e || grid[x][y] == n) {
+            neighbors.erase(neighbors.begin() + i);
+        } 
+        else {
+            i++;
+        }
+    }
+
+    return neighbors;
 }

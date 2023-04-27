@@ -5,6 +5,7 @@
 #include "Hash_shit.h"
 #include "StateSpaceSearch-R.h"
 using namespace std;
+void printGrid(std::vector<std::vector<int>> grid);
 int main () {
     // PacBot pac;
     vector<vector<int>> grid  =  {{I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}, // 0
@@ -54,7 +55,7 @@ int main () {
     Ghost ghost_pink(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
 
     StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
-    // searchState.generatePath(4);
+    searchState.generatePath(4);
     
 
     // std::cout << "Blue" << " " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << " " << ghost_blue.get_euclidian_distance(ghost_blue.getGhostLocation(), pac.getBotPos()) << std::endl;
@@ -194,4 +195,38 @@ int main () {
     // grid[22][14] = v; 
     ///grit ^= ZorbTable[22][14][piece]; 
     return 0;
+}
+void printGrid(std::vector<std::vector<int>> grid) {
+    std::cout << "   ";
+    for (int i = 0 ; i < grid[0].size(); i++ ){
+        std::cout<< i% 10 << " ";
+    }
+    std::cout << std::endl << "0{";
+
+    int i = 1;
+    for (std::vector<int> ve: grid) {
+        std::cout <<"{";
+        for (int i: ve) {
+            if (i == I){
+                std::cout<<"I ";
+            } else if (i == o) {
+                std::cout << "o ";
+            } else if (i == v) {
+                std::cout << "v ";
+            }else if (i == e) {
+                std::cout <<"e ";
+            } else if (i == O) {
+                std::cout <<"O ";
+            } else if (i == n) {
+                std::cout <<"n ";
+            } else if (i == P) {
+                std::cout <<"P ";
+            } else {
+                std::cout << "ch ";
+            }
+        }
+        std::cout << "}\n" << i % 10 << " ";
+        i+= 1;
+    }
+    std::cout <<" }";
 }
