@@ -256,7 +256,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
             curr.points += (red_distance + blue_distance + orange_distance + pink_distance);
             std::cout << "Current node points: " << curr.points << std::endl;
-            if (curr.points > best_node.points) best_node = curr;
+            if (curr.points > best_node.points) {
+                best_node.points = curr.points;
+                best_node = curr;
+            }
 
         }
     }
@@ -496,7 +499,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
             curr.points += (30 / cherry_and_pellet["cherry"].size()) + (50 / cherry_and_pellet["pellet"].size());
             std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
             
-            if (curr.points > best_node.points) best_node = curr;
+            if (curr.points > best_node.points) {
+                best_node.points = curr.points;
+                best_node = curr;
+            }
         }
     }
 
@@ -718,7 +724,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
             curr.points += (50 / cherry_and_pellet["cherry"].size());
             std::cout << "Current node points after cherry calculation: " << curr.points << std::endl;
             
-            if (curr.points > best_node.points) best_node = curr;
+            if (curr.points > best_node.points) {
+                best_node.points = curr.points;
+                best_node = curr;
+            }
         }
     }
 
@@ -921,7 +930,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
             curr.points += (50 / nearest_powerup.size());
             
-            if (curr.points > best_node.points) best_node = curr;
+            if (curr.points > best_node.points) {
+                best_node.points = curr.points;
+                best_node = curr;
+            }
         }
     }
 
@@ -1195,7 +1207,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
             curr.points += (50 / nearest_powerup.size());
             
-            if (curr.points > best_node.points) best_node = curr;
+            if (curr.points > best_node.points) {
+                best_node.points = curr.points;
+                best_node = curr;
+            }
         }
     }
 
