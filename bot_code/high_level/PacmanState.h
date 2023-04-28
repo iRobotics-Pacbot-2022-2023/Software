@@ -39,12 +39,22 @@ class PacmanState {
             powerups_eaten = pu_eaten; // POWERUPS_EATEN; // retrieve from server
     }
     
-    void updateGrid(vector<vector<int>> new_grid) {
-        grid = new_grid;
-    }
+    // void updateGrid(vector<vector<int>> new_grid) {
+    //     grid = new_grid;
+    // }
 
     vector<vector<int>> getGrid() {
         return grid;
+    }
+
+    void changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
+        if (prevPos.first == newPos.first && prevPos.second == newPos.second) return;
+
+        // vector<vector<int>> newGrid = grid;
+        grid[prevPos.first][prevPos.second] = v; 
+        grid[newPos.first][newPos.second] = P; 
+        // Grid::updateGrid(grid);
+        // return newGrid; 
     }
 
     //************************ Position getter and setter 
@@ -63,6 +73,10 @@ class PacmanState {
 
     int getPelletsEaten() {
         return pellets_eaten;
+    }
+
+    void setPelletsEaten(int new_pellets_eaten) {
+        pellets_eaten = new_pellets_eaten;
     }
 
     int getCherriesEaten() {
