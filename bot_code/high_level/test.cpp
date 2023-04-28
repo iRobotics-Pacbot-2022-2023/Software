@@ -58,15 +58,20 @@ int main () {
     // searchState.generatePath(4);
     int count = 0;
     while (count < 100) {
+        cout << "COUNT = " << count << endl;
         // if (searchState.getRed().getGhostLocation().first == searchState.getPacmanPos().first && 
         // searchState.getRed().getGhostLocation().second == searchState.getPacmanPos().second) {
         //     lets_dance = false;
         // }
         std::pair<int, int> pacMove;
-        if (searchState.generatePath(4).size() == 1) {
-            pacMove = searchState.generatePath(4).at(0);
+        vector<pair<int, int>> our_path = searchState.generatePath(4);
+        if (our_path.size() == 1) {
+            pacMove = our_path.at(0);
+        } else if (our_path.size() == 0) {
+            cout << "FAIL: PATH LENGTH 0" << endl;
+            break;
         } else {
-            pacMove = searchState.generatePath(4).at(1);
+            pacMove = our_path.at(1);
         }
         // std::cout << "PacMOVE: " << pacMove.first << " " << pacMove.second << std::endl;
         pac.changePos(pacMove);
@@ -79,6 +84,8 @@ int main () {
         searchState.setPacman(pac);
         searchState.setRedGhost(ghost_red);
         count++;
+
+        cout << "\n" << endl;
     }
     
 
