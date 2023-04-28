@@ -97,9 +97,9 @@ class PacmanState {
     //     return direction_facing;
     // }
 
-    // void setDirection(Direction d) {
-    //     direction_facing = d;
-    // }
+    void setDirection(Direction d) {
+        direction_facing = d;
+    }
     //************************
 
     //************************ Other stuff

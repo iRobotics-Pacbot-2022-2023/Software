@@ -38,6 +38,7 @@ class StateSpaceSearchR {
 
         // Direction 
 
+
         void updatePacmanDir(PacmanState::Direction newDir) { pacman_dir = newDir; }
 
         PacmanState::Direction getPacmanDir() { return pacman_dir; }
@@ -45,8 +46,11 @@ class StateSpaceSearchR {
         // Position
 
         pair<int, int> getPacmanPos() { return pacman.getBotPos(); }
+        void setPacman(PacmanState p) {pacman = p;}
+        void setRedGhost(Ghost r){red_ghost = r;}
 
         vector<vector<int>> getGrid() { return grid; }
+        Ghost getRed() {return red_ghost;}
 
         // no need to update grid - just assign changeGrid to a new variable
         vector<vector<int>> changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
@@ -102,6 +106,34 @@ class StateSpaceSearchR {
                 if (pink_ghost_pos.first < other.pink_ghost_pos.first) return true;
                 if (pink_ghost_pos.second < other.pink_ghost_pos.second) return true;
                 else return false;
+            }
+            bool operator==(const BaseNode& other) const {
+                return (points == other.points && depth == other.depth && pacman_pos == other.pacman_pos && 
+                pacman_dir == other.pacman_dir && red_ghost_pos == other.red_ghost_pos && red_ghost_dir == other.red_ghost_dir
+                && blue_ghost_pos == other.blue_ghost_pos && blue_ghost_dir == other.blue_ghost_dir && orange_ghost_pos == other.orange_ghost_pos
+                && orange_ghost_dir == other.orange_ghost_dir && pink_ghost_pos == other.pink_ghost_pos && pink_ghost_dir == other.pink_ghost_dir
+                && grid == other.grid);
+            }
+            bool operator!=(const BaseNode& other) const {
+                return !(*this == other);
+            }
+            BaseNode& operator=(const BaseNode& other) {
+                if (this != &other) {
+                    pacman_pos = other.pacman_pos;
+                    pacman_dir = other.pacman_dir;
+                    red_ghost_pos = other.red_ghost_pos;
+                    red_ghost_dir = other.red_ghost_dir;
+                    blue_ghost_pos = other.blue_ghost_pos;
+                    blue_ghost_dir = other.blue_ghost_dir;
+                    orange_ghost_pos = other.orange_ghost_pos;
+                    orange_ghost_dir = other.orange_ghost_dir;
+                    pink_ghost_pos = other.pink_ghost_pos;
+                    pink_ghost_dir = other.pink_ghost_dir;
+                    grid = other.grid;
+                    points = other.points;
+                    depth = other.depth;
+                }
+                return *this;
             }
             // bool cherry_eaten;
             // bool powerup_eaten;
@@ -247,6 +279,8 @@ class StateSpaceSearchR {
         map<string, vector<pair<int, int>>> bfsCherry(bool check_nearest_pellet, pair<int, int> start, vector<vector<int>> grid);
 
         vector<pair<int, int>> getNeighborsBFS(pair<int, int> node, vector<vector<int>> grid);
+
+        vector<pair<int, int>> bfsPathSingle(pair<int, int> start, pair<int, int> goal, vector<vector<int>> grid);
 
     private:
 

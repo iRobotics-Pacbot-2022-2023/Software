@@ -55,7 +55,31 @@ int main () {
     Ghost ghost_pink(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
 
     StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
-    searchState.generatePath(4);
+    // searchState.generatePath(4);
+    int count = 0;
+    while (count < 100) {
+        // if (searchState.getRed().getGhostLocation().first == searchState.getPacmanPos().first && 
+        // searchState.getRed().getGhostLocation().second == searchState.getPacmanPos().second) {
+        //     lets_dance = false;
+        // }
+        std::pair<int, int> pacMove;
+        if (searchState.generatePath(4).size() == 1) {
+            pacMove = searchState.generatePath(4).at(0);
+        } else {
+            pacMove = searchState.generatePath(4).at(1);
+        }
+        // std::cout << "PacMOVE: " << pacMove.first << " " << pacMove.second << std::endl;
+        pac.changePos(pacMove);
+        std::cout << "Pac new move: " << pacMove.first << " " << pacMove.second << std::endl;
+        pac.setDirection(searchState.getPacmanDir());
+        // PacmanState pac_test(pacMove, searchState.getPacmanDir(), grid, pellets_eat, prev_powerups, curr_powerup);
+        std::pair<int, int> newMove(ghost_red._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_red).first.first, ghost_red._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_red).first.second);
+        ghost_red.ghostMove(newMove);
+        std::cout << "Ghost move: " << newMove.first << " " << newMove.second << std::endl;
+        searchState.setPacman(pac);
+        searchState.setRedGhost(ghost_red);
+        count++;
+    }
     
 
     // std::cout << "Blue" << " " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << " " << ghost_blue.get_euclidian_distance(ghost_blue.getGhostLocation(), pac.getBotPos()) << std::endl;
