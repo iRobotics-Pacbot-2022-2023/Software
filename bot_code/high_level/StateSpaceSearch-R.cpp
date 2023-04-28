@@ -804,6 +804,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
    StateSpaceSearchR::BaseNode parent;
     parent.pacman_pos = getPacmanPos();
     parent.pacman_dir = getPacmanDir();
+    if (grid[parent.pacman_pos.first][parent.pacman_pos.second] == O) {
+        // POWER_POINTS_LOCATIONS.erase(POWER_POINTS_LOCATIONS.find({parent.pacman_pos.first, parent.pacman_pos.first}));
+        std::cout << "bruh" << std::endl;
+        return generatePathFreightened(length);
+    }
 
     parent.red_ghost_pos = red_ghost.getGhostLocation();
     // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
@@ -897,8 +902,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
             if (grid[child.pacman_pos.first][child.pacman_pos.second] == O) {
                 std::cout << "O reached" << std::endl;
-                pacman.setPowerupsEaten(curr_powerups_eaten); //maybe not needed
-                POWER_POINTS_LOCATIONS.erase(child.pacman_pos);
+                // pacman.setPowerupsEaten(curr_powerups_eaten); //maybe not needed
+                // POWER_POINTS_LOCATIONS.erase(child.pacman_pos);
                 // std::cout << "You have reached the powerup! " << "Powerups: " << curr_powerups_eaten << std::endl;
                 child.grid = changeGrid(curr_grid, curr_position, neighbor);
 
@@ -907,6 +912,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
                 std::pair<int, int> start = std::pair<int, int>(parent.pacman_pos.first, parent.pacman_pos.second);
                 std::pair<int, int> goal = std::pair<int, int>(child.pacman_pos.first, child.pacman_pos.second);
                 vector<pair<int, int>> path = bfsPathSingle(start, goal, grid);
+
+
 
                 // while (!baseNodeEquals(child, nil)) {
                 //     // std::cout << "PowerupPath: " << child.pacman_pos.first << " " << child.pacman_pos.second << std::endl;
@@ -1019,6 +1026,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     - Distance to frieghtened ghost (minimize) (BFS / A*) 
     - Distance to normal ghost (maximize) (average)
     */
+
+   cout << "Freigtened path start" << endl;
 
    map<StateSpaceSearchR::FreightenedNode, StateSpaceSearchR::FreightenedNode> node_to_parent;
 
@@ -1212,7 +1221,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
     StateSpaceSearchR::FreightenedNode best_node;
     best_node.points = -1;
-
+    std::cout << final_positions.size() << std::endl;
+    std::cout << "Parent location: " << parent.pacman_pos.first << " "<< parent.pacman_pos.second << std::endl;
     for (auto n : final_positions) { // node_to_parent
         StateSpaceSearchR::FreightenedNode curr = n; // n.first
         
@@ -1236,9 +1246,9 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
             curr.points += (non_frieghtened_ghosts / 4);
 
-            vector<pair<int, int>> nearest_powerup = bfsPathMultiple(curr.pacman_pos, freightened_ghosts, curr.grid);
+            vector<pair<int, int>> nearest_freightend_ghost = bfsPathMultiple(curr.pacman_pos, freightened_ghosts, curr.grid);
 
-            curr.points += (50 / nearest_powerup.size());
+            curr.points += (50 / nearest_freightend_ghost.size());
             
             if (curr.points > best_node.points) {
                 best_node.points = curr.points;
