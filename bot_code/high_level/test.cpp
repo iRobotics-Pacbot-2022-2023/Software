@@ -55,6 +55,8 @@ int main () {
     Ghost ghost_pink(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
 
     StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
+    searchState.changeGameState(StateSpaceSearchR::GameState::CHERRYTWO);
+    
     // searchState.generatePath(4);
     int count = 0;
     while (count < 100) {

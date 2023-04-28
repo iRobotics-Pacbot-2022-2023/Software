@@ -538,7 +538,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
             }
         }
     }
-
+    // std::cout << "test" << std::endl;
     StateSpaceSearchR::BaseNode filler = best_node;
     // std::cout << "Best points is: " << filler.points << std::endl;
 
@@ -604,7 +604,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     if (parent.pacman_pos.first == 13 && parent.pacman_pos.second == 13) {
         state = StateSpaceSearchR::GameState::BASE;
     }
-
+    // std::cout << "test" << std::endl;
     parent.red_ghost_pos = red_ghost.getGhostLocation();
     // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
     parent.red_ghost_dir = red_ghost.getterDirection();
@@ -746,7 +746,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
 
     StateSpaceSearchR::BaseNode best_node;
     best_node.points = -1;
-
+    std::cout << final_positions.size() << std::endl;
     for (auto n : final_positions) { // node_to_parent
         StateSpaceSearchR::BaseNode curr = n; // n.first
         
