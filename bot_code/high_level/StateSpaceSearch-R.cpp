@@ -813,7 +813,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
     parent.pacman_dir = getPacmanDir();
     if (grid[parent.pacman_pos.first][parent.pacman_pos.second] == O) {
         // POWER_POINTS_LOCATIONS.erase(POWER_POINTS_LOCATIONS.find({parent.pacman_pos.first, parent.pacman_pos.first}));
-        std::cout << "bruh" << std::endl;
+        // std::cout << "bruh" << std::endl;
+        state = StateSpaceSearchR::GameState::FREIGHTENED;
         return generatePathFreightened(length);
     }
 
@@ -1051,23 +1052,26 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     parent.red_ghost_pos = red_ghost.getGhostLocation();
     // std::cout << "Red ghost: " << parent.red_ghost_pos.first << " " << parent.red_ghost_pos.second << std::endl;
     parent.red_ghost_dir = red_ghost.getterDirection();
-    parent.red_ghost_state = red_ghost.getGhostState();
+    parent.red_ghost_state = Ghost::GhostState::frightened;
+    // red_ghost.getGhostState()
 
     parent.blue_ghost_pos = blue_ghost.getGhostLocation();
     // std::cout << "Red ghost: " << parent.blue_ghost_pos.first << " " << parent.blue_ghost_pos.second << std::endl;
     parent.blue_ghost_dir = blue_ghost.getterDirection();
-    parent.blue_ghost_state = blue_ghost.getGhostState();
+    parent.blue_ghost_state = Ghost::GhostState::frightened;
+    // blue_ghost.getGhostState()
 
     parent.orange_ghost_pos = orange_ghost.getGhostLocation();
     // std::cout << "Red ghost: " << parent.orange_ghost_pos.first << " " << parent.orange_ghost_pos.second << std::endl;
     parent.orange_ghost_dir = orange_ghost.getterDirection();
-    parent.orange_ghost_state = orange_ghost.getGhostState();
+    parent.orange_ghost_state = Ghost::GhostState::frightened;
+    // orange_ghost.getGhostState()
 
     parent.pink_ghost_pos = pink_ghost.getGhostLocation();
     // std::cout << "Red ghost: " << parent.pink_ghost_pos.first << " " << parent.pink_ghost_pos.second << std::endl;
     parent.pink_ghost_dir = pink_ghost.getterDirection();
-    parent.pink_ghost_state = pink_ghost.getGhostState();
-
+    parent.pink_ghost_state = Ghost::GhostState::frightened;
+    // pink_ghost.getGhostState()
     parent.grid = grid;
     parent.points = 0;
     parent.depth = 0;
@@ -1233,12 +1237,12 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     for (auto n : final_positions) { // node_to_parent
         StateSpaceSearchR::FreightenedNode curr = n; // n.first
         
-        if (curr.depth == length && curr.points > best_node.points) {
-
+        // if (curr.depth == length && curr.points > best_node.points) {
+            // std::cout << "entered if statement" << std::endl;
             int non_frieghtened_ghosts = 0;
 
             set<pair<int, int>> freightened_ghosts;
-
+    
             if (curr.red_ghost_state != Ghost::GhostState::frightened) non_frieghtened_ghosts += euclideanDistance(curr.pacman_pos, curr.red_ghost_pos);
             else freightened_ghosts.insert(curr.red_ghost_pos);
 
@@ -1261,7 +1265,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
                 best_node.points = curr.points;
                 best_node = curr;
             }
-        }
+        // }
     }
 
     StateSpaceSearchR::FreightenedNode filler = best_node;
