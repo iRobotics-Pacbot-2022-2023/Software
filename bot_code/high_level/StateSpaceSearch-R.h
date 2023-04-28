@@ -36,6 +36,8 @@ class StateSpaceSearchR {
 
         GameState getGameState() { return state; }
 
+        void changeGameState(GameState s) {state = s;}
+
         // Direction 
 
 
