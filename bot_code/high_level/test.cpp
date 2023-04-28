@@ -76,6 +76,9 @@ int main () {
             pacMove = our_path.at(1);
         }
         // std::cout << "PacMOVE: " << pacMove.first << " " << pacMove.second << std::endl;
+        if (grid[pacMove.first][pacMove.second] == o) {
+            pac.setPelletsEaten(pac.getPelletsEaten() + 1);
+        pac.changeGrid(grid, pac.getBotPos(), pacMove);
         pac.changePos(pacMove);
         std::cout << "Pac new move: " << pacMove.first << " " << pacMove.second << std::endl;
         pac.setDirection(searchState.getPacmanDir());
@@ -262,4 +265,5 @@ void printGrid(std::vector<std::vector<int>> grid) {
         i+= 1;
     }
     std::cout <<" }";
+}
 }
