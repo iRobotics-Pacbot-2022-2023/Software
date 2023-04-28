@@ -55,8 +55,8 @@ int main () {
     Ghost ghost_pink(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
 
     StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
-    searchState.changeGameState(StateSpaceSearchR::GameState::CHERRYTWO);
-    
+    // searchState.changeGameState(StateSpaceSearchR::GameState::CHERRYTWO);
+
     // searchState.generatePath(4);
     int count = 0;
     while (count < 100) {
@@ -232,38 +232,38 @@ int main () {
     ///grit ^= ZorbTable[22][14][piece]; 
     return 0;
 }
-void printGrid(std::vector<std::vector<int>> grid) {
-    std::cout << "   ";
-    for (int i = 0 ; i < grid[0].size(); i++ ){
-        std::cout<< i% 10 << " ";
-    }
-    std::cout << std::endl << "0{";
+// void printGrid(std::vector<std::vector<int>> grid) {
+//     std::cout << "   ";
+//     for (int i = 0 ; i < grid[0].size(); i++ ){
+//         std::cout<< i% 10 << " ";
+//     }
+//     std::cout << std::endl << "0{";
 
-    int i = 1;
-    for (std::vector<int> ve: grid) {
-        std::cout <<"{";
-        for (int i: ve) {
-            if (i == I){
-                std::cout<<"I ";
-            } else if (i == o) {
-                std::cout << "o ";
-            } else if (i == v) {
-                std::cout << "v ";
-            }else if (i == e) {
-                std::cout <<"e ";
-            } else if (i == O) {
-                std::cout <<"O ";
-            } else if (i == n) {
-                std::cout <<"n ";
-            } else if (i == P) {
-                std::cout <<"P ";
-            } else {
-                std::cout << "ch ";
-            }
-        }
-        std::cout << "}\n" << i % 10 << " ";
-        i+= 1;
-    }
-    std::cout <<" }";
-}
+//     int i = 1;
+//     for (std::vector<int> ve: grid) {
+//         std::cout <<"{";
+//         for (int i: ve) {
+//             if (i == I){
+//                 std::cout<<"I ";
+//             } else if (i == o) {
+//                 std::cout << "o ";
+//             } else if (i == v) {
+//                 std::cout << "v ";
+//             }else if (i == e) {
+//                 std::cout <<"e ";
+//             } else if (i == O) {
+//                 std::cout <<"O ";
+//             } else if (i == n) {
+//                 std::cout <<"n ";
+//             } else if (i == P) {
+//                 std::cout <<"P ";
+//             } else {
+//                 std::cout << "ch ";
+//             }
+//         }
+//         std::cout << "}\n" << i % 10 << " ";
+//         i+= 1;
+//     }
+//     std::cout <<" }";
+// }
 }
