@@ -25,7 +25,7 @@ void StateSpaceSearchR::updateGameState() {
     // int prev_powerups_eaten = 
     // int curr_powerups_eaten = ();
 
-    if (state == StateSpaceSearchR::GameState::BASE) {\
+    if (pacman.getGameState() == PacmanState::GameState::BASE) {\
         std:: cout << "Entered Base" << std::endl;
         // can only change to CHERRYONE or POWERUP
 
@@ -37,33 +37,34 @@ void StateSpaceSearchR::updateGameState() {
 
         if (euclideanDistance(pacman.getBotPos(), red_ghost.getGhostLocation()) <= 5 || euclideanDistance(pacman.getBotPos(), blue_ghost.getGhostLocation()) <= 5
             || euclideanDistance(pacman.getBotPos(), orange_ghost.getGhostLocation()) <= 5 || euclideanDistance(pacman.getBotPos(), pink_ghost.getGhostLocation()) <= 5) {
-                std::cout << "YOU ARE CLOSE" << std::endl;
-            state = StateSpaceSearchR::GameState::POWERUP;
+                // std::cout << "YOU ARE CLOSE" << std::endl;
+                pacman.setGameState(PacmanState::GameState::POWERUP);
+            // state = PacmanState::GameState::POWERUP;
         }
 
         else if ((curr_cherries_eaten == 0 && pellets_eaten >= 50) || (curr_cherries_eaten == 1 && pellets_eaten >= 150)) {
-            std::cout << "bruh whhat IS YOU DOING" << std::endl;
-            state = StateSpaceSearchR::GameState::CHERRYONE;
+            // std::cout << "bruh whhat IS YOU DOING" << std::endl;
+            pacman.setGameState(PacmanState::GameState::CHERRYONE);
         }
 
-    } else if (state == StateSpaceSearchR::GameState::CHERRYONE) {
+    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYONE) {
         // can only change to CHERRYTWO
 
         if ((curr_cherries_eaten == 0 && pellets_eaten >= 70) || (curr_cherries_eaten == 1 && pellets_eaten >= 170)) {
-            state = StateSpaceSearchR::GameState::CHERRYTWO;
+            pacman.setGameState(PacmanState::GameState::CHERRYTWO);
         }
 
-    } else if (state == StateSpaceSearchR::GameState::CHERRYTWO) {
+    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYTWO) {
         // can only change to BASE
 
         // it;s inferred that if cherry is eaten, curr_cherries_eaten incrememnts
 
         if (curr_cherries_eaten > prev_cherries_eaten /* or time runs out */) {
             prev_cherries_eaten = curr_cherries_eaten;
-            state = StateSpaceSearchR::GameState::BASE;
+            pacman.setGameState(PacmanState::GameState::BASE);
         }
 
-    } else if (state == StateSpaceSearchR::GameState::POWERUP) {
+    } else if (pacman.getGameState() == PacmanState::GameState::POWERUP) {
         // can only change to FREIGHTENED
         std::cout << "You are now in POWERUP" << std::endl;
         if (curr_powerups_eaten > prev_powerups_eaten) {
@@ -74,10 +75,10 @@ void StateSpaceSearchR::updateGameState() {
             blue_ghost.changeGhostState(Ghost::GhostState::frightened);
             orange_ghost.changeGhostState(Ghost::GhostState::frightened);
             pink_ghost.changeGhostState(Ghost::GhostState::frightened);
-            state = StateSpaceSearchR::FREIGHTENED;
+            pacman.setGameState(PacmanState::GameState::FREIGHTENED);
         }
 
-    } else if (state == StateSpaceSearchR::GameState::FREIGHTENED) {
+    } else if (pacman.getGameState() == PacmanState::GameState::FREIGHTENED) {
         // can only change to BASE
 
         if (freightened_time_left == 0) {
@@ -86,13 +87,16 @@ void StateSpaceSearchR::updateGameState() {
             blue_ghost.changeGhostState(Ghost::GhostState::chase);
             orange_ghost.changeGhostState(Ghost::GhostState::chase);
             pink_ghost.changeGhostState(Ghost::GhostState::chase);
-            state = StateSpaceSearchR::GameState::BASE;
+            pacman.setGameState(PacmanState::GameState::BASE);
         }
     }
 }
 
 vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
 
+    cout << "The state space search says we've eaten these many pellets: " << pellets_eaten << endl;
+
+    /*
     if (red_ghost_state == Ghost::GhostState::frightened) {
         std::cout << "red is freightened" << std::endl;
     } else if (red_ghost_state == Ghost::GhostState::chase) {
@@ -124,21 +128,22 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
     } else if (pink_ghost_state == Ghost::GhostState::scatter) {
         std::cout << "pink is scatter" << std::endl;
     }
+    */
 
     updateGameState();
     
-    if (state == StateSpaceSearchR::GameState::BASE) {
+    if (pacman.getGameState() == PacmanState::GameState::BASE) {
         // std::cout << "hello" << std::endl;
         return generatePathBase(length);
-    } else if (state == StateSpaceSearchR::GameState::CHERRYONE) {
+    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYONE) {
         return generatePathCherryOne(length);
-    } else if (state == StateSpaceSearchR::GameState::CHERRYTWO) {
+    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYTWO) {
         // std::cout << "entered cherry two" << std::endl;
         return generatePathCherryTwo(length);
-    } else if (state == StateSpaceSearchR::GameState::POWERUP) {
+    } else if (pacman.getGameState() == PacmanState::GameState::POWERUP) {
         std::cout << "powerup" << std::endl;
         return generatePathPowerUp(length);
-    } else if (state == StateSpaceSearchR::GameState::FREIGHTENED) {
+    } else if (pacman.getGameState() == PacmanState::GameState::FREIGHTENED) {
         std::cout << "BOO" << std::endl;
         return generatePathFreightened(length);
     }
@@ -642,7 +647,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     parent.pacman_pos = getPacmanPos();
     parent.pacman_dir = getPacmanDir();
     if (parent.pacman_pos.first == 13 && parent.pacman_pos.second == 13) {
-        state = StateSpaceSearchR::GameState::BASE;
+        pacman.setGameState(PacmanState::GameState::BASE);
         return generatePathBase(length);
     }
     // std::cout << "test" << std::endl;
@@ -858,7 +863,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
         // POWER_POINTS_LOCATIONS.erase(POWER_POINTS_LOCATIONS.find({parent.pacman_pos.first, parent.pacman_pos.first}));
         // std::cout << "bruh" << std::endl;
-        state = StateSpaceSearchR::GameState::FREIGHTENED;
+        pacman.setGameState(PacmanState::GameState::FREIGHTENED);
         updateFreightenedTimeLeft(30); // idk the time for the freightened state
         red_ghost.changeGhostState(Ghost::GhostState::frightened);
         blue_ghost.changeGhostState(Ghost::GhostState::frightened);
@@ -889,17 +894,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
     queue.push(parent);
 
-    cout << "about to enter while loop" << endl;
+    // cout << "about to enter while loop" << endl;
 
-    int i = 0;
+    // int i = 0;
     while (!queue.empty()) {
-        cout << "i: " << i << endl;
+        // cout << "i: " << i << endl;
         StateSpaceSearchR::BaseNode curr = queue.front();
         // std::cout << "Current position is: " << curr.pacman_pos.first << " " << curr.pacman_pos.second << std::endl;
         queue.pop();
 
         pair<int, int> curr_position = curr.pacman_pos;
-        cout << "Parent coordinate: " << curr_position.first << " " << curr_position.second << endl;
+        // cout << "Parent coordinate: " << curr_position.first << " " << curr_position.second << endl;
         PacmanState::Direction curr_direction = curr.pacman_dir;
 
         pair<int, int> curr_red_ghost_pos = curr.red_ghost_pos;
@@ -918,9 +923,9 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
         vector<pair<int, int>> neighbors = getNeighborsPowerUp(curr_position, curr_grid);
         
         Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
-        if (red.getGhostState() == Ghost::GhostState::chase) {
-                std::cout << "ghost frightened" << std::endl;
-            }
+        // if (red.getGhostState() == Ghost::GhostState::chase) {
+        //         std::cout << "ghost frightened" << std::endl;
+        //     }
         Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
         Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
         Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
@@ -931,7 +936,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
             // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
             child.pacman_pos = neighbor;
 
-            cout << "Child coordinate: " << child.pacman_pos.first << " " << child.pacman_pos.second << endl;
+            // cout << "Child coordinate: " << child.pacman_pos.first << " " << child.pacman_pos.second << endl;
 
             // child.grid = changeGrid(curr_grid, curr_position, neighbor); ------- Placed after if statement
 
@@ -948,21 +953,21 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
                 continue;
             }
 
-            if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 919" << endl;
-            cout << "red ghost position: " << red.getGhostLocation().first << " " << red.getGhostLocation().second << endl;
+            // if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 919" << endl;
+            // cout << "red ghost position: " << red.getGhostLocation().first << " " << red.getGhostLocation().second << endl;
             // if (red.getGhostState() == Ghost::GhostState::fr) {
             //     std::cout << "ghost chase" << std::endl;
             // }
 
             pair<pair<int, int>, Ghost::Direction> red_neighbor = red._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
-            cout << "red" << endl;
+            // cout << "red" << endl;
             pair<pair<int, int>, Ghost::Direction> blue_neighbor = blue._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
-            cout << "blue" << endl;
+            // cout << "blue" << endl;
             pair<pair<int, int>, Ghost::Direction> orange_neighbor = orange._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
-            cout << "orange" << endl;
+            // cout << "orange" << endl;
             pair<pair<int, int>, Ghost::Direction> pink_neighbor = pink._get_next_state_move(child.pacman_pos, child.pacman_dir, red);
 
-            if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 926" << endl;
+            // if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 926" << endl;
 
             child.red_ghost_pos = red_neighbor.first;
             child.red_ghost_dir = red_neighbor.second;
@@ -973,17 +978,17 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
             child.pink_ghost_pos = pink_neighbor.first;
             child.pink_ghost_dir = pink_neighbor.second;
 
-            if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 935" << endl;
+            // if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 935" << endl;
 
             if (child.pacman_pos == child.red_ghost_pos || child.pacman_pos == child.blue_ghost_pos
                 || child.pacman_pos == child.orange_ghost_pos || child.pacman_pos == child.pink_ghost_pos) {
                 child.points = -1;
                 // node_to_parent[child] = curr;
-                cout << "we hit a ghost - second check" << endl;
+                // cout << "we hit a ghost - second check" << endl;
                 continue;
             }
 
-            if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 945" << endl;
+            // if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 945" << endl;
 
             if (grid[child.pacman_pos.first][child.pacman_pos.second] == O) {
                 std::cout << "O reached" << std::endl;
@@ -1009,7 +1014,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
             }
 
-            if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 971" << endl;
+            // if (child.pacman_pos.first == 0 && child.pacman_pos.second == 16) cout << "reached line 971" << endl;
 
             child.grid = changeGrid(curr_grid, curr_position, neighbor);
             
@@ -1032,11 +1037,11 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
             }
         }
 
-        i++;
+        // i++;
 
     }
 
-    cout << "reached out of the while loop" << endl;
+    // cout << "reached out of the while loop" << endl;
 
     /* Figure out and calculate the ghost positions for all the final positions*/
     // for all the basenodes of depth = length, calculate the ghost positions and recalulate score

@@ -19,6 +19,9 @@ class PacmanState {
     enum Direction {
             right, up, left, down
         };    
+
+    enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
+
     //************************ Constructor
     PacmanState() {
         pos = make_pair(13, 13);
@@ -29,7 +32,7 @@ class PacmanState {
         powerups_eaten = 0;
     }
 
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, int p_eaten, int c_eaten, int pu_eaten) {
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, int p_eaten, int c_eaten, int pu_eaten, GameState state) {
             
             pos = botPos; // retrieve from server
             direction_facing = pacDirection;
@@ -37,6 +40,7 @@ class PacmanState {
             pellets_eaten = p_eaten; // PELLETS_EATEN; 
             cherries_eaten = c_eaten; // CHERRIES_EATEN; // retrieve from server
             powerups_eaten = pu_eaten; // POWERUPS_EATEN; // retrieve from server
+            our_game_state = state;
     }
     
     // void updateGrid(vector<vector<int>> new_grid) {
@@ -58,6 +62,14 @@ class PacmanState {
     }
 
     //************************ Position getter and setter 
+
+    GameState getGameState() {
+        return our_game_state;
+    }
+
+    void setGameState(GameState new_game_state) {
+        our_game_state = new_game_state;
+    }
 
     std::pair<int, int> getBotPos() {
         return pos;
@@ -125,6 +137,8 @@ class PacmanState {
     // void introduceCherry();
     //************************
 private:
+
+    GameState our_game_state;
 
     // int score;
     std::pair<int, int> pos;

@@ -30,13 +30,13 @@ class StateSpaceSearchR {
             grid = g;
         }
 
-        enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
+        // enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
 
         void updateGameState();
 
-        GameState getGameState() { return state; }
+        PacmanState::GameState getGameState() { return pacman.getGameState(); }
 
-        void changeGameState(GameState s) {state = s;}
+        void changeGameState(PacmanState::GameState s) { pacman.setGameState(s); }
 
         // Direction 
 
@@ -296,7 +296,7 @@ class StateSpaceSearchR {
 
         Ghost pink_ghost;
 
-        GameState state = BASE;
+        // PacmanState::GameState state = pacman.getGameState();
 
         pair<int, int> pacman_pos = pacman.getBotPos();
 

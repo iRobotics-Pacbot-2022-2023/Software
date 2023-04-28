@@ -44,9 +44,6 @@ class Ghost {
         void changeGhostState(GhostState new_state);
 
 
-
-
-
         Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state); 
         // GETTERS
         PacBot getPac(); // for test only

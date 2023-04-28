@@ -102,6 +102,7 @@ Ghost::Ghost(Ghost & g){
     //potential parameter
     // std::vector<std::vector<int>> grid, 
     std::pair<std::pair<int, int> , Ghost::Direction > Ghost::_get_next_state_move(std::pair<int, int> pacbotPos, PacmanState::Direction pacbotDirection, Ghost red_ghost) {
+        // std::cout << "entered get next state move" << std::endl;
         if (current_ghost_state == frightened) {
             return _get_next_frightened_move();
         } else if (current_ghost_state == chase) {

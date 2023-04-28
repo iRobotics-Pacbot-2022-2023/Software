@@ -38,13 +38,21 @@ int main () {
                                 {I,I,I,I,I,I,I,I,I,I,I,I,e,e,e,I,v,I,e,e,e,I,I,I,I,I,I,I,I,I,I}};
                         //       |         |         |         |         |         |         |
                         //       0         5         10        15        20        25       30 
+
+    int num_pellets = 0;
+    for (vector<int> vect : grid) {
+        for (int i : vect) {
+            if (i == o) num_pellets++;
+        }
+    }
+    
     std::pair<int, int> pos = {14, 7};
     // int pelletsLeft = 50;
     int pellets_eat = 0;
     int prev_powerups = 0;
     int curr_powerup = 0;
     // int cherries_eat = 0;
-    PacmanState pac(pos, PacmanState::Direction::right, grid, pellets_eat, prev_powerups, curr_powerup);
+    PacmanState pac(pos, PacmanState::Direction::right, grid, pellets_eat, prev_powerups, curr_powerup, PacmanState::GameState::BASE);
 
     std::pair<int, int> ghostLoc = {1, 1};
     // std::pair<int, int> scatterLoc = {, 1};
@@ -55,12 +63,47 @@ int main () {
     Ghost ghost_orange(ghostLoc, Ghost::Direction::up, Ghost::Color::orange, Ghost::GhostState::chase);
     Ghost ghost_pink(ghostLoc, Ghost::Direction::up, Ghost::Color::red, Ghost::GhostState::chase);
 
-    StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
+    
+
+    if (ghost_red.getGhostState() == Ghost::GhostState::frightened) {
+        std::cout << "red is freightened" << std::endl;
+    } else if (ghost_red.getGhostState() == Ghost::GhostState::chase) {
+        std::cout << "red is chase" << std::endl;
+    } else if (ghost_red.getGhostState() == Ghost::GhostState::scatter) {
+        std::cout << "red is scatter" << std::endl;
+    }
+
+    if (ghost_blue.getGhostState() == Ghost::GhostState::frightened) {
+        std::cout << "blue is freightened" << std::endl;
+    } else if (ghost_blue.getGhostState() == Ghost::GhostState::chase) {
+        std::cout << "blue is chase" << std::endl;
+    } else if (ghost_blue.getGhostState() == Ghost::GhostState::scatter) {
+        std::cout << "blue is scatter" << std::endl;
+    }
+
+    if (ghost_orange.getGhostState() == Ghost::GhostState::frightened) {
+        std::cout << "orange is freightened" << std::endl;
+    } else if (ghost_orange.getGhostState() == Ghost::GhostState::chase) {
+        std::cout << "orange is chase" << std::endl;
+    } else if (ghost_orange.getGhostState() == Ghost::GhostState::scatter) {
+        std::cout << "orange is scatter" << std::endl;
+    }
+
+    if (ghost_pink.getGhostState() == Ghost::GhostState::frightened) {
+        std::cout << "pink is freightened" << std::endl;
+    } else if (ghost_pink.getGhostState() == Ghost::GhostState::chase) {
+        std::cout << "pink is chase" << std::endl;
+    } else if (ghost_pink.getGhostState() == Ghost::GhostState::scatter) {
+        std::cout << "pink is scatter" << std::endl;
+    }
     // searchState.changeGameState(StateSpaceSearchR::GameState::CHERRYTWO);
 
     // searchState.generatePath(4);
     int count = 0;
-    while (count < 200) {
+    while (count < 400) {
+
+        StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
+
         cout << "COUNT = " << count << endl;
         // if (searchState.getRed().getGhostLocation().first == searchState.getPacmanPos().first && 
         // searchState.getRed().getGhostLocation().second == searchState.getPacmanPos().second) {
@@ -96,6 +139,12 @@ int main () {
 
         cout << "\n" << endl;
     }
+
+    cout << "\n" << endl;
+    cout << "Final position: " << pac.getBotPos().first << " " << pac.getBotPos().second << endl;
+    cout << "Final pellets eaten: " << pac.getPelletsEaten() << endl;
+
+    cout << "Total num pellets: " << num_pellets << endl;
     
 
     // std::cout << "Blue" << " " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << " " << ghost_blue.get_euclidian_distance(ghost_blue.getGhostLocation(), pac.getBotPos()) << std::endl;
