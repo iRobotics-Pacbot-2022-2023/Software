@@ -92,7 +92,39 @@ void StateSpaceSearchR::updateGameState() {
 }
 
 vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
-    
+
+    if (red_ghost_state == Ghost::GhostState::frightened) {
+        std::cout << "red is freightened" << std::endl;
+    } else if (red_ghost_state == Ghost::GhostState::chase) {
+        std::cout << "red is chase" << std::endl;
+    } else if (red_ghost_state == Ghost::GhostState::scatter) {
+        std::cout << "red is scatter" << std::endl;
+    }
+
+    if (blue_ghost_state == Ghost::GhostState::frightened) {
+        std::cout << "blue is freightened" << std::endl;
+    } else if (blue_ghost_state == Ghost::GhostState::chase) {
+        std::cout << "blue is chase" << std::endl;
+    } else if (blue_ghost_state == Ghost::GhostState::scatter) {
+        std::cout << "blue is scatter" << std::endl;
+    }
+
+    if (orange_ghost_state == Ghost::GhostState::frightened) {
+        std::cout << "orange is freightened" << std::endl;
+    } else if (orange_ghost_state == Ghost::GhostState::chase) {
+        std::cout << "orange is chase" << std::endl;
+    } else if (orange_ghost_state == Ghost::GhostState::scatter) {
+        std::cout << "orange is scatter" << std::endl;
+    }
+
+    if (pink_ghost_state == Ghost::GhostState::frightened) {
+        std::cout << "pink is freightened" << std::endl;
+    } else if (pink_ghost_state == Ghost::GhostState::chase) {
+        std::cout << "pink is chase" << std::endl;
+    } else if (pink_ghost_state == Ghost::GhostState::scatter) {
+        std::cout << "pink is scatter" << std::endl;
+    }
+
     updateGameState();
     
     if (state == StateSpaceSearchR::GameState::BASE) {
