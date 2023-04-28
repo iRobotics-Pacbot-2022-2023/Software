@@ -76,7 +76,10 @@ int main () {
         // std::cout << "PacMOVE: " << pacMove.first << " " << pacMove.second << std::endl;
         if (grid[pacMove.first][pacMove.second] == o) {
             pac.setPelletsEaten(pac.getPelletsEaten() + 1);
-        pac.changeGrid(grid, pac.getBotPos(), pacMove);
+        }
+        cout << "Pellets eaten: " << pac.getPelletsEaten() << endl;
+        grid = searchState.changeGrid(grid, pac.getBotPos(), pacMove);
+        // pac.changeGrid(grid, pac.getBotPos(), pacMove);
         pac.changePos(pacMove);
         std::cout << "Pac new move: " << pacMove.first << " " << pacMove.second << std::endl;
         pac.setDirection(searchState.getPacmanDir());
