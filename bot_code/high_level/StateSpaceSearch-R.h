@@ -55,7 +55,7 @@ class StateSpaceSearchR {
 
         // enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
 
-        void updateGameState();
+        // void updateGameState();
 
         PacmanState::GameState getGameState() { return pacman.getGameState(); }
 
