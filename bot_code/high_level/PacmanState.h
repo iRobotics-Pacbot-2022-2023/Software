@@ -107,6 +107,22 @@ class PacmanState {
         powerups_eaten = new_powerups_eaten;
     }
 
+    int getCherryTimeLeft() {
+        return cherry_time_left;
+    }
+
+    void setCherryTimeLeft(int new_time_left) {
+        cherry_time_left = new_time_left;
+    }
+
+    int getFrieghtenedTimeLeft() {
+        return freightened_time_left;
+    }
+
+    void setFrieghtenedTimeLeft(int new_time_left) {
+        freightened_time_left = new_time_left;
+    }
+
     //**************************
 
     //*******************Pellet getter and setter
@@ -159,6 +175,10 @@ private:
     Direction direction_facing;
 
     std::vector<std::vector<int>> grid;
+
+    int freightened_time_left = 0;
+
+    int cherry_time_left = 0;
     
    //*********************/
 

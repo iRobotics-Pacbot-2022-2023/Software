@@ -25,14 +25,8 @@ void StateSpaceSearchR::updateGameState() {
     // int prev_powerups_eaten = 
     // int curr_powerups_eaten = ();
 
-    if (pacman.getGameState() == PacmanState::GameState::BASE) {\
-        std:: cout << "Entered Base" << std::endl;
-        // can only change to CHERRYONE or POWERUP
-
-        // cout << "red ghost position: " << red_ghost.getGhostLocation().first << red_ghost.getGhostLocation().second << endl;
-        // cout << "red ghost position: " << blue_ghost_pos.first << blue_ghost_pos.second << endl;
-        // cout << "red ghost position: " << orange_ghost_pos.first << orange_ghost_pos.second << endl;
-        // cout << "red ghost position: " << pink_ghost_pos.first << pink_ghost_pos.second << endl;
+    if (pacman.getGameState() == PacmanState::GameState::BASE) {
+        std::cout << "StateSpace Search: Start in BASE" << std::endl;
 
 
         if (euclideanDistance(pacman.getBotPos(), red_ghost.getGhostLocation()) <= 5 || euclideanDistance(pacman.getBotPos(), blue_ghost.getGhostLocation()) <= 5
@@ -42,7 +36,7 @@ void StateSpaceSearchR::updateGameState() {
             // state = PacmanState::GameState::POWERUP;
         }
 
-        else if ((curr_cherries_eaten == 0 && pellets_eaten >= 50) || (curr_cherries_eaten == 1 && pellets_eaten >= 150)) {
+        else if ((cherries_eaten == 0 && pellets_eaten >= 50) || (cherries_eaten == 1 && pellets_eaten >= 150)) {
             // std::cout << "bruh whhat IS YOU DOING" << std::endl;
             pacman.setGameState(PacmanState::GameState::CHERRYONE);
         }
@@ -50,36 +44,41 @@ void StateSpaceSearchR::updateGameState() {
     } else if (pacman.getGameState() == PacmanState::GameState::CHERRYONE) {
         // can only change to CHERRYTWO
 
-        if ((curr_cherries_eaten == 0 && pellets_eaten >= 70) || (curr_cherries_eaten == 1 && pellets_eaten >= 170)) {
+        std::cout << "StateSpace Search: Start in CHERRYONE" << std::endl;
+
+        if ((cherries_eaten == 0 && pellets_eaten >= 70) || (cherries_eaten == 1 && pellets_eaten >= 170)) {
             pacman.setGameState(PacmanState::GameState::CHERRYTWO);
         }
 
     } else if (pacman.getGameState() == PacmanState::GameState::CHERRYTWO) {
+
+        std::cout << "StateSpace Search: Start in CHERRYTWO" << std::endl;
         // can only change to BASE
 
         // it;s inferred that if cherry is eaten, curr_cherries_eaten incrememnts
-
-        if (curr_cherries_eaten > prev_cherries_eaten /* or time runs out */) {
-            prev_cherries_eaten = curr_cherries_eaten;
+        if (cherry_time_left == 0) {
+            cherries_eaten++;
             pacman.setGameState(PacmanState::GameState::BASE);
         }
 
     } else if (pacman.getGameState() == PacmanState::GameState::POWERUP) {
         // can only change to FREIGHTENED
-        std::cout << "You are now in POWERUP" << std::endl;
-        if (curr_powerups_eaten > prev_powerups_eaten) {
-            std::cout << curr_powerups_eaten << " " << prev_powerups_eaten << std::endl;
-            prev_cherries_eaten = curr_cherries_eaten;
-            updateFreightenedTimeLeft(30); // idk the time for the freightened state
-            red_ghost.changeGhostState(Ghost::GhostState::frightened);
-            blue_ghost.changeGhostState(Ghost::GhostState::frightened);
-            orange_ghost.changeGhostState(Ghost::GhostState::frightened);
-            pink_ghost.changeGhostState(Ghost::GhostState::frightened);
-            pacman.setGameState(PacmanState::GameState::FREIGHTENED);
-        }
+        std::cout << "StateSpace Search: Start in POWERUP" << std::endl;
+        // if (curr_powerups_eaten > prev_powerups_eaten) {
+        //     std::cout << curr_powerups_eaten << " " << prev_powerups_eaten << std::endl;
+        //     prev_cherries_eaten = curr_cherries_eaten;
+        //     updateFreightenedTimeLeft(30); // idk the time for the freightened state
+        //     red_ghost.changeGhostState(Ghost::GhostState::frightened);
+        //     blue_ghost.changeGhostState(Ghost::GhostState::frightened);
+        //     orange_ghost.changeGhostState(Ghost::GhostState::frightened);
+        //     pink_ghost.changeGhostState(Ghost::GhostState::frightened);
+        //     pacman.setGameState(PacmanState::GameState::FREIGHTENED);
+        // }
 
     } else if (pacman.getGameState() == PacmanState::GameState::FREIGHTENED) {
         // can only change to BASE
+
+        std::cout << "StateSpace Search: Start in FREIGHTENED" << std::endl;
 
         if (freightened_time_left == 0) {
             std::cout << "about to enter base state" << std::endl;
@@ -93,6 +92,8 @@ void StateSpaceSearchR::updateGameState() {
 }
 
 vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
+
+    cout << "The state space search says we've eaten these many pellets: " << pacman.getPelletsEaten() << endl;
 
     cout << "The state space search says we've eaten these many pellets: " << pellets_eaten << endl;
 

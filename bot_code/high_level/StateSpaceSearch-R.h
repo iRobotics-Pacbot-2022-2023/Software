@@ -331,13 +331,13 @@ class StateSpaceSearchR {
 
         int freightened_time_left = 0;
 
-        int prev_powerups_eaten = pacman.getPowerupsEaten(); // retrieve from server
+        int powerups_eaten = pacman.getPowerupsEaten(); // retrieve from server
 
-        int curr_powerups_eaten = prev_powerups_eaten;
+        // int curr_powerups_eaten = prev_powerups_eaten;
 
-        int prev_cherries_eaten = pacman.getCherriesEaten(); // retrieve from server
+        int cherries_eaten = pacman.getCherriesEaten(); // retrieve from server
 
-        int curr_cherries_eaten = prev_cherries_eaten;
+        // int curr_cherries_eaten = prev_cherries_eaten;
 
         set<pair<int, int>> POWER_POINTS_LOCATIONS = {{1, 7}, {1, 27}, {26, 7}, {26, 27}};
 
