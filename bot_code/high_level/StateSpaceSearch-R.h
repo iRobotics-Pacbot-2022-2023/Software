@@ -5,7 +5,7 @@
 #include "PacmanState.h"
 #include "Ghost.h"
 
-// #include "BFS.h"
+#include "BFS.h"
 #include "AStar.h"
 
 #include <vector>
@@ -14,7 +14,6 @@
 #include <map>
 #include <set>
 #include <cmath>
-#include <unordered_map>
 
 class StateSpaceSearchR {
     public:

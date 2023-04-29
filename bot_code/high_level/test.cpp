@@ -100,7 +100,9 @@ int main () {
 
     // searchState.generatePath(4);
     int count = 0;
-    while (count < 400) {
+    while (count < 200) {
+
+        cout << "Pellets eaten: " << pac.getPelletsEaten() << endl;
 
         StateSpaceSearchR searchState(pac, ghost_red, ghost_blue, ghost_orange, ghost_pink, grid);
 
@@ -119,22 +121,66 @@ int main () {
         } else {
             pacMove = our_path.at(1);
         }
+
         // std::cout << "PacMOVE: " << pacMove.first << " " << pacMove.second << std::endl;
+
+        // update pellet count
         if (grid[pacMove.first][pacMove.second] == o) {
             pac.setPelletsEaten(pac.getPelletsEaten() + 1);
+        } else if (grid[pacMove.first][pacMove.second] == O) {
+            pac.setPowerupsEaten(pac.getPowerupsEaten() + 1);
         }
-        cout << "Pellets eaten: " << pac.getPelletsEaten() << endl;
+        
+        // update grid
         grid = searchState.changeGrid(grid, pac.getBotPos(), pacMove);
         // pac.changeGrid(grid, pac.getBotPos(), pacMove);
+
+        // update pacman position
         pac.changePos(pacMove);
         std::cout << "Pac new move: " << pacMove.first << " " << pacMove.second << std::endl;
+
+        // update pacman direction
         pac.setDirection(searchState.getPacmanDir());
+
+        // RED GHOST
+        cout << "Prev ghost pos: " << ghost_red.getGhostLocation().first << " " << ghost_red.getGhostLocation().second << endl;
         // PacmanState pac_test(pacMove, searchState.getPacmanDir(), grid, pellets_eat, prev_powerups, curr_powerup);
-        std::pair<int, int> newMove(ghost_red._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_red).first.first, ghost_red._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_red).first.second);
-        ghost_red.ghostMove(newMove);
-        std::cout << "Ghost move: " << newMove.first << " " << newMove.second << std::endl;
-        searchState.setPacman(pac);
-        searchState.setRedGhost(ghost_red);
+        std::pair<int, int> newRedMove(ghost_red._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_red).first.first, 
+                                    ghost_red._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_red).first.second);
+        ghost_red.ghostMove(newRedMove);
+        cout << "Next ghost pos: " << ghost_red.getGhostLocation().first << " " << ghost_red.getGhostLocation().second << endl;
+        // std::cout << "Ghost move: " << newMove.first << " " << newMove.second << std::endl;
+        // searchState.setPacman(pac);
+        // searchState.setRedGhost(ghost_red);
+
+        // BLUE GHOST
+        cout << "Prev ghost pos: " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << endl;
+        // PacmanState pac_test(pacMove, searchState.getPacmanDir(), grid, pellets_eat, prev_powerups, curr_powerup);
+        std::pair<int, int> newBlueMove(ghost_blue._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_blue).first.first, 
+                                    ghost_blue._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_blue).first.second);
+        ghost_blue.ghostMove(newBlueMove);
+        cout << "Next ghost pos: " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << endl;
+        // std::cout << "Ghost move: " << newMove.first << " " << newMove.second << std::endl;
+        // searchState.setPacman(pac);
+        // searchState.setRedGhost(ghost_red);
+
+        // ORANGE GHOST
+        cout << "Prev ghost pos: " << ghost_orange.getGhostLocation().first << " " << ghost_orange.getGhostLocation().second << endl;
+        // PacmanState pac_test(pacMove, searchState.getPacmanDir(), grid, pellets_eat, prev_powerups, curr_powerup);
+        std::pair<int, int> newOrangeMove(ghost_orange._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_orange).first.first, 
+                                    ghost_orange._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_orange).first.second);
+        ghost_orange.ghostMove(newOrangeMove);
+        cout << "Next ghost pos: " << ghost_orange.getGhostLocation().first << " " << ghost_orange.getGhostLocation().second << endl;
+
+        // PINK GHOST
+        cout << "Prev ghost pos: " << ghost_pink.getGhostLocation().first << " " << ghost_pink.getGhostLocation().second << endl;
+        // PacmanState pac_test(pacMove, searchState.getPacmanDir(), grid, pellets_eat, prev_powerups, curr_powerup);
+        std::pair<int, int> newPinkMove(ghost_pink._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_pink).first.first, 
+                                    ghost_pink._get_next_state_move(pac.getBotPos(), searchState.getPacmanDir(), ghost_pink).first.second);
+        ghost_pink.ghostMove(newPinkMove);
+        cout << "Next ghost pos: " << ghost_pink.getGhostLocation().first << " " << ghost_pink.getGhostLocation().second << endl;
+
+
         count++;
 
         cout << "\n" << endl;

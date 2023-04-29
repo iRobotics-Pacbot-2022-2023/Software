@@ -24,6 +24,10 @@ int main() {
     }
 
     //vector<pair<int, int>> insert = generatePath(balls);
+    if(insert.size() == 1 ){
+      
+
+    }
     // write data to the Teensy
     //serialPrintf(serial_port, insert);
     serialPrintf(serial_port, "Hello, Teensy!\n");
@@ -41,6 +45,7 @@ int main() {
     //override store previous move
     if(data == '&'){
         //send new shit
+         serialPrintf(serial_port, "Hello, Teensy!\n");
     }
     //compare between what the current instruction the bot is going at and what the algorithm is sending
     //If there is conflict then override the current instruction and send what the algorithm is saying
