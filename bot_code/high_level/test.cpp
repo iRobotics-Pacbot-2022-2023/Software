@@ -53,7 +53,7 @@ int main () {
     int prev_powerups = 0;
     int curr_powerup = 0;
     // int cherries_eat = 0;
-    PacmanState pac(pos, PacmanState::Direction::right, grid, pellets_eat, prev_powerups, curr_powerup, PacmanState::GameState::BASE);
+    PacmanState pac(pos, PacmanState::Direction::right, pellets_eat, prev_powerups, curr_powerup, PacmanState::GameState::BASE);
 
     std::pair<int, int> ghostLoc = {1, 1};
     // std::pair<int, int> scatterLoc = {, 1};
@@ -71,7 +71,7 @@ int main () {
 
     // searchState.generatePath(4);
     int count = 0;
-    while (count < 50) {
+    while (count < 300) {
 
         cout << "PACMAN STATE Pellets eaten: " << pac.getPelletsEaten() << endl;
 
@@ -129,6 +129,9 @@ int main () {
             pac.setPelletsEaten(pac.getPelletsEaten() + 1);
         } else if (grid[pacMove.first][pacMove.second] == O) {
             pac.setPowerupsEaten(pac.getPowerupsEaten() + 1);
+        } else if (pac.getGameState() == PacmanState::GameState::CHERRYTWO 
+            && pacMove.first == 13 && pacMove.second == 13) {
+            pac.setCherriesEaten(pac.getCherriesEaten() + 1);
         }
         
         // update grid
@@ -150,8 +153,7 @@ int main () {
         ghost_red.ghostMove(newRedMove);
         cout << "Next ghost pos: " << ghost_red.getGhostLocation().first << " " << ghost_red.getGhostLocation().second << endl;
         // std::cout << "Ghost move: " << newMove.first << " " << newMove.second << std::endl;
-        // searchState.setPacman(pac);
-        // searchState.setRedGhost(ghost_red);
+        
 
         // BLUE GHOST
         cout << "Prev ghost pos: " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << endl;
@@ -161,8 +163,7 @@ int main () {
         ghost_blue.ghostMove(newBlueMove);
         cout << "Next ghost pos: " << ghost_blue.getGhostLocation().first << " " << ghost_blue.getGhostLocation().second << endl;
         // std::cout << "Ghost move: " << newMove.first << " " << newMove.second << std::endl;
-        // searchState.setPacman(pac);
-        // searchState.setRedGhost(ghost_red);
+        
 
         // ORANGE GHOST
         cout << "Prev ghost pos: " << ghost_orange.getGhostLocation().first << " " << ghost_orange.getGhostLocation().second << endl;
@@ -186,29 +187,21 @@ int main () {
         cout << "\n" << endl;
     }
 
-    const int I = 1; // WALL
-    const int o = 2; // Pellet
-    const int e = 3; // unreachable
-    const int O = 4; // power point
-    const int n = 5; // untouchable
-    const int P = 6; // Pacbot
-    const int v = 7; // visited - No pellets here
-
-        int r = 0;
-        for (vector<int> vect : grid) {
-            for (int i : vect) {
-                if (i == I) cout << 'I' << " ";
-                if (i == o) cout << 'o' << " ";
-                if (i == e) cout << 'e' << " ";
-                if (i == O) cout << 'O' << " ";
-                if (i == n) cout << 'n' << " ";
-                if (i == P) cout << 'P' << " ";
-                if (i == v) cout << 'v' << " ";
-            }
-            cout << "\n" << endl;
-            r++;
+    int r = 0;
+    for (vector<int> vect : grid) {
+        for (int i : vect) {
+            if (i == I) cout << 'I' << " ";
+            if (i == o) cout << 'o' << " ";
+            if (i == e) cout << 'e' << " ";
+            if (i == O) cout << 'O' << " ";
+            if (i == n) cout << 'n' << " ";
+            if (i == P) cout << 'P' << " ";
+            if (i == v) cout << 'v' << " ";
         }
-        cout << "rows: " << r << endl;
+        cout << "\n" << endl;
+        r++;
+    }
+    cout << "rows: " << r << endl;
 
     cout << "\n" << endl;
     cout << "Final position: " << pac.getBotPos().first << " " << pac.getBotPos().second << endl;

@@ -32,16 +32,24 @@ class Ghost {
         Ghost();
         Ghost(std::pair<int, int> ghostLoc, Direction ghostDir, Color ghostColor, GhostState ghostState);
         Ghost( Ghost & g);
-        std::pair<int, int> getGhostLocation();
+        
         Ghost operator=(const Ghost& rhs);
+
+        std::pair<int, int> getGhostLocation();
+
+        void setGhostLocation(std::pair<int, int> new_loc);
 
         Direction getGhostDirection();
 
+        void setGhostDirection(Direction new_dir);
+
         Color getGhostColor();
+
+        void setGhostColor(Color new_color);
 
         GhostState getGhostState();
 
-        void changeGhostState(GhostState new_state);
+        void setGhostState(GhostState new_state);
 
 
         Ghost(std::pair<int, int> ghostLoc, std::pair<int, int> scatterLoc, std::pair<int, int> pacPos, Ghost::Direction facing, Ghost::GhostState state); 

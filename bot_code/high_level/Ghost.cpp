@@ -52,7 +52,19 @@ Ghost::Ghost(Ghost & g){
         return current_ghost_state;
     }
 
-    void Ghost::changeGhostState(Ghost::GhostState new_state) {
+    void Ghost::setGhostLocation(std::pair<int, int> new_loc) {
+        curGhostLocation = new_loc;
+    }
+
+    void Ghost::setGhostDirection(Direction new_dir) {
+        direction_facing = new_dir;
+    }
+
+    void Ghost::setGhostColor(Color new_color) {
+        ghost_color = new_color;
+    }
+
+    void Ghost::setGhostState(Ghost::GhostState new_state) {
         current_ghost_state = new_state;
     }
 

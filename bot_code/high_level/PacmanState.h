@@ -26,17 +26,17 @@ class PacmanState {
     PacmanState() {
         pos = make_pair(13, 13);
         direction_facing = right;
-        grid = {};
+        // grid = {};
         pellets_eaten = 0;
         cherries_eaten = 0;
         powerups_eaten = 0;
     }
 
-    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, std::vector<std::vector<int>> our_grid, int p_eaten, int c_eaten, int pu_eaten, GameState state) {
+    PacmanState(std::pair<int, int> botPos, PacmanState::Direction pacDirection, int p_eaten, int c_eaten, int pu_eaten, GameState state) {
             
             pos = botPos; // retrieve from server
             direction_facing = pacDirection;
-            grid = our_grid;
+            // grid = our_grid;
             pellets_eaten = p_eaten; // PELLETS_EATEN; 
             cherries_eaten = c_eaten; // CHERRIES_EATEN; // retrieve from server
             powerups_eaten = pu_eaten; // POWERUPS_EATEN; // retrieve from server
@@ -47,19 +47,19 @@ class PacmanState {
     //     grid = new_grid;
     // }
 
-    vector<vector<int>> getGrid() {
-        return grid;
-    }
+    // vector<vector<int>> getGrid() {
+    //     return grid;
+    // }
 
-    void changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
-        if (prevPos.first == newPos.first && prevPos.second == newPos.second) return;
+    // void changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
+    //     if (prevPos.first == newPos.first && prevPos.second == newPos.second) return;
 
-        // vector<vector<int>> newGrid = grid;
-        grid[prevPos.first][prevPos.second] = v; 
-        grid[newPos.first][newPos.second] = P; 
-        // Grid::updateGrid(grid);
-        // return newGrid; 
-    }
+    //     // vector<vector<int>> newGrid = grid;
+    //     grid[prevPos.first][prevPos.second] = v; 
+    //     grid[newPos.first][newPos.second] = P; 
+    //     // Grid::updateGrid(grid);
+    //     // return newGrid; 
+    // }
 
     //************************ Position getter and setter 
 
@@ -81,6 +81,10 @@ class PacmanState {
 
     Direction getDirection() {
         return direction_facing;
+    }
+
+    void setDirection(Direction d) {
+        direction_facing = d;
     }
 
     int getPelletsEaten() {
@@ -139,9 +143,7 @@ class PacmanState {
     //     return direction_facing;
     // }
 
-    void setDirection(Direction d) {
-        direction_facing = d;
-    }
+    
     //************************
 
     //************************ Other stuff
@@ -174,7 +176,7 @@ private:
     
     Direction direction_facing;
 
-    std::vector<std::vector<int>> grid;
+    // std::vector<std::vector<int>> grid;
 
     int freightened_time_left = 0;
 

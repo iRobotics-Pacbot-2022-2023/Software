@@ -21,6 +21,7 @@ void StateSpaceSearchR::updateGameState() {
 
 
     int pellets_eaten = pacman.getPelletsEaten();
+    int cherries_eaten = pacman.getCherriesEaten();
 
     // int prev_powerups_eaten = 
     // int curr_powerups_eaten = ();
@@ -32,12 +33,14 @@ void StateSpaceSearchR::updateGameState() {
         if (euclideanDistance(pacman.getBotPos(), red_ghost.getGhostLocation()) <= 5 || euclideanDistance(pacman.getBotPos(), blue_ghost.getGhostLocation()) <= 5
             || euclideanDistance(pacman.getBotPos(), orange_ghost.getGhostLocation()) <= 5 || euclideanDistance(pacman.getBotPos(), pink_ghost.getGhostLocation()) <= 5) {
                 // std::cout << "YOU ARE CLOSE" << std::endl;
+                std::cout << "CHANGE TO POWERUP" << std::endl;
                 pacman.setGameState(PacmanState::GameState::POWERUP);
             // state = PacmanState::GameState::POWERUP;
         }
 
         else if ((cherries_eaten == 0 && pellets_eaten >= 50) || (cherries_eaten == 1 && pellets_eaten >= 150)) {
             // std::cout << "bruh whhat IS YOU DOING" << std::endl;
+            std::cout << "CHANGE TO CHERRYONE" << std::endl;
             pacman.setGameState(PacmanState::GameState::CHERRYONE);
         }
 
@@ -47,21 +50,24 @@ void StateSpaceSearchR::updateGameState() {
         std::cout << "StateSpace Search: Start in CHERRYONE" << std::endl;
 
         if ((cherries_eaten == 0 && pellets_eaten >= 70) || (cherries_eaten == 1 && pellets_eaten >= 170)) {
+            std::cout << "CHANGE TO CHERRY TWO" << std::endl;
+            pacman.setCherryTimeLeft(30);
             pacman.setGameState(PacmanState::GameState::CHERRYTWO);
         }
 
-    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYTWO) {
+    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYTWO) { // Method to change to Base in the cherrytwo function
 
         std::cout << "StateSpace Search: Start in CHERRYTWO" << std::endl;
         // can only change to BASE
 
         // it;s inferred that if cherry is eaten, curr_cherries_eaten incrememnts
-        if (cherry_time_left == 0) {
+        if (pacman.getCherryTimeLeft() == 0) {
+            std::cout << "CHANGE TO BASE" << std::endl;
             cherries_eaten++;
             pacman.setGameState(PacmanState::GameState::BASE);
         }
 
-    } else if (pacman.getGameState() == PacmanState::GameState::POWERUP) {
+    } else if (pacman.getGameState() == PacmanState::GameState::POWERUP) { // Method to change to Freightened in powerup function
         // can only change to FREIGHTENED
         std::cout << "StateSpace Search: Start in POWERUP" << std::endl;
         // if (curr_powerups_eaten > prev_powerups_eaten) {
@@ -80,12 +86,12 @@ void StateSpaceSearchR::updateGameState() {
 
         std::cout << "StateSpace Search: Start in FREIGHTENED" << std::endl;
 
-        if (freightened_time_left == 0) {
-            std::cout << "about to enter base state" << std::endl;
-            red_ghost.changeGhostState(Ghost::GhostState::chase);
-            blue_ghost.changeGhostState(Ghost::GhostState::chase);
-            orange_ghost.changeGhostState(Ghost::GhostState::chase);
-            pink_ghost.changeGhostState(Ghost::GhostState::chase);
+        if (pacman.getFrieghtenedTimeLeft() == 0) {
+            std::cout << "CHANGE TO BASE" << std::endl;
+            red_ghost.setGhostState(Ghost::GhostState::chase);
+            blue_ghost.setGhostState(Ghost::GhostState::chase);
+            orange_ghost.setGhostState(Ghost::GhostState::chase);
+            pink_ghost.setGhostState(Ghost::GhostState::chase);
             pacman.setGameState(PacmanState::GameState::BASE);
         }
     }
@@ -95,7 +101,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
 
     cout << "The state space search says we've eaten these many pellets: " << pacman.getPelletsEaten() << endl;
 
-    cout << "The state space search says we've eaten these many pellets: " << pellets_eaten << endl;
+    // cout << "The state space search says we've eaten these many pellets: " << pellets_eaten << endl;
 
     /*
     if (red_ghost_state == Ghost::GhostState::frightened) {
@@ -222,10 +228,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathBase(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsBase(curr_position, curr_grid);
 
-        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
-        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
-        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
-        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost.getGhostState()); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost.getGhostState());
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost.getGhostState());
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost.getGhostState());
 
     //     // if depth = length dont add to queue
 
@@ -489,10 +495,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryOne(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsCherryOne(curr_position, curr_grid);
 
-        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
-        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
-        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
-        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost.getGhostState()); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost.getGhostState());
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost.getGhostState());
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost.getGhostState());
 
         for (auto neighbor : neighbors) {
             // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
@@ -648,6 +654,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
     parent.pacman_pos = getPacmanPos();
     parent.pacman_dir = getPacmanDir();
     if (parent.pacman_pos.first == 13 && parent.pacman_pos.second == 13) {
+        std::cout << "CHANGE TO BASE" << std::endl;
         pacman.setGameState(PacmanState::GameState::BASE);
         return generatePathBase(length);
     }
@@ -696,10 +703,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsBase(curr_position, curr_grid); // Base works fine for cherry two
 
-        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
-        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
-        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
-        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost.getGhostState()); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost.getGhostState());
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost.getGhostState());
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost.getGhostState());
 
         for (auto neighbor : neighbors) {
             // std::cout << "neighbor position is: " << neighbor.first << " " << neighbor.second << std::endl;
@@ -832,6 +839,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathCherryTwo(int length) {
         // std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     }
 
+    pacman.setCherryTimeLeft(pacman.getCherryTimeLeft() - (length / 2));
+
     return path;
 
 }
@@ -864,12 +873,14 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
         // POWER_POINTS_LOCATIONS.erase(POWER_POINTS_LOCATIONS.find({parent.pacman_pos.first, parent.pacman_pos.first}));
         // std::cout << "bruh" << std::endl;
+        std::cout << "CHANGE TO BASE" << std::endl;
         pacman.setGameState(PacmanState::GameState::FREIGHTENED);
-        updateFreightenedTimeLeft(30); // idk the time for the freightened state
-        red_ghost.changeGhostState(Ghost::GhostState::frightened);
-        blue_ghost.changeGhostState(Ghost::GhostState::frightened);
-        orange_ghost.changeGhostState(Ghost::GhostState::frightened);
-        pink_ghost.changeGhostState(Ghost::GhostState::frightened);
+        pacman.setFrieghtenedTimeLeft(30);
+        // updateFreightenedTimeLeft(30); // idk the time for the freightened state
+        red_ghost.setGhostState(Ghost::GhostState::frightened);
+        blue_ghost.setGhostState(Ghost::GhostState::frightened);
+        orange_ghost.setGhostState(Ghost::GhostState::frightened);
+        pink_ghost.setGhostState(Ghost::GhostState::frightened);
         // state = StateSpaceSearchR::FREIGHTENED;
         return generatePathFreightened(length);
     }
@@ -923,13 +934,14 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathPowerUp(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsPowerUp(curr_position, curr_grid);
         
-        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
+        // Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
         // if (red.getGhostState() == Ghost::GhostState::chase) {
         //         std::cout << "ghost frightened" << std::endl;
         //     }
-        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
-        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
-        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost.getGhostState()); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost.getGhostState());
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost.getGhostState());
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost.getGhostState());
 
 
         for (auto neighbor : neighbors) {
@@ -1199,10 +1211,10 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
         vector<pair<int, int>> neighbors = getNeighborsBase(curr_position, curr_grid); // Base works fine for freightened
 
-        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost_state); // location, direction, color, state
-        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost_state);
-        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost_state);
-        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost_state);
+        Ghost red(curr_red_ghost_pos, curr_red_ghost_dir, Ghost::Color::red, red_ghost.getGhostState()); // location, direction, color, state
+        Ghost blue(curr_blue_ghost_pos, curr_blue_ghost_dir, Ghost::Color::blue, blue_ghost.getGhostState());
+        Ghost orange(curr_orange_ghost_pos, curr_orange_ghost_dir, Ghost::Color::orange, orange_ghost.getGhostState());
+        Ghost pink(curr_pink_ghost_pos, curr_pink_ghost_dir, Ghost::Color::pink, pink_ghost.getGhostState());
 
         for (auto neighbor : neighbors) {
             StateSpaceSearchR::FreightenedNode child;
@@ -1272,25 +1284,25 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
 
             if (child.pacman_pos == child.red_ghost_pos && child.red_ghost_state == Ghost::GhostState::frightened) {
                 // child.red_ghost_state = Ghost::GhostState::scatter; // I think
-                red_ghost_state = Ghost::GhostState::scatter;
+                red_ghost.setGhostState(Ghost::GhostState::scatter);
                 child.points += 200;
             }
 
             if (child.pacman_pos == child.blue_ghost_pos && child.blue_ghost_state == Ghost::GhostState::frightened) {
                 // child.blue_ghost_state = Ghost::GhostState::scatter; // I think
-                blue_ghost_state = Ghost::GhostState::scatter;
+                blue_ghost.setGhostState(Ghost::GhostState::scatter);
                 child.points += 200;
             }
 
             if (child.pacman_pos == child.orange_ghost_pos && child.orange_ghost_state == Ghost::GhostState::frightened) {
                 // child.orange_ghost_state = Ghost::GhostState::scatter; // I think
-                orange_ghost_state = Ghost::GhostState::scatter;
+                orange_ghost.setGhostState(Ghost::GhostState::scatter);
                 child.points += 200;
             }
 
             if (child.pacman_pos == child.pink_ghost_pos && child.pink_ghost_state == Ghost::GhostState::frightened) {
                 // child.pink_ghost_state = Ghost::GhostState::scatter; // I think
-                pink_ghost_state = Ghost::GhostState::scatter;
+                pink_ghost.setGhostState(Ghost::GhostState::scatter);
                 child.points += 200;
             }
             
@@ -1373,7 +1385,8 @@ vector<pair<int, int>> StateSpaceSearchR::generatePathFreightened(int length) {
     //     // std::cout << "The parent node traversed is: " << filler.pacman_pos.first << " " << filler.pacman_pos.second << std::endl;
     // }
 
-    freightened_time_left -= (length / 2);
+    pacman.setFrieghtenedTimeLeft(pacman.getFrieghtenedTimeLeft() - (length / 2));
+    // freightened_time_left -= (length / 2);
 
     return path;
 

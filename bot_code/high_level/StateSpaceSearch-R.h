@@ -20,12 +20,36 @@ class StateSpaceSearchR {
 
         StateSpaceSearchR(PacmanState p, Ghost red, Ghost blue, Ghost orange, Ghost pink, vector<vector<int>> g) {
 
-            red_ghost = red;
-            pacman = p;
-            red_ghost = red;
-            blue_ghost = blue;
-            orange_ghost = orange;
-            pink_ghost = pink;
+            
+            pacman.changePos(p.getBotPos());
+            pacman.setDirection(p.getDirection());
+            pacman.setPelletsEaten(p.getPelletsEaten());
+            pacman.setCherriesEaten(p.getCherriesEaten());
+            pacman.setPowerupsEaten(p.getPowerupsEaten());
+            pacman.setGameState(p.getGameState());
+            pacman.setFrieghtenedTimeLeft(p.getFrieghtenedTimeLeft());
+            pacman.setCherryTimeLeft(p.getCherryTimeLeft());
+
+            red_ghost.setGhostLocation(red.getGhostLocation());
+            red_ghost.setGhostDirection(red.getGhostDirection());
+            red_ghost.setGhostColor(red.getGhostColor());
+            red_ghost.setGhostState(red.getGhostState());
+            
+            blue_ghost.setGhostLocation(blue.getGhostLocation());
+            blue_ghost.setGhostDirection(blue.getGhostDirection());
+            blue_ghost.setGhostColor(blue.getGhostColor());
+            blue_ghost.setGhostState(blue.getGhostState());
+
+            orange_ghost.setGhostLocation(orange.getGhostLocation());
+            orange_ghost.setGhostDirection(orange.getGhostDirection());
+            orange_ghost.setGhostColor(orange.getGhostColor());
+            orange_ghost.setGhostState(orange.getGhostState());
+
+            pink_ghost.setGhostLocation(pink.getGhostLocation());
+            pink_ghost.setGhostDirection(pink.getGhostDirection());
+            pink_ghost.setGhostColor(pink.getGhostColor());
+            pink_ghost.setGhostState(pink.getGhostState());
+
             grid = g;
         }
 
@@ -40,18 +64,18 @@ class StateSpaceSearchR {
         // Direction 
 
 
-        void updatePacmanDir(PacmanState::Direction newDir) { pacman_dir = newDir; }
+        void updatePacmanDir(PacmanState::Direction newDir) { pacman.setDirection(newDir); }
 
-        PacmanState::Direction getPacmanDir() { return pacman_dir; }
+        PacmanState::Direction getPacmanDir() { return pacman.getDirection(); }
 
         // Position
 
         pair<int, int> getPacmanPos() { return pacman.getBotPos(); }
-        void setPacman(PacmanState p) {pacman = p;}
-        void setRedGhost(Ghost r){red_ghost = r;}
+        // void setPacman(PacmanState p) {pacman = p;}
+        // void setRedGhost(Ghost r){red_ghost = r;}
 
         vector<vector<int>> getGrid() { return grid; }
-        Ghost getRed() {return red_ghost;}
+        // Ghost getRed() {return red_ghost;}
 
         // no need to update grid - just assign changeGrid to a new variable
         vector<vector<int>> changeGrid(vector<vector<int>> grid, pair<int, int> prevPos, pair<int, int> newPos) { 
@@ -216,9 +240,9 @@ class StateSpaceSearchR {
 
         vector<pair<int, int>> getNeighborsPowerUp(pair<int, int> pos, vector<vector<int>> grid);
 
-        void updateFreightenedTimeLeft(int time) { freightened_time_left = time; }
+        // void updateFreightenedTimeLeft(int time) { freightened_time_left = time; }
 
-        int getFreightenedTimeLeft() { return freightened_time_left; }
+        // int getFreightenedTimeLeft() { return freightened_time_left; }
 
         // //************************ Prepowerup getter and setter
         // void setPrevPowerUpsEaten(int new_powerups_eaten) {
@@ -297,45 +321,47 @@ class StateSpaceSearchR {
 
         // PacmanState::GameState state = pacman.getGameState();
 
-        pair<int, int> pacman_pos = pacman.getBotPos();
+        // pair<int, int> pacman_pos = pacman.getBotPos();
 
-        PacmanState::Direction pacman_dir = pacman.getDirection();
+        // PacmanState::Direction pacman_dir = pacman.getDirection();
 
-        pair<int, int> red_ghost_pos = red_ghost.getGhostLocation();
+        // pair<int, int> red_ghost_pos = red_ghost.getGhostLocation();
 
-        Ghost::Direction red_ghost_dir = red_ghost.getGhostDirection();
+        // Ghost::Direction red_ghost_dir = red_ghost.getGhostDirection();
 
-        Ghost::GhostState red_ghost_state = red_ghost.getGhostState();
+        // Ghost::GhostState red_ghost_state = red_ghost.getGhostState();
 
-        pair<int, int> blue_ghost_pos = blue_ghost.getGhostLocation();
+        // pair<int, int> blue_ghost_pos = blue_ghost.getGhostLocation();
 
-        Ghost::Direction blue_ghost_dir = blue_ghost.getGhostDirection();
+        // Ghost::Direction blue_ghost_dir = blue_ghost.getGhostDirection();
 
-        Ghost::GhostState blue_ghost_state = blue_ghost.getGhostState();
+        // Ghost::GhostState blue_ghost_state = blue_ghost.getGhostState();
 
-        pair<int, int> orange_ghost_pos = orange_ghost.getGhostLocation();
+        // pair<int, int> orange_ghost_pos = orange_ghost.getGhostLocation();
 
-        Ghost::Direction orange_ghost_dir = orange_ghost.getGhostDirection();
+        // Ghost::Direction orange_ghost_dir = orange_ghost.getGhostDirection();
 
-        Ghost::GhostState orange_ghost_state = orange_ghost.getGhostState();
+        // Ghost::GhostState orange_ghost_state = orange_ghost.getGhostState();
 
-        pair<int, int> pink_ghost_pos = pink_ghost.getGhostLocation();
+        // pair<int, int> pink_ghost_pos = pink_ghost.getGhostLocation();
 
-        Ghost::Direction pink_ghost_dir = pink_ghost.getGhostDirection();
+        // Ghost::Direction pink_ghost_dir = pink_ghost.getGhostDirection();
 
-        Ghost::GhostState pink_ghost_state = pink_ghost.getGhostState();
+        // Ghost::GhostState pink_ghost_state = pink_ghost.getGhostState();
 
         vector<vector<int>> grid;
 
-        int pellets_eaten = pacman.getPelletsEaten();
+        // int pellets_eaten = pacman.getPelletsEaten();
 
-        int freightened_time_left = 0;
+        // int freightened_time_left = 0;
 
-        int powerups_eaten = pacman.getPowerupsEaten(); // retrieve from server
+        // int cherry_time_left = 0;
+
+        // int powerups_eaten = pacman.getPowerupsEaten(); // retrieve from server
 
         // int curr_powerups_eaten = prev_powerups_eaten;
 
-        int cherries_eaten = pacman.getCherriesEaten(); // retrieve from server
+        // int cherries_eaten = pacman.getCherriesEaten(); // retrieve from server
 
         // int curr_cherries_eaten = prev_cherries_eaten;
 
