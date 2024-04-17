@@ -47,6 +47,8 @@ const int CHERRY_POINTS = 100;
 const int POWER_POINTS = 50;
 const int PELLET_POINTS = 10;
 
+const int MAX_PELLETS = 244;
+
 // extern set<pair<int, int>> POWER_POINTS_LOCATIONS = {{1, 7}, {1, 27}, {26, 7}, {26, 27}};
 
 /* Ghosts Points

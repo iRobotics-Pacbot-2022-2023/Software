@@ -8,21 +8,21 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
 
     cout << "The state space search says we've eaten these many pellets: " << pacman.getPelletsEaten() << endl;
 
+    auto our_game_state = pacman.getGameState();
     
-    
-    if (pacman.getGameState() == PacmanState::GameState::BASE) {
+    if (our_game_state == PacmanState::GameState::BASE) {
         std::cout << "state space search: base" << std::endl;
         return generatePathBase(length);
-    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYONE) {
+    } else if (our_game_state == PacmanState::GameState::CHERRYONE) {
         std::cout << "state space search: cherryone" << std::endl;
         return generatePathCherryOne(length);
-    } else if (pacman.getGameState() == PacmanState::GameState::CHERRYTWO) {
+    } else if (our_game_state == PacmanState::GameState::CHERRYTWO) {`   c
         std::cout << "state space search: cherrytwo" << std::endl;
         return generatePathCherryTwo(length);
-    } else if (pacman.getGameState() == PacmanState::GameState::POWERUP) {
+    } else if (our_game_state == PacmanState::GameState::POWERUP) {
         std::cout << "state space search: powerup" << std::endl;
         return generatePathPowerUp(length);
-    } else if (pacman.getGameState() == PacmanState::GameState::FREIGHTENED) {
+    } else if (our_game_state == PacmanState::GameState::FREIGHTENED) {
         std::cout << "state space search: freightened" << std::endl;
         return generatePathFreightened(length);
     }

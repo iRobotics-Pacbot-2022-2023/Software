@@ -319,6 +319,10 @@ class StateSpaceSearchR {
 
         Ghost pink_ghost;
 
+        vector<vector<int>> grid;
+
+        set<pair<int, int>> POWER_POINTS_LOCATIONS = {{1, 7}, {1, 27}, {26, 7}, {26, 27}};
+
         // PacmanState::GameState state = pacman.getGameState();
 
         // pair<int, int> pacman_pos = pacman.getBotPos();
@@ -349,7 +353,7 @@ class StateSpaceSearchR {
 
         // Ghost::GhostState pink_ghost_state = pink_ghost.getGhostState();
 
-        vector<vector<int>> grid;
+        
 
         // int pellets_eaten = pacman.getPelletsEaten();
 
@@ -365,7 +369,7 @@ class StateSpaceSearchR {
 
         // int curr_cherries_eaten = prev_cherries_eaten;
 
-        set<pair<int, int>> POWER_POINTS_LOCATIONS = {{1, 7}, {1, 27}, {26, 7}, {26, 27}};
+       
 
 
 };

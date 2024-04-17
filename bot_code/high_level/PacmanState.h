@@ -16,9 +16,7 @@ using namespace std;
 class PacmanState {
     public:
 
-    enum Direction {
-            right, up, left, down
-        };    
+    enum Direction { right, up, left, down };    
 
     enum GameState { BASE, CHERRYONE, CHERRYTWO, POWERUP, FREIGHTENED };
 
