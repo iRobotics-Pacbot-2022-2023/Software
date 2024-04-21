@@ -2,7 +2,7 @@
 #include "Ghost.h"
 #include "PacmanState.h"
 #include <iostream>
-#include "Hash.h"
+// #include "Hash.h"
 #include "StateSpaceSearch-R.h"
 using namespace std;
 void printGrid(std::vector<std::vector<int>> grid);
