@@ -16,7 +16,7 @@ vector<pair<int, int>> StateSpaceSearchR::generatePath(int length) {
     } else if (our_game_state == PacmanState::GameState::CHERRYONE) {
         std::cout << "state space search: cherryone" << std::endl;
         return generatePathCherryOne(length);
-    } else if (our_game_state == PacmanState::GameState::CHERRYTWO) {`   c
+    } else if (our_game_state == PacmanState::GameState::CHERRYTWO) {
         std::cout << "state space search: cherrytwo" << std::endl;
         return generatePathCherryTwo(length);
     } else if (our_game_state == PacmanState::GameState::POWERUP) {

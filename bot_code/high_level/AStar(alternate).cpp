@@ -85,7 +85,7 @@ vector<int> a_star(unordered_map<int, unordered_map<int, int>> &graph, int start
     return vector<int>();
 }
 
-double heuristic(int node, int goal) {
-    // Calculates the Euclidean distance between the node and the goal node
-    unordered_map<int, pair<int, int>> coordinates = {
-        {0, {0,
+// double heuristic(int node, int goal) {
+//     // Calculates the Euclidean distance between the node and the goal node
+//     unordered_map<int, pair<int, int>> coordinates = {
+//         {0, {0,
