@@ -167,7 +167,7 @@ int main () {
 
         count++;
 
-        cout << "\n" << endl;
+        cout << "\n\n\n\n\n" << endl;
     }
 
     int r = 0;
