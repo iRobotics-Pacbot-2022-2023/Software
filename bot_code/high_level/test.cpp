@@ -3,6 +3,8 @@
 #include <iostream>
 // #include "Hash.h"
 #include "StateSpaceSearch-R.h"
+#include <unistd.h>
+
 using namespace std;
 void printGrid(std::vector<std::vector<int>> grid);
 void printGhostState(Ghost ghost_red, Ghost ghost_blue, Ghost ghost_orange, Ghost ghost_pink);
