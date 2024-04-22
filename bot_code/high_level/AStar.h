@@ -17,4 +17,4 @@ using namespace std;
 
     vector<pair<int, int>> getNeighborsAStar(pair<int, int> node, vector<vector<int>> grid);
 
-    int euclideanDistance(pair<int, int> start, pair<int, int> goal);
+    // int euclideanDistance(pair<int, int> start, pair<int, int> goal);

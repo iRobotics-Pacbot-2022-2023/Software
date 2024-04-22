@@ -80,6 +80,6 @@ vector<pair<int, int>> getNeighborsAStar(pair<int, int> node, vector<vector<int>
     return neighbors;
 }
 
-int euclideanDistance(pair<int, int> start, pair<int, int> goal) {
-    return pow(start.first - goal.first, 2) + pow(start.second - goal.second, 2);
-}
+// int euclideanDistance(pair<int, int> start, pair<int, int> goal) {
+//     return pow(start.first - goal.first, 2) + pow(start.second - goal.second, 2);
+// }

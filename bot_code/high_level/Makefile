@@ -7,7 +7,7 @@ CXXFLAGS = -Wall -g -std=c++11
 TARGET = test
 
 # Files and directories - Exclude specific files
-SRCS = $(filter-out communication.cpp hashing.cpp main.cpp MoreCommunicationmodules.cpp Sender.cpp StateSpaceSearch.cpp AStar_alternate.cpp main_local.cpp, $(wildcard *.cpp))
+SRCS = $(filter-out communication.cpp hashing.cpp main.cpp MoreCommunicationmodules.cpp Sender.cpp StateSpaceSearch.cpp AStar_alternate.cpp main_local.cpp testBFS.cpp, $(wildcard *.cpp))
 OBJS = $(SRCS:.cpp=.o)
 
 # Build executable
