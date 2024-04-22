@@ -9,7 +9,7 @@ class Grid {
         public:
 
                 Grid() {
-                        vector<vector<int>> grid;
+                        // vector<vector<int>> grid;
                 }
 
                 void updateGrid(vector<vector<int>> new_grid) { grid = new_grid; } // GET FROM SYSTEM

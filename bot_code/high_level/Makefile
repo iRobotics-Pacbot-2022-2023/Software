@@ -7,7 +7,7 @@ CXXFLAGS = -Wall -g -std=c++11
 TARGET = test.cpp
 
 # Files and directories - Exclude specific files
-SRCS = $(filter-out Communication.cpp hashing.cpp main.cpp MoreCommunicationmodules.cpp sender.cpp statespacesearch.cpp AStar_alternate.cpp, $(wildcard *.cpp))
+SRCS = $(filter-out communication.cpp hashing.cpp main.cpp MoreCommunicationmodules.cpp Sender.cpp StateSpaceSearch.cpp AStar_alternate.cpp main_local.cpp, $(wildcard *.cpp))
 OBJS = $(SRCS:.cpp=.o)
 
 # Build executable
@@ -16,7 +16,7 @@ $(TARGET): $(OBJS)
 
 # Build object files
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c "$<"
+	$(CXX) $(CXXFLAGS) -c "$<" 
 
 # Phony targets
 .PHONY: clean all
