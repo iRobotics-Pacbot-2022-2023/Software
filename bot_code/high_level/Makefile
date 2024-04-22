@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -g -std=c++11
 
 
 # Target executable name
-TARGET = test.cpp
+TARGET = test
 
 # Files and directories - Exclude specific files
 SRCS = $(filter-out communication.cpp hashing.cpp main.cpp MoreCommunicationmodules.cpp Sender.cpp StateSpaceSearch.cpp AStar_alternate.cpp main_local.cpp, $(wildcard *.cpp))
