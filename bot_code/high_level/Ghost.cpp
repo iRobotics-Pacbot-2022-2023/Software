@@ -184,7 +184,7 @@ std::pair<std::pair<int, int>, Ghost::Direction> Ghost::_get_next_blue_chase_mov
     }
 
 
-    // fuckkkkkkkkkk i gotta do BFS
+    // i gotta do BFS
     std::pair<std::pair<int, int>, Ghost::Direction> Ghost::get_move_based_on_target(std::pair<int, int> target) {
         // BFS does not model the ghost movement properly
         // i need to go back to euclidian but put the correct logic
