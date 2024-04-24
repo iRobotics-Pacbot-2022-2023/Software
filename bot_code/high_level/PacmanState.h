@@ -26,7 +26,6 @@ class PacmanState {
         direction_facing = right;
         // grid = {};
         pellets_eaten = 0;
-        cherries_eaten = 0;
         powerups_eaten = 0;
     }
 
